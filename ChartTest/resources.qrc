@@ -1,0 +1,19 @@
+<RCC>
+    <qresource prefix="/images">
+        <file>images/ChartProperties1.png</file>
+        <file>images/ChartProperties2.png</file>
+        <file>images/ChartProperties3.png</file>
+        <file>images/charts1.png</file>
+        <file>images/charts2.png</file>
+        <file>images/colorPickerIcon1.jpg</file>
+        <file>images/colorPickerIcon2.jpg</file>
+        <file>images/colorPickerIcon3.jpg</file>
+        <file>images/colorPickerIcon4.jpg</file>
+        <file>images/colorPickerIcon5.jpg</file>
+        <file>images/fontIcon1.jpg</file>
+        <file>images/fontIcon2.jpg</file>
+        <file>images/fontIcon3.jpg</file>
+        <file>images/fontIcon4.jpg</file>
+        <file>images/rotate1.png</file>
+    </qresource>
+</RCC>
