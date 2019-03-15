@@ -89,29 +89,29 @@ ChartProperties::ChartProperties(QWidget *parent) :
     ui->spinYAxisRotation->setFont(_controlsDefaualtFont);
     ui->spinYAxisRotation->setPalette(_controlsDefaualtFontColorPalette);
 
-    ui->dspinXMajorTics->setFont(_controlsDefaualtFont);
-    ui->dspinXMajorTics->setPalette(_controlsDefaualtFontColorPalette);
+    ui->spinXMajorTics->setFont(_controlsDefaualtFont);
+    ui->spinXMajorTics->setPalette(_controlsDefaualtFontColorPalette);
 
-    ui->dspinXMinorTics->setFont(_controlsDefaualtFont);
-    ui->dspinXMinorTics->setPalette(_controlsDefaualtFontColorPalette);
+    ui->spinXMinorTics->setFont(_controlsDefaualtFont);
+    ui->spinXMinorTics->setPalette(_controlsDefaualtFontColorPalette);
 
-    ui->dspinYMajorTics->setFont(_controlsDefaualtFont);
-    ui->dspinYMajorTics->setPalette(_controlsDefaualtFontColorPalette);
+    ui->spinYMajorTics->setFont(_controlsDefaualtFont);
+    ui->spinYMajorTics->setPalette(_controlsDefaualtFontColorPalette);
 
-    ui->dspinYMinorTics->setFont(_controlsDefaualtFont);
-    ui->dspinYMinorTics->setPalette(_controlsDefaualtFontColorPalette);
+    ui->spinYMinorTics->setFont(_controlsDefaualtFont);
+    ui->spinYMinorTics->setPalette(_controlsDefaualtFontColorPalette);
 
-    ui->dspinXMajorThickness->setFont(_controlsDefaualtFont);
-    ui->dspinXMajorThickness->setPalette(_controlsDefaualtFontColorPalette);
+    ui->spinXMajorThickness->setFont(_controlsDefaualtFont);
+    ui->spinXMajorThickness->setPalette(_controlsDefaualtFontColorPalette);
 
-    ui->dspinXMinorThickness->setFont(_controlsDefaualtFont);
-    ui->dspinXMinorThickness->setPalette(_controlsDefaualtFontColorPalette);
+    ui->spinXMinorThickness->setFont(_controlsDefaualtFont);
+    ui->spinXMinorThickness->setPalette(_controlsDefaualtFontColorPalette);
 
-    ui->dspinYMajorThickness->setFont(_controlsDefaualtFont);
-    ui->dspinYMajorThickness->setPalette(_controlsDefaualtFontColorPalette);
+    ui->spinYMajorThickness->setFont(_controlsDefaualtFont);
+    ui->spinYMajorThickness->setPalette(_controlsDefaualtFontColorPalette);
 
-    ui->dspinYMinorThickness->setFont(_controlsDefaualtFont);
-    ui->dspinYMinorThickness->setPalette(_controlsDefaualtFontColorPalette);
+    ui->spinYMinorThickness->setFont(_controlsDefaualtFont);
+    ui->spinYMinorThickness->setPalette(_controlsDefaualtFontColorPalette);
 
     disablePushButtons();
 
@@ -175,7 +175,7 @@ void ChartProperties::setChartXAxisGridLines(bool AxisMajorLinesAreVisible, int 
 {
 
     ui->checkXMajor->setChecked(AxisMajorLinesAreVisible);
-    ui->dspinXMajorThickness->setValue(AxisMajorGridLinesize);
+    ui->spinXMajorThickness->setValue(AxisMajorGridLinesize);
 
     // Set the X Axis Major tic Label color
     // -----------------------------------------------------
@@ -186,16 +186,16 @@ void ChartProperties::setChartXAxisGridLines(bool AxisMajorLinesAreVisible, int 
 
     // Set the X Axis Major spinbox text/count value
     // -----------------------------------------------------
-    ui->dspinXMajorTics->setValue(AxisMajorLinesTicCount);
+    ui->spinXMajorTics->setValue(AxisMajorLinesTicCount);
 
     // Set the X Axis Major spin box text color
     // -----------------------------------------------------
     palMajor.setColor(QPalette::Text, AxisMajorLinesColor);
-    ui->dspinXMajorTics->setPalette(palMajor);
+    ui->spinXMajorTics->setPalette(palMajor);
 
 
     ui->checkXMinor->setChecked(AxisMinorLinesAreVisible);
-    ui->dspinXMinorThickness->setValue(AxisMinorGridLinesize);
+    ui->spinXMinorThickness->setValue(AxisMinorGridLinesize);
 
     // Set the X Axis Minor tic Label color
     // -----------------------------------------------------
@@ -207,8 +207,8 @@ void ChartProperties::setChartXAxisGridLines(bool AxisMajorLinesAreVisible, int 
     // Set the X Axis Minor spinbox text/count value
     // -----------------------------------------------------
     palMinor.setColor(QPalette::Text, AxisMajorLinesColor);
-    ui->dspinXMinorTics->setPalette(palMinor);
-    ui->dspinXMinorTics->setValue(AxisMinorLinesTicCount);
+    ui->spinXMinorTics->setPalette(palMinor);
+    ui->spinXMinorTics->setValue(AxisMinorLinesTicCount);
 
 }
 
@@ -248,7 +248,7 @@ void ChartProperties::setChartYAxisGridLines(bool AxisMajorLinesAreVisible, int 
                                              QColor AxisMinorLinesColor, double AxisMinorGridLinesize)
 {
     ui->checkYMajor->setChecked(AxisMajorLinesAreVisible);
-    ui->dspinYMajorThickness->setValue(AxisMajorGridLinesize);
+    ui->spinYMajorThickness->setValue(AxisMajorGridLinesize);
 
     // Set the X Axis Major tic Label color
     // -----------------------------------------------------
@@ -259,16 +259,16 @@ void ChartProperties::setChartYAxisGridLines(bool AxisMajorLinesAreVisible, int 
 
     // Set the X Axis Major spinbox text/count value
     // -----------------------------------------------------
-    ui->dspinYMajorTics->setValue(AxisMajorLinesTicCount);
+    ui->spinYMajorTics->setValue(AxisMajorLinesTicCount);
 
     // Set the X Axis Major spin box text color
     // -----------------------------------------------------
     palMajor.setColor(QPalette::Text, AxisMajorLinesColor);
-    ui->dspinYMajorTics->setPalette(palMajor);
+    ui->spinYMajorTics->setPalette(palMajor);
 
 
     ui->checkYMinor->setChecked(AxisMinorLinesAreVisible);
-    ui->dspinYMinorThickness->setValue(AxisMinorGridLinesize);
+    ui->spinYMinorThickness->setValue(AxisMinorGridLinesize);
 
     // Set the X Axis Minor tic Label color
     // -----------------------------------------------------
@@ -280,8 +280,8 @@ void ChartProperties::setChartYAxisGridLines(bool AxisMajorLinesAreVisible, int 
     // Set the X Axis Minor spinbox text/count value
     // -----------------------------------------------------
     palMinor.setColor(QPalette::Text, AxisMajorLinesColor);
-    ui->dspinYMinorTics->setPalette(palMinor);
-    ui->dspinYMinorTics->setValue(AxisMinorLinesTicCount);
+    ui->spinYMinorTics->setPalette(palMinor);
+    ui->spinYMinorTics->setValue(AxisMinorLinesTicCount);
 
 }
 
@@ -297,6 +297,9 @@ void ChartProperties::setPenItems(int width, QColor color, int penStyle, QString
 
         // set pen state
         _penStates[penNumber - 1] = 1;
+        bool state = _penStates[penNumber - 1] != 0;
+
+        qDebug() << "This pen state is " << state;
 
         // Convert color to palette
         palPen.setColor(QPalette::Text, color);
@@ -442,8 +445,9 @@ void ChartProperties::updatePenItemsAndNotify(int penNumber)
 
 void ChartProperties::disablePushButtons()
 {
-    // disable all unused pushButtons
-    ui->comboPen01->setEnabled(false);
+    // initially disable all pushButtons?
+    //_penStates
+    //ui->comboPen01->setEnabled(false);
 }
 
 void ChartProperties::on_btnChartTitleTextColor_clicked()
@@ -717,7 +721,7 @@ void ChartProperties::on_btnXAxisMajorGridColor_clicked()
 
            // change the spinbox color
            pal.setColor(QPalette::Text, color);
-           ui->dspinXMajorTics->setPalette(pal);
+           ui->spinXMajorTics->setPalette(pal);
 
            // Fire the signal event
            // -------------------------------------------------------------------------------------------------
@@ -745,7 +749,7 @@ void ChartProperties::on_btnXAxisMinorGridColor_clicked()
 
             // change the spinbox color
             pal.setColor(QPalette::Text, color);
-            ui->dspinXMinorTics->setPalette(pal);
+            ui->spinXMinorTics->setPalette(pal);
 
             // Fire the signal event
             // -------------------------------------------------------------------------------------------------
@@ -772,11 +776,11 @@ void ChartProperties::on_btnYAxisMajorGridColor_clicked()
 
         // change the spinbox color
         pal.setColor(QPalette::Text, color);
-        ui->dspinYMajorTics->setPalette(pal);
+        ui->spinYMajorTics->setPalette(pal);
 
         // Fire the signal event
         // -------------------------------------------------------------------------------------------------
-        emit HTCChartYAxisMajorTicsColorChanged(this->getColorFromPalette(ui->dspinYMajorTics->palette()));
+        emit HTCChartYAxisMajorTicsColorChanged(this->getColorFromPalette(ui->spinYMajorTics->palette()));
     }
 
 }
@@ -798,22 +802,15 @@ void ChartProperties::on_btnYAxisMinorGridColor_clicked()
 
         // change the spinbox color
         pal.setColor(QPalette::Text, color);
-        ui->dspinYMinorTics->setPalette(pal);
+        ui->spinYMinorTics->setPalette(pal);
 
         // Fire the signal event
         // -------------------------------------------------------------------------------------------------
-        emit HTCChartYAxisMinorTicsColorChanged(this->getColorFromPalette(ui->dspinYMinorTics->palette()));
+        emit HTCChartYAxisMinorTicsColorChanged(this->getColorFromPalette(ui->spinYMinorTics->palette()));
 
     }
 }
 
-void ChartProperties::on_dspinXMajorThickness_valueChanged(double arg1)
-{
-    if (!_busy)
-    {
-        emit HTCChartXMajorThicknessValueChanged(arg1);
-    }
-}
 
 void ChartProperties::on_checkXMinor_clicked(bool checked)
 {
@@ -847,53 +844,53 @@ void ChartProperties::on_checkYMinor_clicked(bool checked)
     }
 }
 
-void ChartProperties::on_dspinXMajorTics_valueChanged(double arg1)
-{
-    if (!_busy)
-    {
-        if (ui->checkXMajor->isChecked() == true)
-        {
-            emit HTCChartXMajorTicsValueChanged(arg1);
-        }
+//void ChartProperties::on_dspinXMajorTics_valueChanged(double arg1)
+//{
+//    if (!_busy)
+//    {
+//        if (ui->checkXMajor->isChecked() == true)
+//        {
+//            emit HTCChartXMajorTicsValueChanged(arg1);
+//        }
 
-    }
-}
+//    }
+//}
 
-void ChartProperties::on_dspinXMinorTics_valueChanged(double arg1)
-{
-    if (!_busy)
-    {
-        if (ui->checkXMinor->isChecked() == true)
-        {
-            emit HTCChartXMinorTicsValueChanged(arg1);
-        }
+//void ChartProperties::on_dspinXMinorTics_valueChanged(double arg1)
+//{
+//    if (!_busy)
+//    {
+//        if (ui->checkXMinor->isChecked() == true)
+//        {
+//            emit HTCChartXMinorTicsValueChanged(arg1);
+//        }
 
-    }
-}
+//    }
+//}
 
-void ChartProperties::on_dspinYMajorTics_valueChanged(double arg1)
-{
-    if (!_busy)
-    {
-        if (ui->checkYMajor->isChecked() == true)
-        {
-            emit HTCChartYMajorTicsValueChanged(arg1);
-        }
+//void ChartProperties::on_dspinYMajorTics_valueChanged(double arg1)
+//{
+//    if (!_busy)
+//    {
+//        if (ui->checkYMajor->isChecked() == true)
+//        {
+//            emit HTCChartYMajorTicsValueChanged(arg1);
+//        }
 
-    }
-}
+//    }
+//}
 
-void ChartProperties::on_dspinYMinorTics_valueChanged(double arg1)
-{
-    if (!_busy)
-    {
-        if (ui->checkYMinor->isChecked() == true)
-        {
-            emit HTCChartYMinorTicsValueChanged(arg1);
-        }
+//void ChartProperties::on_dspinYMinorTics_valueChanged(double arg1)
+//{
+//    if (!_busy)
+//    {
+//        if (ui->checkYMinor->isChecked() == true)
+//        {
+//            emit HTCChartYMinorTicsValueChanged(arg1);
+//        }
 
-    }
-}
+//    }
+//}
 
 
 void ChartProperties::on_radioXLin_clicked(bool checked)
@@ -915,14 +912,6 @@ void ChartProperties::on_radioXLog_clicked(bool checked)
     }
 }
 
-void ChartProperties::on_dspinXMinorThickness_valueChanged(double arg1)
-{
-    if (!_busy)
-    {
-        emit HTCChartXMinorThicknessValueChanged(arg1);
-    }
-}
-
 
 void ChartProperties::on_radioYLin_clicked(bool checked)
 {
@@ -930,22 +919,6 @@ void ChartProperties::on_radioYLin_clicked(bool checked)
     {
         emit HTCChartYLinChartRequest(checked);
         qDebug() << "Y lin Request " << checked;
-    }
-}
-
-void ChartProperties::on_dspinYMajorThickness_valueChanged(double arg1)
-{
-    if (!_busy)
-    {
-        emit HTCChartYMajorThicknessValueChanged(arg1);
-    }
-}
-
-void ChartProperties::on_dspinYMinorThickness_valueChanged(double arg1)
-{
-    if (!_busy)
-    {
-        emit HTCChartYMinorThicknessValueChanged(arg1);
     }
 }
 
@@ -1051,10 +1024,93 @@ void ChartProperties::setToolTips()
     ui->btnXAxisValuesColor->setToolTip("Color: " + getColorStringFromPalette(ui->txtXLabels->palette()));
     ui->btnYAxisValuesColor->setToolTip("Color: " + getColorStringFromPalette(ui->txtYLabels->palette()));
 
-    ui->btnXAxisMajorGridColor->setToolTip("Color: " + getColorStringFromPalette(ui->dspinXMajorTics->palette()));
-    ui->btnXAxisMinorGridColor->setToolTip("Color: " + getColorStringFromPalette(ui->dspinXMinorTics->palette()));
-    ui->btnYAxisMajorGridColor->setToolTip("Color: " + getColorStringFromPalette(ui->dspinYMajorTics->palette()));
-    ui->btnYAxisMinorGridColor->setToolTip("Color: " + getColorStringFromPalette(ui->dspinYMinorTics->palette()));
+    ui->btnXAxisMajorGridColor->setToolTip("Color: " + getColorStringFromPalette(ui->spinXMajorTics->palette()));
+    ui->btnXAxisMinorGridColor->setToolTip("Color: " + getColorStringFromPalette(ui->spinXMinorTics->palette()));
+    ui->btnYAxisMajorGridColor->setToolTip("Color: " + getColorStringFromPalette(ui->spinYMajorTics->palette()));
+    ui->btnYAxisMinorGridColor->setToolTip("Color: " + getColorStringFromPalette(ui->spinYMinorTics->palette()));
 
 
+}
+
+void ChartProperties::on_spinXMajorThickness_valueChanged(int arg1)
+{
+    if (!_busy)
+    {
+        emit HTCChartYMajorThicknessValueChanged(arg1);
+    }
+}
+
+void ChartProperties::on_spinXMinorThickness_valueChanged(int arg1)
+{
+    if (!_busy)
+    {
+
+        emit HTCChartXMinorThicknessValueChanged(arg1);
+    }
+}
+
+void ChartProperties::on_spinYMajorThickness_valueChanged(int arg1)
+{
+    if (!_busy)
+    {
+        //qDebug() << "just got a new Y Major value of " << arg1;
+        emit HTCChartYMajorThicknessValueChanged(arg1);
+    }
+}
+
+void ChartProperties::on_spinYMinorThickness_valueChanged(int arg1)
+{
+    if (!_busy)
+    {
+        //qDebug() << "just got a new Y Minor value of " << arg1;
+        emit HTCChartYMinorThicknessValueChanged(arg1);
+    }
+}
+
+
+void ChartProperties::on_spinYMajorTics_valueChanged(int arg1)
+{
+    if (!_busy)
+    {
+        if (ui->checkYMajor->isChecked() == true)
+        {
+            emit HTCChartYMajorTicsValueChanged(arg1);
+        }
+    }
+}
+
+void ChartProperties::on_spinYMinorTics_valueChanged(int arg1)
+{
+    if (!_busy)
+    {
+        if (ui->checkYMinor->isChecked() == true)
+        {
+            emit HTCChartYMinorTicsValueChanged(arg1);
+        }
+    }
+}
+
+void ChartProperties::on_spinXMajorTics_valueChanged(int arg1)
+{
+
+        if (!_busy)
+        {
+            if (ui->checkXMajor->isChecked() == true)
+            {
+                emit HTCChartXMajorTicsValueChanged(arg1);
+            }
+
+        }
+}
+
+void ChartProperties::on_spinXMinorTics_valueChanged(int arg1)
+{
+
+    if (!_busy)
+    {
+        if (ui->checkXMinor->isChecked() == true)
+        {
+            emit HTCChartXMinorTicsValueChanged(arg1);
+        }
+    }
 }

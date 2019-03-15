@@ -41,16 +41,13 @@ void HtcChart::setFileToOpen(QString fileName)
     _rawDataFileAndPath = fileName;
 
     readfileIntoList(_rawDataFileAndPath);
+
     initChart();
 }
 
+
 void HtcChart::on_actionProperties_triggered()
 {
-    // When this is called
-    // all of this charts properties need
-    // to be sent to the property editor
-    // first.
-    // ------------------------------------
 
     QPoint p = this->pos();
     QSize s = this->frameSize();
@@ -216,194 +213,206 @@ void HtcChart::initConnects()
 
 void HtcChart::initChart()
 {
-    QLineSeries *series = new QLineSeries();
-    fillSeriesfromFile(series);
+    bool axisXHasBeenAdded = false;
+    bool axisYHasBeenAdded = false;
 
-    // added for legend test
-    // ------------------------
-    series->setName(_defaultPenName);
-
-    // ------------------------
-    QString style = penStyles[defaultPenStyle];
-
-    qDebug() << "setting pen style to n == " << defaultPenStyle << " Style text == " << style;
-
-    //Series pen color & thickness
-    // ---------------------------
-    QPen SeriesPen(defaultPenColor);
-    SeriesPen.setWidth(defaultPenWidth);
-    SeriesPen.setStyle(Qt::PenStyle(defaultPenStyle));
-    series->setPen(SeriesPen);
-
-    QChart *chart = new QChart();
-    chart->addSeries(series);
-    chart->legend()->hide();
-
+    _chart = new QChart();
 
     // Chart Title
     // ----------------------------------
-    chart->setTitle(_chartTitleText);
-    chart->setTitleFont(_chartTitleTextFont);
-    chart->setTitleBrush(QBrush(_chartTitleTextColor));
+    _chart->setTitle(_chartTitleText);
+    _chart->setTitleFont(_chartTitleTextFont);
+    _chart->setTitleBrush(QBrush(_chartTitleTextColor));
+    _chart->legend()->hide();
 
 
-    // X Axis values
-    //
-    // Need different methods for LIN & LOG
-    // -----------------------------------
-    if (_chartXAxisLinLogScale == "LIN" )
+    for(int dataSet = 1; dataSet < _currentHeaderCount ; dataSet++)
     {
-        //qDebug() << "X Axis being redrawn as LIN";
 
-        QValueAxis *axisX = new QValueAxis();
-        axisX->setTitleText(_chartXAxisUnitsText);
-        axisX->setTitleBrush(_chartXAxisUnitsBrush);
-        axisX->setTitleFont(_chartXAxisUnitsTextFont);
-
-
-        axisX->setLabelFormat("%i");
-        axisX->setMin(_XAxisMinValue);
-        axisX->setMax(_XAxisMaxValue);
-
-        axisX->setGridLineVisible(_chartXAxisMajorGridLinesVisible);
-        axisX->setTickCount(_chartXAxisMajorGridLinesCount);
-        axisX->setGridLinePen(_chartXAxisMajorGridLinesPen);
-
-        axisX->setMinorGridLineVisible(_chartXAxisMinorGridLinesVisible);
-        axisX->setMinorTickCount(_chartXAxisMinorGridLinesCount);
-        axisX->setMinorGridLinePen(_chartXAxisMinorGridLinesPen);
-
-//        qDebug() << "in initChart setting X Axis Major/Minor tics as "
-//                 << _chartXAxisMajorGridLinesCount
-//                 << "/" << _chartXAxisMinorGridLinesCount;
-
-        axisX->setLabelsColor(_chartXAxisLabelColor);
-        axisX->setLabelsFont(_chartXAxisLabelFont);
-        axisX->setLabelsAngle(_chartXAxisLabelRotation);
-
-        chart->addAxis(axisX, Qt::AlignBottom);
-        series->attachAxis(axisX);
-    }
-    else
-    {
-        //qDebug() << "X Axis being redrawn as LOG";
-
-        QLogValueAxis *axisX = new QLogValueAxis();
-        axisX->setTitleText(_chartXAxisUnitsText);
-        axisX->setTitleBrush(_chartXAxisUnitsBrush);
-        axisX->setTitleFont(_chartXAxisUnitsTextFont);
-
-        axisX->setLabelFormat("%i");
-        axisX->setMin(_XAxisMinValue);
-        axisX->setMax(_XAxisMaxValue);
-
-        axisX->setGridLineVisible(_chartXAxisMajorGridLinesVisible);
-        // no Major tic count for log charts
-        //axisX->setTickCount(_chartXAxisMajorGridLinesCount);
-        axisX->setGridLinePen(_chartXAxisMajorGridLinesPen);
-
-
-        axisX->setMinorGridLineVisible(_chartXAxisMinorGridLinesVisible);
-        axisX->setMinorTickCount(_chartXAxisMinorGridLinesCount);
-        axisX->setMinorGridLinePen(_chartXAxisMinorGridLinesPen);
-
-        axisX->setLabelsColor(_chartXAxisLabelColor);
-
-        axisX->setLabelsFont(_chartXAxisLabelFont);
-        axisX->setLabelsAngle(_chartXAxisLabelRotation);
-        chart->addAxis(axisX, Qt::AlignBottom);
-        series->attachAxis(axisX);
-    }
-
-    // Y Axis values
-    //
-    // Need different methods for LIN & LOG
-    // --------------------------------------------
-    //QLogValueAxis *axisY = new QLogValueAxis();
-    if (_chartYAxisLinLogScale == "LIN")
-    {
-        //qDebug() << "Y Axis being redrawn as LIN";
-
-        QValueAxis *axisY = new QValueAxis();
-        axisY->setTitleText(_chartYAxisUnitsText);
-        axisY->setLabelFormat("%.1f");
-        axisY->setTitleBrush(_chartYAxisUnitsBrush);
-        axisY->setTitleFont(_chartYAxisUnitsTextFont);
-
-        axisY->setLabelsColor(_chartYAxisLabelColor);
-        axisY->setLabelsFont(_chartYAxisLabelFont);
-        axisY->setLabelsAngle(_chartYAxisLabelRotation);
-
-        axisY->setMax(_YAxisMaxValue);
-        axisY->setMin(_YAxisMinValue);
-
-        axisY->setGridLineVisible(_chartYAxisMajorGridLinesVisible);
-        axisY->setTickCount(_chartYAxisMajorGridLinesCount);
-        axisY->setGridLinePen(_chartYAxisMajorGridLinesPen);
+        QLineSeries *_series = new QLineSeries();
+        fillSeriesfromList(_series, dataSet);
+        _series->setName(_currentHeaderList[dataSet]);
 
 
 
-        axisY->setMinorGridLineVisible(_chartYAxisMinorGridLinesVisible);
-        axisY->setMinorTickCount(_chartYAxisMinorGridLinesCount);
-        axisY->setMinorGridLinePen(_chartYAxisMinorGridLinesPen);
+        QString style = penStyles[defaultPenStyle];
 
-//        qDebug() << "in initChart setting Y Axis Major/Minor tics as "
-//                 << _chartYAxisMajorGridLinesCount
-//                 << "/" << _chartYAxisMinorGridLinesCount;
+        //Series pen color & thickness
+        QPen SeriesPen(_penColors[dataSet - 1]);
+        SeriesPen.setWidth(defaultPenWidth);
+        SeriesPen.setStyle(Qt::PenStyle(defaultPenStyle));
 
-        chart->addAxis(axisY, Qt::AlignLeft);
-        series->attachAxis(axisY);
+        _series->setPen(SeriesPen);
+        _chart->addSeries(_series);
 
-    }
-    else
-    {
-        //qDebug() << "Y Axis being redrawn as LOG";
-
-        QLogValueAxis *axisY = new QLogValueAxis();
-        axisY->setTitleText(_chartYAxisUnitsText);
-        axisY->setLabelFormat("%.1f");
-        axisY->setTitleBrush(_chartYAxisUnitsBrush);
-        axisY->setTitleFont(_chartYAxisUnitsTextFont);
-
-        axisY->setLabelsColor(_chartYAxisLabelColor);
-
-        axisY->setLabelsFont(_chartYAxisLabelFont);
-
-        axisY->setLabelsAngle(_chartYAxisLabelRotation);
-
-        axisY->setMax(_YAxisMaxValue);
-        axisY->setMin(_YAxisMinValue);
-        qDebug() << "Received Y Axis Max/Min values >> " << _YAxisMaxValue << "/" << _YAxisMinValue;
-        qDebug() << "Drawing Y Axis with Max/Min >> " << axisY->max() << "/" << axisY->min();
-
-        axisY->setGridLineVisible(_chartYAxisMajorGridLinesVisible);
-        // no Major tic count for log charts
-        //axisY->setTickCount(_chartXAxisMajorGridLinesCount);
-        axisY->setGridLinePen(_chartYAxisMajorGridLinesPen);
+        if (_chartXAxisLinLogScale == "LIN" )
+        {
+            QValueAxis *axisX = new QValueAxis();
+            axisX->setMin(_XAxisMinValue);
+            axisX->setMax(_XAxisMaxValue);
+            axisX->setTitleText(_chartXAxisUnitsText);
+            axisX->setTitleBrush(_chartXAxisUnitsBrush);
+            axisX->setTitleFont(_chartXAxisUnitsTextFont);
+            axisX->setLabelFormat("%i");
+            axisX->setGridLineVisible(_chartXAxisMajorGridLinesVisible);
+            axisX->setTickCount(_chartXAxisMajorGridLinesCount);
+            axisX->setGridLinePen(_chartXAxisMajorGridLinesPen);
+            axisX->setMinorGridLineVisible(_chartXAxisMinorGridLinesVisible);
+            axisX->setMinorTickCount(_chartXAxisMinorGridLinesCount);
+            axisX->setMinorGridLinePen(_chartXAxisMinorGridLinesPen);
+            axisX->setLabelsColor(_chartXAxisLabelColor);
+            axisX->setLabelsFont(_chartXAxisLabelFont);
+            axisX->setLabelsAngle(_chartXAxisLabelRotation);
 
 
-        axisY->setMinorGridLineVisible(_chartYAxisMinorGridLinesVisible);
-        axisY->setMinorTickCount(_chartXAxisMinorGridLinesCount);
-        axisY->setMinorGridLinePen(_chartYAxisMinorGridLinesPen);
+            _chart->addAxis(axisX, Qt::AlignBottom);
 
-        chart->addAxis(axisY, Qt::AlignLeft);
-        series->attachAxis(axisY);
+            if (axisXHasBeenAdded == false)
+            {
+                axisX->setVisible(true);
+                axisXHasBeenAdded = true;
+            }
+            else
+            {
+                axisX->setVisible(false);
+            }
+
+            _series->attachAxis(axisX);
+
+        }
+        else
+        {
+            QLogValueAxis *axisX = new QLogValueAxis();
+            axisX->setTitleText(_chartXAxisUnitsText);
+            axisX->setTitleBrush(_chartXAxisUnitsBrush);
+            axisX->setTitleFont(_chartXAxisUnitsTextFont);
+            axisX->setLabelFormat("%i");
+            axisX->setMin(_XAxisMinValue);
+            axisX->setMax(_XAxisMaxValue);
+            axisX->setGridLineVisible(_chartXAxisMajorGridLinesVisible);
+            axisX->setGridLinePen(_chartXAxisMajorGridLinesPen);
+            axisX->setMinorGridLineVisible(_chartXAxisMinorGridLinesVisible);
+            axisX->setMinorTickCount(_chartXAxisMinorGridLinesCount);
+            axisX->setMinorGridLinePen(_chartXAxisMinorGridLinesPen);
+            axisX->setLabelsColor(_chartXAxisLabelColor);
+            axisX->setLabelsFont(_chartXAxisLabelFont);
+            axisX->setLabelsAngle(_chartXAxisLabelRotation);
+
+            _chart->addAxis(axisX, Qt::AlignBottom);
+
+            if (axisXHasBeenAdded == false)
+            {
+                axisX->setVisible(true);
+                axisXHasBeenAdded = true;
+            }
+            else
+            {
+                axisX->setVisible(false);
+            }
+
+            _series->attachAxis(axisX);
+
+
+        }
+
+        // Y Axis values
+        // ------------------------------------
+        if (_chartYAxisLinLogScale == "LIN")
+        {
+             QValueAxis *axisY = new QValueAxis();
+             axisY->setMax(_YAxisMaxValue);
+             axisY->setMin(_YAxisMinValue);
+             axisY->setTitleText(_chartYAxisUnitsText);
+             axisY->setLabelFormat("%.1f");
+             axisY->setTitleBrush(_chartYAxisUnitsBrush);
+             axisY->setTitleFont(_chartYAxisUnitsTextFont);
+             axisY->setLabelsColor(_chartYAxisLabelColor);
+             axisY->setLabelsFont(_chartYAxisLabelFont);
+             axisY->setLabelsAngle(_chartYAxisLabelRotation);
+             axisY->setGridLineVisible(_chartYAxisMajorGridLinesVisible);
+             axisY->setTickCount(_chartYAxisMajorGridLinesCount);
+             axisY->setGridLinePen(_chartYAxisMajorGridLinesPen);
+             axisY->setMinorGridLineVisible(_chartYAxisMinorGridLinesVisible);
+             axisY->setMinorTickCount(_chartYAxisMinorGridLinesCount);
+             axisY->setMinorGridLinePen(_chartYAxisMinorGridLinesPen);
+
+             _chart->addAxis(axisY, Qt::AlignLeft);
+
+            if (axisYHasBeenAdded == false)
+            {
+                axisY->setVisible(true);
+                axisYHasBeenAdded = true;
+            }
+            else
+            {
+                axisY->setVisible(false);
+            }
+
+            _series->attachAxis(axisY);
+
+        }
+        else
+        {
+            QLogValueAxis *axisY = new QLogValueAxis();
+            axisY->setTitleText(_chartYAxisUnitsText);
+            axisY->setLabelFormat("%.1f");
+            axisY->setTitleBrush(_chartYAxisUnitsBrush);
+            axisY->setTitleFont(_chartYAxisUnitsTextFont);
+            axisY->setLabelsColor(_chartYAxisLabelColor);
+            axisY->setLabelsFont(_chartYAxisLabelFont);
+            axisY->setLabelsAngle(_chartYAxisLabelRotation);
+            axisY->setMax(_YAxisMaxValue);
+            axisY->setMin(_YAxisMinValue);
+            axisY->setGridLineVisible(_chartYAxisMajorGridLinesVisible);
+            axisY->setGridLinePen(_chartYAxisMajorGridLinesPen);
+            axisY->setMinorGridLineVisible(_chartYAxisMinorGridLinesVisible);
+            axisY->setMinorTickCount(_chartXAxisMinorGridLinesCount);
+            axisY->setMinorGridLinePen(_chartYAxisMinorGridLinesPen);
+
+            _chart->addAxis(axisY, Qt::AlignLeft);
+
+            if (axisYHasBeenAdded == false)
+            {
+                axisY->setVisible(true);
+                axisYHasBeenAdded = true;
+            }
+            else
+            {
+                axisY->setVisible(false);
+            }
+
+            _series->attachAxis(axisY);
+
+
+        }
+
+
     }
 
 
 
     // added for legend test
     // -------------------------
-    chart->legend()->setVisible(true);
-    chart->legend()->setAlignment(Qt::AlignBottom);
+    _chart->legend()->setVisible(true);
+    _chart->legend()->setAlignment(Qt::AlignBottom); // Qt::AlignBottom
+    _chart->legend()->setBackgroundVisible(true);
+
+    // pos X/Y  size H/W
+    //_chart->legend()->setGeometry(QRectF(0, 0, 600, 400));
+   // _chart->legend()->setPreferredSize()
+
 
     // change a property of the legend
-    QFont font = chart->legend()->font();
-        font.setPointSize(14);// setBold(!font.bold());
-        chart->legend()->setFont(font);
+    QFont font = _chart->legend()->font();
+        font.setPointSize(12);// setBold(!font.bold());
+        //font.setFamily("Courier New");
+        font.setFamily("Times New Roman");
+        _chart->legend()->setFont(font);
 
-    //  Create the cart
-    chartView = new QChartView(chart);
+
+
+        //  Create the cart
+    chartView = new QChartView(_chart);
     chartView->setRenderHint(QPainter::Antialiasing);
 
     ui->chartLayout->addWidget(chartView,0,0);
@@ -429,6 +438,10 @@ void HtcChart::readfileIntoList(QString fileName)
                 file.close();
         }
 
+    // set headers
+    setHeaderValues(_masterlist);
+
+
 }
 
 void HtcChart::setDataFileDelim(QString fileName)
@@ -447,17 +460,38 @@ void HtcChart::setDataFileDelim(QString fileName)
 
 }
 
-void HtcChart::setHeaderValues(int row, QStringList list)
+void HtcChart::setHeaderValues(QStringList list)
 {
-    QString current;
 
-    current = list[row];
-    if (!_currentHeaderList.isEmpty())
+    if (!_masterlist.isEmpty())
     {
-        _currentHeaderList.clear();
+        _firstNumericRow = findFirstNumericRow(_masterlist, _dataFileDelim);
+
+        QString current;
+
+        current = list[_firstNumericRow - 1];
+        if (!_currentHeaderList.isEmpty())
+        {
+            _currentHeaderList.clear();
+        }
+
+
+
+        _currentHeaderList = current.split(_dataFileDelim);
+        _currentHeaderCount = _currentHeaderList.count();
     }
 
-    _currentHeaderList = current.split(_dataFileDelim);
+
+
+//    QString current;
+
+//    current = list[row];
+//    if (!_currentHeaderList.isEmpty())
+//    {
+//        _currentHeaderList.clear();
+//    }
+
+//    _currentHeaderList = current.split(_dataFileDelim);
 
 }
 
@@ -540,26 +574,22 @@ int HtcChart::findFirstNumericRow(QStringList list, QString delimiter)
     //
     // -----------------------------------------------------
 
-    //             fillSeriesfromFile(QLineSeries * series);
-    void HtcChart::fillSeriesfromFile(QLineSeries *series)
+
+    void HtcChart::fillSeriesfromList(QLineSeries *series, int dataSet)
 {
 
 
     QStringList group;
     int start;
     double freq;
-    double minfreq = 9999999999;
-    double maxfreq = -9999999999;
     double level;
-    double minlevel = 9999999999;
-    double maxlevel = -9999999999;
+
+
 
 
         if (!_masterlist.isEmpty())
         {
 
-            _firstNumericRow = findFirstNumericRow(_masterlist, _dataFileDelim);
-            setHeaderValues(_firstNumericRow - 1,_masterlist);
 
             _currentHeaderRow = _firstNumericRow -1;
 
@@ -578,23 +608,23 @@ int HtcChart::findFirstNumericRow(QStringList list, QString delimiter)
                 group = _masterlist[i].split(_dataFileDelim);
 
                 freq = QString(group.at(0)).toDouble()/_XAxisRescaleValue;
-                level = QString(group.at(1)).toDouble();
+                level = QString(group.at(dataSet)).toDouble();
 
-                if (minfreq > freq)
+                if (_minfreq > freq)
                 {
-                    minfreq = freq;
+                    _minfreq = freq;
                 }
-                if (maxfreq < freq)
+                if (_maxfreq < freq)
                 {
-                    maxfreq = freq;
+                    _maxfreq = freq;
                 }
-                if (minlevel > level)
+                if (_minlevel > level)
                 {
-                    minlevel = level;
+                    _minlevel = level;
                 }
-                if (maxlevel < level)
+                if (_maxlevel < level)
                 {
-                    maxlevel = level;
+                    _maxlevel = level;
                 }
 
                 series->append(freq, level);
@@ -602,16 +632,13 @@ int HtcChart::findFirstNumericRow(QStringList list, QString delimiter)
 
         }
 
-        if (_autoRangesDiscovered == false)
-        {
-            _XAxisMinValue= minfreq;
-            _XAxisMaxValue = maxfreq;
-            _YAxisMinValue= minlevel;
-            _YAxisMaxValue = maxlevel;
+
+            _XAxisMinValue= _minfreq;
+            _XAxisMaxValue = _maxfreq;
+            _YAxisMinValue= _minlevel;
+            _YAxisMaxValue = _maxlevel;
 
             _autoRangesDiscovered = true;
-        }
-
 
     }
 

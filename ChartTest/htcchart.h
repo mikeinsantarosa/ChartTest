@@ -166,14 +166,33 @@ private:
     int _firstNumericRow;
     int _currentHeaderRow;
     QStringList _currentHeaderList;
+    QChart *_chart;
+    QLineSeries *_series;
+    int _currentHeaderCount;
     QString _dataFileDelim;
+
+    double _minfreq = 9999999999;
+    double _maxfreq = -9999999999;
+
+    double _minlevel = 9999999999;
+    double _maxlevel = -9999999999;
+
+    QColor _penColors[24] = {QColor("#FF0000"), QColor("#0000FF"), QColor("#00FF00"), QColor("#FA9EF7"),
+                             QColor("#C79EFA"), QColor("#9ECEFA"), QColor("#9EECFA"), QColor("#9EFAE4"),
+                             QColor("#AFFA9E"), QColor("#FADD9E"), QColor("#FAA99E"), QColor("#AB5A50"),
+                            QColor("#AB8E50"), QColor("#83AB50"), QColor("#50ABA4"), QColor("#506EAB"),
+                            QColor("#8A50AB"), QColor("#AB5063"), QColor("#F7B8EF"), QColor("#B8C7F7"),
+                           QColor("#89FBFC"), QColor("#C4D05E"), QColor("#DE77F7"), QColor("#DBF777")};
+
 
     void setDataFileDelim(QString fileName);
 
-    void setHeaderValues(int row, QStringList list);
+    void setHeaderValues(QStringList list);
+
+
 
     int findFirstNumericRow(QStringList list, QString delimiter);
-    void fillSeriesfromFile(QLineSeries * series);
+    void fillSeriesfromList(QLineSeries * series, int dataSet);
 
     QStringList _masterlist;
 

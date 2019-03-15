@@ -162,7 +162,6 @@ private slots:
 
     void on_btnYAxisMinorGridColor_clicked();
 
-    void on_dspinXMajorThickness_valueChanged(double arg1);
 
     void on_checkXMinor_clicked(bool checked);
 
@@ -172,25 +171,19 @@ private slots:
 
     void on_checkYMinor_clicked(bool checked);
 
-    void on_dspinXMajorTics_valueChanged(double arg1);
+    //void on_dspinXMajorTics_valueChanged(double arg1);
 
-    void on_dspinXMinorTics_valueChanged(double arg1);
+    //void on_dspinXMinorTics_valueChanged(double arg1);
 
-    void on_dspinYMajorTics_valueChanged(double arg1);
+    //void on_dspinYMajorTics_valueChanged(double arg1);
 
-    void on_dspinYMinorTics_valueChanged(double arg1);
+    //void on_dspinYMinorTics_valueChanged(double arg1);
 
     void on_radioXLin_clicked(bool checked);
 
     void on_radioXLog_clicked(bool checked);
 
-    void on_dspinXMinorThickness_valueChanged(double arg1);
-
     void on_radioYLin_clicked(bool checked);
-
-    void on_dspinYMajorThickness_valueChanged(double arg1);
-
-    void on_dspinYMinorThickness_valueChanged(double arg1);
 
     void on_lineXMax_editingFinished();
 
@@ -199,7 +192,6 @@ private slots:
     void on_lineYMin_editingFinished();
 
     void on_lineYMax_editingFinished();
-
 
     void on_pBttonPen01_clicked();
 
@@ -210,6 +202,23 @@ private slots:
     void on_comboPen01_currentIndexChanged(int index);
 
     void on_linePen01_editingFinished();
+
+    void on_spinXMajorThickness_valueChanged(int arg1);
+
+    void on_spinXMinorThickness_valueChanged(int arg1);
+
+    void on_spinYMajorThickness_valueChanged(int arg1);
+
+    void on_spinYMinorThickness_valueChanged(int arg1);
+
+
+    void on_spinYMajorTics_valueChanged(int arg1);
+
+    void on_spinYMinorTics_valueChanged(int arg1);
+
+    void on_spinXMajorTics_valueChanged(int arg1);
+
+    void on_spinXMinorTics_valueChanged(int arg1);
 
 private:
 

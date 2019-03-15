@@ -33,6 +33,7 @@ bool HtcDataDialog::Init(QString filename)
 {
     bool result;
     _dataFileName = filename;
+    qDebug() << "Loaded file " << _dataFileName;
     _delimiter = setDelimiter(_dataFileName);
     result = getFileData(_rawList);
     if (result == true)
@@ -40,6 +41,7 @@ bool HtcDataDialog::Init(QString filename)
         _firstDataRow = findFirstDataRow(_delimiter);
         _numberOfDataRows = setListToView(_listToView);
         _numberOFHeaderRows = setHeaderList(_FileHeaderList);
+        qDebug() << "Loaded file " << _dataFileName;
         loadModel();
     }
 

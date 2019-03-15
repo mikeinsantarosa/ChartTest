@@ -71,12 +71,14 @@ void MainWindow::on_btnClose_clicked()
 void MainWindow::on_btnShowTestChart_clicked()
 {
     //QString fileToOpen = "C:/qtTraining/ChartTest/80M-1G_3_h.txt";
-    QString fileToOpen = "/home/mandbx/Desktop/misc-docs/q241/samples/80M-1G_3_h-LOG.txt";
+    //QString fileToOpen = "/home/mandbx/Desktop/misc-docs/q241/samples/80M-1G_3_h-LOG.txt";
+    QString fileToOpen = "/home/mandbx/Desktop/misc-docs/q241/samples/80M-1G_3_h-LOG-2_data_Points.txt";
 
     testchart = new HtcChart;
 
     // set the file to use
     testchart->setFileToOpen(fileToOpen);
+    qDebug() << "Loaded file >> " << fileToOpen;
 
     // load the file and convert to Qlist
 
