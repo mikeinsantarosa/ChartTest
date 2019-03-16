@@ -171,14 +171,6 @@ private slots:
 
     void on_checkYMinor_clicked(bool checked);
 
-    //void on_dspinXMajorTics_valueChanged(double arg1);
-
-    //void on_dspinXMinorTics_valueChanged(double arg1);
-
-    //void on_dspinYMajorTics_valueChanged(double arg1);
-
-    //void on_dspinYMinorTics_valueChanged(double arg1);
-
     void on_radioXLin_clicked(bool checked);
 
     void on_radioXLog_clicked(bool checked);
@@ -195,7 +187,7 @@ private slots:
 
     void on_pBttonPen01_clicked();
 
-    void on_spinBox01_valueChanged(int arg1);
+    //void on_spinBox01_valueChanged(int arg1);
 
     void on_linePen01_textChanged(const QString &arg1);
 
@@ -219,6 +211,148 @@ private slots:
     void on_spinXMajorTics_valueChanged(int arg1);
 
     void on_spinXMinorTics_valueChanged(int arg1);
+
+    void on_pBttonPen02_clicked();
+
+    void on_pBttonPen03_clicked();
+
+    void on_pBttonPen04_clicked();
+
+    void on_pBttonPen05_clicked();
+
+    void on_pBttonPen06_clicked();
+
+    void on_pBttonPen07_clicked();
+
+    void on_pBttonPen08_clicked();
+
+    void on_pBttonPen09_clicked();
+
+    void on_pBttonPen10_clicked();
+
+    void on_pBttonPen11_clicked();
+
+    void on_pBttonPen12_clicked();
+
+    void on_pBttonPen13_clicked();
+
+    void on_pBttonPen14_clicked();
+
+    void on_pBttonPen15_clicked();
+
+    void on_pBttonPen16_clicked();
+
+    void on_pBttonPen17_clicked();
+
+    void on_pBttonPen18_clicked();
+
+    void on_pBttonPen19_clicked();
+
+    void on_pBttonPen20_clicked();
+
+    void on_pBttonPen21_clicked();
+
+    void on_pBttonPen22_clicked();
+
+    void on_pBttonPen23_clicked();
+
+    void on_pBttonPen24_clicked();
+
+    void on_spinBox01_valueChanged(int arg1);
+
+    void on_spinBox02_valueChanged(int arg1);
+
+    void on_spinBox03_valueChanged(int arg1);
+
+    void on_spinBox04_valueChanged(int arg1);
+
+    void on_spinBox05_valueChanged(int arg1);
+
+    void on_spinBox06_valueChanged(int arg1);
+
+    void on_spinBox07_valueChanged(int arg1);
+
+    void on_spinBox08_valueChanged(int arg1);
+
+    void on_spinBox09_valueChanged(int arg1);
+
+    void on_spinBox10_valueChanged(int arg1);
+
+    void on_spinBox11_valueChanged(int arg1);
+
+    void on_spinBox12_valueChanged(int arg1);
+
+    void on_spinBox13_valueChanged(int arg1);
+
+    void on_spinBox14_valueChanged(int arg1);
+
+    void on_spinBox15_valueChanged(int arg1);
+
+    void on_spinBox16_valueChanged(int arg1);
+
+    void on_spinBox17_valueChanged(int arg1);
+
+    void on_spinBox18_valueChanged(int arg1);
+
+    void on_spinBox19_valueChanged(int arg1);
+
+    void on_spinBox20_valueChanged(int arg1);
+
+    void on_spinBox21_valueChanged(int arg1);
+
+    void on_spinBox22_valueChanged(int arg1);
+
+    void on_spinBox23_valueChanged(int arg1);
+
+    void on_spinBox24_valueChanged(int arg1);
+
+
+
+    void on_comboPen02_currentIndexChanged(int index);
+
+    void on_comboPen03_currentIndexChanged(int index);
+
+    void on_comboPen04_currentIndexChanged(int index);
+
+    void on_comboPen05_currentIndexChanged(int index);
+
+    void on_comboPen06_currentIndexChanged(int index);
+
+    void on_comboPen07_currentIndexChanged(int index);
+
+    void on_comboPen08_currentIndexChanged(int index);
+
+    void on_comboPen09_currentIndexChanged(int index);
+
+    void on_comboPen10_currentIndexChanged(int index);
+
+    void on_comboPen11_currentIndexChanged(int index);
+
+    void on_comboPen12_currentIndexChanged(int index);
+
+    void on_comboPen13_currentIndexChanged(int index);
+
+    void on_comboPen14_currentIndexChanged(int index);
+
+    void on_comboPen15_currentIndexChanged(int index);
+
+    void on_comboPen16_currentIndexChanged(int index);
+
+    void on_comboPen17_currentIndexChanged(int index);
+
+    void on_comboPen18_currentIndexChanged(int index);
+
+    void on_comboPen19_currentIndexChanged(int index);
+
+    void on_comboPen20_currentIndexChanged(int index);
+
+    void on_comboPen21_currentIndexChanged(int index);
+
+    void on_comboPen22_currentIndexChanged(int index);
+
+    void on_comboPen23_currentIndexChanged(int index);
+
+    void on_comboPen24_currentIndexChanged(int index);
 
 private:
 
@@ -257,8 +391,16 @@ private:
     int _penStates[24] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
+    int _penThicknesses[24] = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+                           1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+
     void updatePenItemsAndNotify(int penNumber);
-    void disablePushButtons();
+
+
+    void initAllPenControls();
+    void initPenFont(int pen);
+    void disAblePen(int pen);
+    void enablePen(int pen);
 
 };
 

@@ -59,7 +59,7 @@ void HtcChart::on_actionProperties_triggered()
     cp->setChartYAxisItems(_chartYAxisUnitsText, _chartYAxisUnitsTextFont, _chartYAxisUnitsBrush, _chartYAxisLabelFont, _chartYAxisLabelColor, _chartYAxisLabelRotation, _YAxisMinValue, _YAxisMaxValue, _chartYAxisLinLogScale);
     cp->setChartYAxisGridLines(_chartYAxisMajorGridLinesVisible,_chartYAxisMajorGridLinesCount, _chartYAxisMajorGridLinesColor, _chartYAxisMajorGridLineSize,_chartYAxisMinorGridLinesVisible,_chartYAxisMinorGridLinesCount, _chartYAxisMinorGridLinesColor, _chartYAxisMinorGridLineSize);
 
-    cp->setPenItems(defaultPenWidth, defaultPenColor, defaultPenStyle, _currentHeaderList[1], 1);
+    //cp->setPenItems(defaultPenWidth, defaultPenColor, defaultPenStyle, _currentHeaderList[1], 1);
 
     // show modal
     cp->setModal(true);
@@ -231,19 +231,23 @@ void HtcChart::initChart()
 
         QLineSeries *_series = new QLineSeries();
         fillSeriesfromList(_series, dataSet);
+
         _series->setName(_currentHeaderList[dataSet]);
-
-
-
-        QString style = penStyles[defaultPenStyle];
 
         //Series pen color & thickness
         QPen SeriesPen(_penColors[dataSet - 1]);
-        SeriesPen.setWidth(defaultPenWidth);
-        SeriesPen.setStyle(Qt::PenStyle(defaultPenStyle));
+        SeriesPen.setWidth(_penWidths[dataSet - 1]);
+        SeriesPen.setStyle(Qt::PenStyle(_penStyles[dataSet - 1]));
+
+        qDebug() << "Updating Chart pen -" << dataSet << " with width of " << _penWidths[dataSet - 1];
 
         _series->setPen(SeriesPen);
         _chart->addSeries(_series);
+
+        if(!_UpdatingFromProperties)
+        {
+            cp->setPenItems(_penWidths[dataSet - 1], _penColors[dataSet - 1], defaultPenStyle, _currentHeaderList[dataSet], dataSet);
+        }
 
         if (_chartXAxisLinLogScale == "LIN" )
         {
@@ -475,10 +479,10 @@ void HtcChart::setHeaderValues(QStringList list)
             _currentHeaderList.clear();
         }
 
-
-
         _currentHeaderList = current.split(_dataFileDelim);
         _currentHeaderCount = _currentHeaderList.count();
+
+
     }
 
 
@@ -1166,13 +1170,13 @@ void HtcChart::HTCChartYLinChart(bool checked)
 
 void HtcChart::HTCChartPenValues(int width, QColor color, int penStyle, QString penName, int penNumber)
 {
-    _penStates[penNumber - 1] = 1;
-    defaultPenWidth = width;
-    defaultPenColor = color;
-    _penStyles[penNumber - 1] = penStyle;
-    defaultPenStyle = penStyle;
+   _UpdatingFromProperties = true;
 
-    _defaultPenName = penName;
+    _penStates[penNumber - 1] = 1;
+    _penWidths[penNumber - 1] = width;
+    _penColors[penNumber - 1] = color;
+    _penStyles[penNumber - 1] = penStyle;
+    _currentHeaderList[penNumber] = penName;
 
     qDebug() << "got width:" << width << " color:" << color.name() << " pen Style:"
              << penStyle << " pen name:" << penName << " pen number " << penNumber;
@@ -1180,6 +1184,7 @@ void HtcChart::HTCChartPenValues(int width, QColor color, int penStyle, QString 
     clearLayout(ui->chartLayout);
     initChart();
 
+       _UpdatingFromProperties = false;
 
 }
 

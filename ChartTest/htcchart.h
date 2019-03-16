@@ -177,13 +177,6 @@ private:
     double _minlevel = 9999999999;
     double _maxlevel = -9999999999;
 
-    QColor _penColors[24] = {QColor("#FF0000"), QColor("#0000FF"), QColor("#00FF00"), QColor("#FA9EF7"),
-                             QColor("#C79EFA"), QColor("#9ECEFA"), QColor("#9EECFA"), QColor("#9EFAE4"),
-                             QColor("#AFFA9E"), QColor("#FADD9E"), QColor("#FAA99E"), QColor("#AB5A50"),
-                            QColor("#AB8E50"), QColor("#83AB50"), QColor("#50ABA4"), QColor("#506EAB"),
-                            QColor("#8A50AB"), QColor("#AB5063"), QColor("#F7B8EF"), QColor("#B8C7F7"),
-                           QColor("#89FBFC"), QColor("#C4D05E"), QColor("#DE77F7"), QColor("#DBF777")};
-
 
     void setDataFileDelim(QString fileName);
 
@@ -271,18 +264,27 @@ private:
                              "Qt::CustomDashLine" };
     int defaultPenStyle;
 
+    QColor _penColors[24] = {QColor("#FF0000"), QColor("#0000FF"), QColor("#00FF00"), QColor("#FA9EF7"),
+                             QColor("#C79EFA"), QColor("#9ECEFA"), QColor("#9EECFA"), QColor("#9EFAE4"),
+                             QColor("#AFFA9E"), QColor("#FADD9E"), QColor("#FAA99E"), QColor("#AB5A50"),
+                            QColor("#AB8E50"), QColor("#83AB50"), QColor("#50ABA4"), QColor("#506EAB"),
+                            QColor("#8A50AB"), QColor("#AB5063"), QColor("#F7B8EF"), QColor("#B8C7F7"),
+                           QColor("#89FBFC"), QColor("#C4D05E"), QColor("#DE77F7"), QColor("#DBF777")};
+
+
     int _penStates[24] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-    int _penStyles[24] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                           0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-    int _penWidths[24] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                           0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+    int _penStyles[24] = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+                           1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+    int _penWidths[24] = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+                           1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
 
     QPen defaultChartPenStyle;
     QPen getPenStyle(int style);
 
     // first run auto discovery
     bool _autoRangesDiscovered;
+    bool _UpdatingFromProperties = false;
 
     void initMinScaleValues(QStringList list);
     void initMaxScaleValues(QStringList list);
