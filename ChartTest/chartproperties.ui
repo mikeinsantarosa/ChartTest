@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>720</width>
+    <width>800</width>
     <height>380</height>
    </rect>
   </property>
@@ -18,13 +18,13 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>720</width>
+    <width>800</width>
     <height>380</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>720</width>
+    <width>800</width>
     <height>380</height>
    </size>
   </property>
@@ -38,23 +38,23 @@
   <property name="styleSheet">
    <string notr="true"/>
   </property>
-  <layout class="QGridLayout" name="gridLayout_3">
+  <layout class="QGridLayout" name="gridLayout_7">
    <item row="0" column="0" colspan="2">
     <widget class="QTabWidget" name="tabWidgetChartProp">
      <property name="minimumSize">
       <size>
-       <width>710</width>
+       <width>790</width>
        <height>310</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>710</width>
+       <width>790</width>
        <height>310</height>
       </size>
      </property>
      <property name="currentIndex">
-      <number>3</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tabtitle">
       <attribute name="title">
@@ -65,7 +65,7 @@
         <rect>
          <x>5</x>
          <y>5</y>
-         <width>700</width>
+         <width>790</width>
          <height>260</height>
         </rect>
        </property>
@@ -77,13 +77,13 @@
        </property>
        <property name="minimumSize">
         <size>
-         <width>700</width>
+         <width>790</width>
          <height>260</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>700</width>
+         <width>790</width>
          <height>260</height>
         </size>
        </property>
@@ -109,13 +109,13 @@
           </property>
           <property name="minimumSize">
            <size>
-            <width>580</width>
+            <width>680</width>
             <height>220</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>580</width>
+            <width>680</width>
             <height>220</height>
            </size>
           </property>
@@ -205,7 +205,7 @@
       <attribute name="title">
        <string>X Axis</string>
       </attribute>
-      <layout class="QGridLayout" name="gridLayout_7">
+      <layout class="QGridLayout" name="gridLayout_3">
        <item row="0" column="0">
         <widget class="QGroupBox" name="groupXAxisItems">
          <property name="sizePolicy">
@@ -2191,7 +2191,7 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>705</width>
+         <width>790</width>
          <height>280</height>
         </rect>
        </property>
@@ -2203,13 +2203,13 @@
        </property>
        <property name="minimumSize">
         <size>
-         <width>705</width>
+         <width>790</width>
          <height>280</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>705</width>
+         <width>790</width>
          <height>280</height>
         </size>
        </property>
@@ -2224,7 +2224,7 @@
          <rect>
           <x>10</x>
           <y>33</y>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </rect>
         </property>
@@ -2236,13 +2236,13 @@
         </property>
         <property name="minimumSize">
          <size>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </size>
         </property>
@@ -2255,7 +2255,7 @@
          <rect>
           <x>10</x>
           <y>64</y>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </rect>
         </property>
@@ -2267,13 +2267,13 @@
         </property>
         <property name="minimumSize">
          <size>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </size>
         </property>
@@ -2286,7 +2286,7 @@
          <rect>
           <x>10</x>
           <y>94</y>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </rect>
         </property>
@@ -2298,13 +2298,13 @@
         </property>
         <property name="minimumSize">
          <size>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </size>
         </property>
@@ -2317,7 +2317,7 @@
          <rect>
           <x>10</x>
           <y>124</y>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </rect>
         </property>
@@ -2329,13 +2329,13 @@
         </property>
         <property name="minimumSize">
          <size>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </size>
         </property>
@@ -2348,7 +2348,7 @@
          <rect>
           <x>10</x>
           <y>154</y>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </rect>
         </property>
@@ -2360,13 +2360,13 @@
         </property>
         <property name="minimumSize">
          <size>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </size>
         </property>
@@ -2379,7 +2379,7 @@
          <rect>
           <x>10</x>
           <y>184</y>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </rect>
         </property>
@@ -2391,13 +2391,13 @@
         </property>
         <property name="minimumSize">
          <size>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </size>
         </property>
@@ -2410,7 +2410,7 @@
          <rect>
           <x>10</x>
           <y>214</y>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </rect>
         </property>
@@ -2422,13 +2422,13 @@
         </property>
         <property name="minimumSize">
          <size>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </size>
         </property>
@@ -2441,7 +2441,7 @@
          <rect>
           <x>10</x>
           <y>244</y>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </rect>
         </property>
@@ -2453,13 +2453,13 @@
         </property>
         <property name="minimumSize">
          <size>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </size>
         </property>
@@ -2470,7 +2470,7 @@
        <widget class="QSpinBox" name="spinBox14">
         <property name="geometry">
          <rect>
-          <x>344</x>
+          <x>395</x>
           <y>184</y>
           <width>30</width>
           <height>26</height>
@@ -2498,7 +2498,7 @@
        <widget class="QPushButton" name="pBttonPen11">
         <property name="geometry">
          <rect>
-          <x>374</x>
+          <x>426</x>
           <y>94</y>
           <width>26</width>
           <height>26</height>
@@ -2539,9 +2539,9 @@
        <widget class="QLineEdit" name="linePen09">
         <property name="geometry">
          <rect>
-          <x>253</x>
+          <x>270</x>
           <y>33</y>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </rect>
         </property>
@@ -2553,13 +2553,13 @@
         </property>
         <property name="minimumSize">
          <size>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </size>
         </property>
@@ -2570,9 +2570,9 @@
        <widget class="QLineEdit" name="linePen12">
         <property name="geometry">
          <rect>
-          <x>253</x>
+          <x>270</x>
           <y>124</y>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </rect>
         </property>
@@ -2584,13 +2584,13 @@
         </property>
         <property name="minimumSize">
          <size>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </size>
         </property>
@@ -2601,7 +2601,7 @@
        <widget class="QPushButton" name="pBttonPen09">
         <property name="geometry">
          <rect>
-          <x>374</x>
+          <x>426</x>
           <y>33</y>
           <width>26</width>
           <height>26</height>
@@ -2642,7 +2642,7 @@
        <widget class="QSpinBox" name="spinBox12">
         <property name="geometry">
          <rect>
-          <x>344</x>
+          <x>395</x>
           <y>124</y>
           <width>30</width>
           <height>26</height>
@@ -2670,7 +2670,7 @@
        <widget class="QPushButton" name="pBttonPen12">
         <property name="geometry">
          <rect>
-          <x>374</x>
+          <x>426</x>
           <y>124</y>
           <width>26</width>
           <height>26</height>
@@ -2711,7 +2711,7 @@
        <widget class="QPushButton" name="pBttonPen10">
         <property name="geometry">
          <rect>
-          <x>374</x>
+          <x>426</x>
           <y>64</y>
           <width>26</width>
           <height>26</height>
@@ -2752,7 +2752,7 @@
        <widget class="QPushButton" name="pBttonPen13">
         <property name="geometry">
          <rect>
-          <x>374</x>
+          <x>426</x>
           <y>154</y>
           <width>26</width>
           <height>26</height>
@@ -2793,9 +2793,9 @@
        <widget class="QLineEdit" name="linePen13">
         <property name="geometry">
          <rect>
-          <x>253</x>
+          <x>270</x>
           <y>154</y>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </rect>
         </property>
@@ -2807,13 +2807,13 @@
         </property>
         <property name="minimumSize">
          <size>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </size>
         </property>
@@ -2824,9 +2824,9 @@
        <widget class="QLineEdit" name="linePen11">
         <property name="geometry">
          <rect>
-          <x>253</x>
+          <x>270</x>
           <y>94</y>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </rect>
         </property>
@@ -2838,13 +2838,13 @@
         </property>
         <property name="minimumSize">
          <size>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </size>
         </property>
@@ -2855,7 +2855,7 @@
        <widget class="QSpinBox" name="spinBox09">
         <property name="geometry">
          <rect>
-          <x>344</x>
+          <x>395</x>
           <y>33</y>
           <width>30</width>
           <height>26</height>
@@ -2883,7 +2883,7 @@
        <widget class="QPushButton" name="pBttonPen14">
         <property name="geometry">
          <rect>
-          <x>374</x>
+          <x>426</x>
           <y>184</y>
           <width>26</width>
           <height>26</height>
@@ -2924,7 +2924,7 @@
        <widget class="QSpinBox" name="spinBox13">
         <property name="geometry">
          <rect>
-          <x>344</x>
+          <x>395</x>
           <y>154</y>
           <width>30</width>
           <height>26</height>
@@ -2952,9 +2952,9 @@
        <widget class="QLineEdit" name="linePen15">
         <property name="geometry">
          <rect>
-          <x>253</x>
+          <x>270</x>
           <y>214</y>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </rect>
         </property>
@@ -2966,13 +2966,13 @@
         </property>
         <property name="minimumSize">
          <size>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </size>
         </property>
@@ -2983,7 +2983,7 @@
        <widget class="QSpinBox" name="spinBox15">
         <property name="geometry">
          <rect>
-          <x>344</x>
+          <x>395</x>
           <y>214</y>
           <width>30</width>
           <height>26</height>
@@ -3011,9 +3011,9 @@
        <widget class="QLineEdit" name="linePen16">
         <property name="geometry">
          <rect>
-          <x>253</x>
+          <x>270</x>
           <y>244</y>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </rect>
         </property>
@@ -3025,13 +3025,13 @@
         </property>
         <property name="minimumSize">
          <size>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </size>
         </property>
@@ -3042,7 +3042,7 @@
        <widget class="QPushButton" name="pBttonPen15">
         <property name="geometry">
          <rect>
-          <x>374</x>
+          <x>426</x>
           <y>214</y>
           <width>26</width>
           <height>26</height>
@@ -3083,7 +3083,7 @@
        <widget class="QPushButton" name="pBttonPen16">
         <property name="geometry">
          <rect>
-          <x>374</x>
+          <x>426</x>
           <y>244</y>
           <width>26</width>
           <height>26</height>
@@ -3124,7 +3124,7 @@
        <widget class="QSpinBox" name="spinBox10">
         <property name="geometry">
          <rect>
-          <x>344</x>
+          <x>395</x>
           <y>64</y>
           <width>30</width>
           <height>26</height>
@@ -3152,9 +3152,9 @@
        <widget class="QLineEdit" name="linePen14">
         <property name="geometry">
          <rect>
-          <x>253</x>
+          <x>270</x>
           <y>184</y>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </rect>
         </property>
@@ -3166,13 +3166,13 @@
         </property>
         <property name="minimumSize">
          <size>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </size>
         </property>
@@ -3183,9 +3183,9 @@
        <widget class="QLineEdit" name="linePen10">
         <property name="geometry">
          <rect>
-          <x>253</x>
+          <x>270</x>
           <y>64</y>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </rect>
         </property>
@@ -3197,13 +3197,13 @@
         </property>
         <property name="minimumSize">
          <size>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </size>
         </property>
@@ -3214,7 +3214,7 @@
        <widget class="QSpinBox" name="spinBox11">
         <property name="geometry">
          <rect>
-          <x>344</x>
+          <x>395</x>
           <y>94</y>
           <width>30</width>
           <height>26</height>
@@ -3242,7 +3242,7 @@
        <widget class="QSpinBox" name="spinBox16">
         <property name="geometry">
          <rect>
-          <x>344</x>
+          <x>395</x>
           <y>244</y>
           <width>30</width>
           <height>26</height>
@@ -3270,7 +3270,7 @@
        <widget class="QPushButton" name="pBttonPen21">
         <property name="geometry">
          <rect>
-          <x>604</x>
+          <x>683</x>
           <y>154</y>
           <width>26</width>
           <height>26</height>
@@ -3311,7 +3311,7 @@
        <widget class="QPushButton" name="pBttonPen23">
         <property name="geometry">
          <rect>
-          <x>604</x>
+          <x>683</x>
           <y>214</y>
           <width>26</width>
           <height>26</height>
@@ -3352,9 +3352,9 @@
        <widget class="QLineEdit" name="linePen17">
         <property name="geometry">
          <rect>
-          <x>482</x>
+          <x>532</x>
           <y>33</y>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </rect>
         </property>
@@ -3366,13 +3366,13 @@
         </property>
         <property name="minimumSize">
          <size>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </size>
         </property>
@@ -3383,7 +3383,7 @@
        <widget class="QSpinBox" name="spinBox24">
         <property name="geometry">
          <rect>
-          <x>574</x>
+          <x>653</x>
           <y>244</y>
           <width>30</width>
           <height>26</height>
@@ -3411,9 +3411,9 @@
        <widget class="QLineEdit" name="linePen20">
         <property name="geometry">
          <rect>
-          <x>482</x>
+          <x>532</x>
           <y>124</y>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </rect>
         </property>
@@ -3425,13 +3425,13 @@
         </property>
         <property name="minimumSize">
          <size>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </size>
         </property>
@@ -3442,7 +3442,7 @@
        <widget class="QSpinBox" name="spinBox23">
         <property name="geometry">
          <rect>
-          <x>574</x>
+          <x>653</x>
           <y>214</y>
           <width>30</width>
           <height>26</height>
@@ -3470,9 +3470,9 @@
        <widget class="QLineEdit" name="linePen22">
         <property name="geometry">
          <rect>
-          <x>482</x>
+          <x>532</x>
           <y>184</y>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </rect>
         </property>
@@ -3484,13 +3484,13 @@
         </property>
         <property name="minimumSize">
          <size>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </size>
         </property>
@@ -3501,7 +3501,7 @@
        <widget class="QPushButton" name="pBttonPen19">
         <property name="geometry">
          <rect>
-          <x>604</x>
+          <x>683</x>
           <y>94</y>
           <width>26</width>
           <height>26</height>
@@ -3542,9 +3542,9 @@
        <widget class="QLineEdit" name="linePen21">
         <property name="geometry">
          <rect>
-          <x>482</x>
+          <x>532</x>
           <y>154</y>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </rect>
         </property>
@@ -3556,13 +3556,13 @@
         </property>
         <property name="minimumSize">
          <size>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </size>
         </property>
@@ -3573,9 +3573,9 @@
        <widget class="QLineEdit" name="linePen18">
         <property name="geometry">
          <rect>
-          <x>482</x>
+          <x>532</x>
           <y>64</y>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </rect>
         </property>
@@ -3587,13 +3587,13 @@
         </property>
         <property name="minimumSize">
          <size>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </size>
         </property>
@@ -3604,7 +3604,7 @@
        <widget class="QSpinBox" name="spinBox19">
         <property name="geometry">
          <rect>
-          <x>574</x>
+          <x>653</x>
           <y>94</y>
           <width>30</width>
           <height>26</height>
@@ -3632,7 +3632,7 @@
        <widget class="QSpinBox" name="spinBox22">
         <property name="geometry">
          <rect>
-          <x>574</x>
+          <x>653</x>
           <y>184</y>
           <width>30</width>
           <height>26</height>
@@ -3660,7 +3660,7 @@
        <widget class="QPushButton" name="pBttonPen18">
         <property name="geometry">
          <rect>
-          <x>604</x>
+          <x>683</x>
           <y>64</y>
           <width>26</width>
           <height>26</height>
@@ -3701,7 +3701,7 @@
        <widget class="QSpinBox" name="spinBox21">
         <property name="geometry">
          <rect>
-          <x>574</x>
+          <x>653</x>
           <y>154</y>
           <width>30</width>
           <height>26</height>
@@ -3729,7 +3729,7 @@
        <widget class="QPushButton" name="pBttonPen20">
         <property name="geometry">
          <rect>
-          <x>604</x>
+          <x>683</x>
           <y>124</y>
           <width>26</width>
           <height>26</height>
@@ -3770,9 +3770,9 @@
        <widget class="QLineEdit" name="linePen23">
         <property name="geometry">
          <rect>
-          <x>482</x>
+          <x>532</x>
           <y>214</y>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </rect>
         </property>
@@ -3784,13 +3784,13 @@
         </property>
         <property name="minimumSize">
          <size>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </size>
         </property>
@@ -3801,7 +3801,7 @@
        <widget class="QPushButton" name="pBttonPen22">
         <property name="geometry">
          <rect>
-          <x>604</x>
+          <x>683</x>
           <y>184</y>
           <width>26</width>
           <height>26</height>
@@ -3842,7 +3842,7 @@
        <widget class="QPushButton" name="pBttonPen17">
         <property name="geometry">
          <rect>
-          <x>604</x>
+          <x>683</x>
           <y>33</y>
           <width>26</width>
           <height>26</height>
@@ -3883,7 +3883,7 @@
        <widget class="QSpinBox" name="spinBox17">
         <property name="geometry">
          <rect>
-          <x>574</x>
+          <x>653</x>
           <y>33</y>
           <width>30</width>
           <height>26</height>
@@ -3911,7 +3911,7 @@
        <widget class="QPushButton" name="pBttonPen24">
         <property name="geometry">
          <rect>
-          <x>604</x>
+          <x>683</x>
           <y>244</y>
           <width>26</width>
           <height>26</height>
@@ -3952,9 +3952,9 @@
        <widget class="QLineEdit" name="linePen19">
         <property name="geometry">
          <rect>
-          <x>482</x>
+          <x>532</x>
           <y>94</y>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </rect>
         </property>
@@ -3966,13 +3966,13 @@
         </property>
         <property name="minimumSize">
          <size>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </size>
         </property>
@@ -3983,9 +3983,9 @@
        <widget class="QLineEdit" name="linePen24">
         <property name="geometry">
          <rect>
-          <x>482</x>
+          <x>532</x>
           <y>244</y>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </rect>
         </property>
@@ -3997,13 +3997,13 @@
         </property>
         <property name="minimumSize">
          <size>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>90</width>
+          <width>120</width>
           <height>25</height>
          </size>
         </property>
@@ -4014,7 +4014,7 @@
        <widget class="QSpinBox" name="spinBox18">
         <property name="geometry">
          <rect>
-          <x>574</x>
+          <x>653</x>
           <y>64</y>
           <width>30</width>
           <height>26</height>
@@ -4042,7 +4042,7 @@
        <widget class="QSpinBox" name="spinBox20">
         <property name="geometry">
          <rect>
-          <x>574</x>
+          <x>653</x>
           <y>124</y>
           <width>30</width>
           <height>26</height>
@@ -4070,7 +4070,7 @@
        <widget class="QSpinBox" name="spinBox01">
         <property name="geometry">
          <rect>
-          <x>103</x>
+          <x>134</x>
           <y>33</y>
           <width>30</width>
           <height>26</height>
@@ -4098,7 +4098,7 @@
        <widget class="QPushButton" name="pBttonPen01">
         <property name="geometry">
          <rect>
-          <x>136</x>
+          <x>164</x>
           <y>33</y>
           <width>26</width>
           <height>26</height>
@@ -4139,7 +4139,7 @@
        <widget class="QSpinBox" name="spinBox02">
         <property name="geometry">
          <rect>
-          <x>103</x>
+          <x>134</x>
           <y>64</y>
           <width>30</width>
           <height>26</height>
@@ -4167,7 +4167,7 @@
        <widget class="QPushButton" name="pBttonPen02">
         <property name="geometry">
          <rect>
-          <x>136</x>
+          <x>164</x>
           <y>64</y>
           <width>26</width>
           <height>26</height>
@@ -4208,7 +4208,7 @@
        <widget class="QSpinBox" name="spinBox03">
         <property name="geometry">
          <rect>
-          <x>103</x>
+          <x>134</x>
           <y>94</y>
           <width>30</width>
           <height>26</height>
@@ -4236,7 +4236,7 @@
        <widget class="QPushButton" name="pBttonPen03">
         <property name="geometry">
          <rect>
-          <x>136</x>
+          <x>164</x>
           <y>94</y>
           <width>26</width>
           <height>26</height>
@@ -4277,7 +4277,7 @@
        <widget class="QSpinBox" name="spinBox04">
         <property name="geometry">
          <rect>
-          <x>103</x>
+          <x>134</x>
           <y>124</y>
           <width>30</width>
           <height>26</height>
@@ -4305,7 +4305,7 @@
        <widget class="QPushButton" name="pBttonPen04">
         <property name="geometry">
          <rect>
-          <x>136</x>
+          <x>164</x>
           <y>124</y>
           <width>26</width>
           <height>26</height>
@@ -4346,7 +4346,7 @@
        <widget class="QSpinBox" name="spinBox05">
         <property name="geometry">
          <rect>
-          <x>103</x>
+          <x>134</x>
           <y>154</y>
           <width>30</width>
           <height>26</height>
@@ -4374,7 +4374,7 @@
        <widget class="QPushButton" name="pBttonPen05">
         <property name="geometry">
          <rect>
-          <x>136</x>
+          <x>164</x>
           <y>154</y>
           <width>26</width>
           <height>26</height>
@@ -4415,7 +4415,7 @@
        <widget class="QSpinBox" name="spinBox06">
         <property name="geometry">
          <rect>
-          <x>103</x>
+          <x>134</x>
           <y>184</y>
           <width>30</width>
           <height>26</height>
@@ -4443,7 +4443,7 @@
        <widget class="QPushButton" name="pBttonPen06">
         <property name="geometry">
          <rect>
-          <x>136</x>
+          <x>164</x>
           <y>184</y>
           <width>26</width>
           <height>26</height>
@@ -4484,7 +4484,7 @@
        <widget class="QSpinBox" name="spinBox07">
         <property name="geometry">
          <rect>
-          <x>103</x>
+          <x>134</x>
           <y>214</y>
           <width>30</width>
           <height>26</height>
@@ -4512,7 +4512,7 @@
        <widget class="QPushButton" name="pBttonPen07">
         <property name="geometry">
          <rect>
-          <x>136</x>
+          <x>164</x>
           <y>214</y>
           <width>26</width>
           <height>26</height>
@@ -4553,7 +4553,7 @@
        <widget class="QSpinBox" name="spinBox08">
         <property name="geometry">
          <rect>
-          <x>103</x>
+          <x>134</x>
           <y>244</y>
           <width>30</width>
           <height>26</height>
@@ -4581,7 +4581,7 @@
        <widget class="QPushButton" name="pBttonPen08">
         <property name="geometry">
          <rect>
-          <x>136</x>
+          <x>164</x>
           <y>244</y>
           <width>26</width>
           <height>26</height>
@@ -4622,7 +4622,7 @@
        <widget class="QComboBox" name="comboPen01">
         <property name="geometry">
          <rect>
-          <x>163</x>
+          <x>190</x>
           <y>33</y>
           <width>74</width>
           <height>25</height>
@@ -4644,7 +4644,7 @@
        <widget class="QComboBox" name="comboPen09">
         <property name="geometry">
          <rect>
-          <x>400</x>
+          <x>453</x>
           <y>33</y>
           <width>74</width>
           <height>25</height>
@@ -4666,7 +4666,7 @@
        <widget class="QComboBox" name="comboPen17">
         <property name="geometry">
          <rect>
-          <x>630</x>
+          <x>710</x>
           <y>33</y>
           <width>74</width>
           <height>25</height>
@@ -4688,7 +4688,7 @@
        <widget class="QComboBox" name="comboPen02">
         <property name="geometry">
          <rect>
-          <x>163</x>
+          <x>190</x>
           <y>64</y>
           <width>74</width>
           <height>25</height>
@@ -4710,7 +4710,7 @@
        <widget class="QComboBox" name="comboPen03">
         <property name="geometry">
          <rect>
-          <x>163</x>
+          <x>190</x>
           <y>94</y>
           <width>74</width>
           <height>25</height>
@@ -4732,7 +4732,7 @@
        <widget class="QComboBox" name="comboPen04">
         <property name="geometry">
          <rect>
-          <x>163</x>
+          <x>190</x>
           <y>124</y>
           <width>74</width>
           <height>25</height>
@@ -4754,7 +4754,7 @@
        <widget class="QComboBox" name="comboPen05">
         <property name="geometry">
          <rect>
-          <x>163</x>
+          <x>190</x>
           <y>154</y>
           <width>74</width>
           <height>25</height>
@@ -4776,7 +4776,7 @@
        <widget class="QComboBox" name="comboPen06">
         <property name="geometry">
          <rect>
-          <x>163</x>
+          <x>190</x>
           <y>184</y>
           <width>74</width>
           <height>25</height>
@@ -4798,7 +4798,7 @@
        <widget class="QComboBox" name="comboPen07">
         <property name="geometry">
          <rect>
-          <x>163</x>
+          <x>190</x>
           <y>214</y>
           <width>74</width>
           <height>25</height>
@@ -4820,7 +4820,7 @@
        <widget class="QComboBox" name="comboPen08">
         <property name="geometry">
          <rect>
-          <x>163</x>
+          <x>190</x>
           <y>244</y>
           <width>74</width>
           <height>25</height>
@@ -4842,7 +4842,7 @@
        <widget class="QComboBox" name="comboPen12">
         <property name="geometry">
          <rect>
-          <x>400</x>
+          <x>453</x>
           <y>124</y>
           <width>74</width>
           <height>25</height>
@@ -4864,7 +4864,7 @@
        <widget class="QComboBox" name="comboPen10">
         <property name="geometry">
          <rect>
-          <x>400</x>
+          <x>453</x>
           <y>64</y>
           <width>74</width>
           <height>25</height>
@@ -4886,7 +4886,7 @@
        <widget class="QComboBox" name="comboPen11">
         <property name="geometry">
          <rect>
-          <x>400</x>
+          <x>453</x>
           <y>94</y>
           <width>74</width>
           <height>25</height>
@@ -4908,7 +4908,7 @@
        <widget class="QComboBox" name="comboPen13">
         <property name="geometry">
          <rect>
-          <x>400</x>
+          <x>453</x>
           <y>154</y>
           <width>74</width>
           <height>25</height>
@@ -4930,7 +4930,7 @@
        <widget class="QComboBox" name="comboPen14">
         <property name="geometry">
          <rect>
-          <x>400</x>
+          <x>453</x>
           <y>184</y>
           <width>74</width>
           <height>25</height>
@@ -4952,7 +4952,7 @@
        <widget class="QComboBox" name="comboPen15">
         <property name="geometry">
          <rect>
-          <x>400</x>
+          <x>453</x>
           <y>214</y>
           <width>74</width>
           <height>25</height>
@@ -4974,7 +4974,7 @@
        <widget class="QComboBox" name="comboPen16">
         <property name="geometry">
          <rect>
-          <x>400</x>
+          <x>453</x>
           <y>244</y>
           <width>74</width>
           <height>25</height>
@@ -4996,7 +4996,7 @@
        <widget class="QComboBox" name="comboPen20">
         <property name="geometry">
          <rect>
-          <x>630</x>
+          <x>710</x>
           <y>124</y>
           <width>74</width>
           <height>25</height>
@@ -5018,7 +5018,7 @@
        <widget class="QComboBox" name="comboPen22">
         <property name="geometry">
          <rect>
-          <x>630</x>
+          <x>710</x>
           <y>184</y>
           <width>74</width>
           <height>25</height>
@@ -5040,7 +5040,7 @@
        <widget class="QComboBox" name="comboPen24">
         <property name="geometry">
          <rect>
-          <x>630</x>
+          <x>710</x>
           <y>244</y>
           <width>74</width>
           <height>25</height>
@@ -5062,7 +5062,7 @@
        <widget class="QComboBox" name="comboPen18">
         <property name="geometry">
          <rect>
-          <x>630</x>
+          <x>710</x>
           <y>64</y>
           <width>74</width>
           <height>25</height>
@@ -5084,7 +5084,7 @@
        <widget class="QComboBox" name="comboPen23">
         <property name="geometry">
          <rect>
-          <x>630</x>
+          <x>710</x>
           <y>214</y>
           <width>74</width>
           <height>25</height>
@@ -5106,7 +5106,7 @@
        <widget class="QComboBox" name="comboPen19">
         <property name="geometry">
          <rect>
-          <x>630</x>
+          <x>710</x>
           <y>94</y>
           <width>74</width>
           <height>25</height>
@@ -5128,7 +5128,7 @@
        <widget class="QComboBox" name="comboPen21">
         <property name="geometry">
          <rect>
-          <x>630</x>
+          <x>710</x>
           <y>154</y>
           <width>74</width>
           <height>25</height>
