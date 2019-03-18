@@ -36,13 +36,17 @@ HtcChart::~HtcChart()
     delete ui;
 }
 
-void HtcChart::setFileToOpen(QString fileName)
+void HtcChart::setFileToOpen(QString fileName, bool RescaleFreq)
 {
     _rawDataFileAndPath = fileName;
-
+    reScaleFreqColumn = RescaleFreq;
     readfileIntoList(_rawDataFileAndPath);
 
     initChart();
+
+
+   // createPen(45, "Hi-Limit");
+
 }
 
 
@@ -101,7 +105,7 @@ void HtcChart::initProperties()
     _chartXAxisLabelFont = QFont("Arial",14, QFont::Normal );
     _chartXAxisLabelRotation = -45;
 
-    _XAxisRescaleValue = 1.0e06;
+
     _chartXAxisLinLogScale = "LIN";
 
     _chartXAxisMajorGridLinesVisible = true;
@@ -209,12 +213,15 @@ void HtcChart::initConnects()
     connect(cp,SIGNAL(HTCChartYLinChartRequest(bool)),this,SLOT(HTCChartYLinChart(bool)));
 
     connect(cp,SIGNAL(HTCChartPenValueChanged(int, QColor, int, QString, int)),this,SLOT(HTCChartPenValues(int, QColor, int, QString, int)));
+    connect(cp,SIGNAL(HTCCHartAddPenRequest(double, QString)),this,SLOT(HTCCHartNewPen(double, QString)));
 }
 
 void HtcChart::initChart()
 {
     bool axisXHasBeenAdded = false;
     bool axisYHasBeenAdded = false;
+    QString cName = "";
+
 
     _chart = new QChart();
 
@@ -229,17 +236,19 @@ void HtcChart::initChart()
     for(int dataSet = 1; dataSet < _currentHeaderCount ; dataSet++)
     {
 
+
+
         QLineSeries *_series = new QLineSeries();
         fillSeriesfromList(_series, dataSet);
 
-        _series->setName(_currentHeaderList[dataSet]);
+        cName = StripQuotesFromString(_currentHeaderList[dataSet]);
+        _series->setName(StripQuotesFromString(cName));
+        //_series->setName(_currentHeaderList[dataSet]);
 
         //Series pen color & thickness
         QPen SeriesPen(_penColors[dataSet - 1]);
         SeriesPen.setWidth(_penWidths[dataSet - 1]);
         SeriesPen.setStyle(Qt::PenStyle(_penStyles[dataSet - 1]));
-
-        qDebug() << "Updating Chart pen -" << dataSet << " with width of " << _penWidths[dataSet - 1];
 
         _series->setPen(SeriesPen);
         _chart->addSeries(_series);
@@ -406,9 +415,9 @@ void HtcChart::initChart()
    // _chart->legend()->setPreferredSize()
 
 
-    // change a property of the legend
+
     QFont font = _chart->legend()->font();
-        font.setPointSize(12);// setBold(!font.bold());
+        font.setPointSize(_legendFontPointSize);
         //font.setFamily("Courier New");
         font.setFamily("Times New Roman");
         _chart->legend()->setFont(font);
@@ -484,18 +493,6 @@ void HtcChart::setHeaderValues(QStringList list)
 
 
     }
-
-
-
-//    QString current;
-
-//    current = list[row];
-//    if (!_currentHeaderList.isEmpty())
-//    {
-//        _currentHeaderList.clear();
-//    }
-
-//    _currentHeaderList = current.split(_dataFileDelim);
 
 }
 
@@ -588,67 +585,115 @@ int HtcChart::findFirstNumericRow(QStringList list, QString delimiter)
     double freq;
     double level;
 
+    if (!_masterlist.isEmpty())
+    {
 
 
+        _currentHeaderRow = _firstNumericRow -1;
 
-        if (!_masterlist.isEmpty())
+        if (_firstNumericRow != -1)
         {
 
-
-            _currentHeaderRow = _firstNumericRow -1;
-
-            if (_firstNumericRow != -1)
-            {
-
-                start = _firstNumericRow;
-            }
-            else
-            {
-                start = 0;
-            }
-
-            for (int i = start; i < _masterlist.count(); i++)
-            {
-                group = _masterlist[i].split(_dataFileDelim);
-
-                freq = QString(group.at(0)).toDouble()/_XAxisRescaleValue;
-                level = QString(group.at(dataSet)).toDouble();
-
-                if (_minfreq > freq)
-                {
-                    _minfreq = freq;
-                }
-                if (_maxfreq < freq)
-                {
-                    _maxfreq = freq;
-                }
-                if (_minlevel > level)
-                {
-                    _minlevel = level;
-                }
-                if (_maxlevel < level)
-                {
-                    _maxlevel = level;
-                }
-
-                series->append(freq, level);
-            }
-
+            start = _firstNumericRow;
+        }
+        else
+        {
+            start = 0;
         }
 
+        for (int i = start; i < _masterlist.count(); i++)
+        {
+            group = _masterlist[i].split(_dataFileDelim);
 
-            _XAxisMinValue= _minfreq;
-            _XAxisMaxValue = _maxfreq;
-            _YAxisMinValue= _minlevel;
-            _YAxisMaxValue = _maxlevel;
+            freq = QString(group.at(0)).toDouble()/getFreqRescaleValue();
+            level = QString(group.at(dataSet)).toDouble();
 
-            _autoRangesDiscovered = true;
+            if (_minfreq > freq)
+            {
+                _minfreq = freq;
+            }
+            if (_maxfreq < freq)
+            {
+                _maxfreq = freq;
+            }
+            if (_minlevel > level)
+            {
+                _minlevel = level;
+            }
+            if (_maxlevel < level)
+            {
+                _maxlevel = level;
+            }
 
+            series->append(freq, level);
+        }
+
+    }
+
+    if (_autoRangesDiscovered == false)
+    {
+        _XAxisMinValue= _minfreq;
+        _XAxisMaxValue = _maxfreq;
+        _YAxisMinValue= _minlevel;
+        _YAxisMaxValue = _maxlevel;
+
+        qDebug() << "AutoDiscovered  min/max freq values of " << _minfreq << "/" << _maxfreq;
+
+        _autoRangesDiscovered = true;
+
+    }
+
+
+
+
+
+    }
+
+    double HtcChart::getFreqRescaleValue()
+    {
+        if(reScaleFreqColumn == true)
+        {
+            _XAxisRescaleValue = 1.0e06;
+        }
+        else
+        {
+            _XAxisRescaleValue = 1;
+        }
     }
 
     QPen HtcChart::getPenStyle(int style)
     {
         return QPen(penStyles[style]);
+    }
+
+    void HtcChart::createPen(double baseValue, QString header)
+    {
+
+        QString currentRow;
+        int start = _currentHeaderRow +1;
+
+        _currentHeaderList.append(header);
+
+        for (int i = start; i < _masterlist.count(); i++)
+        {
+           currentRow = _masterlist.at(i);
+           currentRow.append(_dataFileDelim);
+           currentRow.append(QString::number(baseValue));
+           _masterlist[i] = currentRow;
+
+        }
+
+        updateHeaderCount();
+
+        // reload the chart
+        clearLayout(ui->chartLayout);
+        initChart();
+
+    }
+
+    void HtcChart::updateHeaderCount()
+    {
+        _currentHeaderCount = _currentHeaderList.count();
     }
 
 
@@ -707,6 +752,27 @@ QFont HtcChart::GetNewFont(QFont currentFont)
 QPen HtcChart::GetNewGirdLinesPen(QColor color, double size, Qt::PenStyle style)
 {
     QPen result = QPen(QBrush(color), size,style, Qt::SquareCap, Qt::BevelJoin);
+    return result;
+}
+
+QString HtcChart::StripQuotesFromString(QString wordToStrip)
+{
+    QString target = "";
+    QString result = "";
+
+    result = wordToStrip;
+
+    target.append('"');
+
+    if(wordToStrip.startsWith(target))
+     {
+            wordToStrip.remove(0,1);
+     }
+    if(wordToStrip.endsWith(target))
+    {
+        wordToStrip.remove(wordToStrip.size()-1,1);
+    }
+
     return result;
 }
 
@@ -1178,13 +1244,16 @@ void HtcChart::HTCChartPenValues(int width, QColor color, int penStyle, QString 
     _penStyles[penNumber - 1] = penStyle;
     _currentHeaderList[penNumber] = penName;
 
-    qDebug() << "got width:" << width << " color:" << color.name() << " pen Style:"
-             << penStyle << " pen name:" << penName << " pen number " << penNumber;
-
     clearLayout(ui->chartLayout);
     initChart();
 
        _UpdatingFromProperties = false;
+
+}
+
+void HtcChart::HTCCHartNewPen(double baseValue, QString header)
+{
+    createPen(baseValue, header);
 
 }
 

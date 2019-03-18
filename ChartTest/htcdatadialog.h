@@ -53,7 +53,7 @@ private:
 
     int _firstDataRow;
     int _numberOfDataRows;
-    int _numberOFHeaderRows;
+    int _numberOfHeaderRows;
 
 
     QString setDelimiter(QString fName);

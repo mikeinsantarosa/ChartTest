@@ -32,17 +32,40 @@ QStringList *HtcDataDialog::getHeader()
 bool HtcDataDialog::Init(QString filename)
 {
     bool result;
+
+    // assign file name to local variable
     _dataFileName = filename;
-    qDebug() << "Loaded file " << _dataFileName;
+
+    // figure out what char to use as a delimiter.
     _delimiter = setDelimiter(_dataFileName);
+
+    // fill up a local list with data from the file
     result = getFileData(_rawList);
+
+
     if (result == true)
     {
+        // figure out what row of the listis the beginning
+        // of data
         _firstDataRow = findFirstDataRow(_delimiter);
+
+        // Get just the data rows from the raw list
+        // into _listToView and return the number of data rows
         _numberOfDataRows = setListToView(_listToView);
-        _numberOFHeaderRows = setHeaderList(_FileHeaderList);
-        qDebug() << "Loaded file " << _dataFileName;
+
+        qDebug() << "Number of data rows => " << _numberOfHeaderRows;
+
+        // Get just the header rows from the raw list
+        // into _fileHeaderList and return the number of header rows
+        _numberOfHeaderRows = setHeaderList(_FileHeaderList);
+
+        qDebug() << "Number of header rows => " << _numberOfHeaderRows;
+
+        // put  the data into a model that can be
+        // presented in a table
         loadModel();
+
+
     }
 
     return result;
@@ -61,7 +84,7 @@ int HtcDataDialog::GetNumberOfDataRows()
 
 int HtcDataDialog::GetNumberOfHeaderRows()
 {
-    return _numberOFHeaderRows;
+    return _numberOfHeaderRows;
 }
 
 QVector<int> HtcDataDialog::getSelectedColumnsList()
@@ -122,6 +145,7 @@ int HtcDataDialog::findFirstDataRow(QString delimiter)
                 dataItem = group[i];
                 dataItem = dataItem.trimmed();
                 isNumber = false;
+
                 if (dataItem.toDouble(&isNumber))
                 {
                     numFinds = numFinds + 1;
@@ -198,6 +222,7 @@ int HtcDataDialog::setHeaderList(QStringList *list)
     for (int i = first; i < last; i++)
     {
         list->append(_rawList->at(i));
+
         numRows += 1;
     }
 

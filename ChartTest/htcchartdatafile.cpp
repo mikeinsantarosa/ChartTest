@@ -88,10 +88,13 @@ void HTCChartDataFile::init()
     _dataSuccessfullyLoaded = false;
 
     _totalNumberOfRows = loadFileIntoList();
+
     if (_totalNumberOfRows > 0)
     {
-       _firstDataRow = findFirstDataRow(_fileDelimiter);
+       _firstDataRow = findFirstDataRow(_rawDataList, _fileDelimiter);
+
        _lastDataRow = setLastDataRow();
+
        _numberOfDataColumns = setColumnHeadersList(_fileDelimiter);
        _fileInfo = QFileInfo(_basedOnThisFile);
 
@@ -108,7 +111,7 @@ void HTCChartDataFile::init()
     }
 }
 
-int HTCChartDataFile::findFirstDataRow(QString delimiter)
+int HTCChartDataFile::findFirstDataRow(QStringList list, QString delimiter)
 {
     QStringList group;
     QString current;
@@ -119,22 +122,32 @@ int HTCChartDataFile::findFirstDataRow(QString delimiter)
     bool found = false;
 
 
-    for (int listRow = 0; listRow < _rawDataList.count(); listRow++)
+    for (int listRow = 0; listRow < list.count(); listRow++)
     {
 
         if (!found)
         {
             numFinds = 0;
-            current = _rawDataList[listRow];
+            current = list[listRow];
             group = current.split(delimiter);
+
+            qDebug() << "checking this string - " << group;
 
             for (int i = 0; i < group.count(); i++)
             {
+
                 dataItem = group[i];
+
+                qDebug() << "Value being checked - " << dataItem;
+
+
                 dataItem = dataItem.trimmed();
                 isNumber = false;
                 if (dataItem.toDouble(&isNumber))
                 {
+
+                    //qDebug() << "That value was a double - " << dataItem;
+
                     numFinds = numFinds + 1;
                     if (numFinds > 1)
                     {
@@ -144,7 +157,9 @@ int HTCChartDataFile::findFirstDataRow(QString delimiter)
 
                     }
                 }
+
             }
+
         }
         else
         {
@@ -153,6 +168,10 @@ int HTCChartDataFile::findFirstDataRow(QString delimiter)
 
 
     }
+
+    qDebug() << "Found first data row on line " << result;
+
+
     return result;
 }
 
@@ -182,7 +201,10 @@ int HTCChartDataFile::loadFileIntoList()
             }
                 file.close();
         }
-    if (_rawDataList.count() > 0)
+
+    qDebug() << "in loadFileIntoList() and found " << _rawDataList.count() << " rows.";
+
+    if(_rawDataList.count() > 0)
     {
         result = _rawDataList.count();
     }

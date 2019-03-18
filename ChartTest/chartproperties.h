@@ -115,8 +115,8 @@ signals:
 
 
     void HTCChartPenValueChanged(int width, QColor color, int penStyle, QString penName, int penNumber);
+    void HTCCHartAddPenRequest(double baseValue, QString header);
 
-//ChartYAxisLabelTextRotation
 
 
 private slots:
@@ -162,7 +162,6 @@ private slots:
 
     void on_btnYAxisMinorGridColor_clicked();
 
-
     void on_checkXMinor_clicked(bool checked);
 
     void on_checkXMajor_clicked(bool checked);
@@ -187,8 +186,6 @@ private slots:
 
     void on_pBttonPen01_clicked();
 
-    //void on_spinBox01_valueChanged(int arg1);
-
     void on_linePen01_textChanged(const QString &arg1);
 
     void on_comboPen01_currentIndexChanged(int index);
@@ -202,7 +199,6 @@ private slots:
     void on_spinYMajorThickness_valueChanged(int arg1);
 
     void on_spinYMinorThickness_valueChanged(int arg1);
-
 
     void on_spinYMajorTics_valueChanged(int arg1);
 
@@ -240,23 +236,7 @@ private slots:
 
     void on_pBttonPen15_clicked();
 
-    void on_pBttonPen16_clicked();
 
-    void on_pBttonPen17_clicked();
-
-    void on_pBttonPen18_clicked();
-
-    void on_pBttonPen19_clicked();
-
-    void on_pBttonPen20_clicked();
-
-    void on_pBttonPen21_clicked();
-
-    void on_pBttonPen22_clicked();
-
-    void on_pBttonPen23_clicked();
-
-    void on_pBttonPen24_clicked();
 
     void on_spinBox01_valueChanged(int arg1);
 
@@ -288,23 +268,6 @@ private slots:
 
     void on_spinBox15_valueChanged(int arg1);
 
-    void on_spinBox16_valueChanged(int arg1);
-
-    void on_spinBox17_valueChanged(int arg1);
-
-    void on_spinBox18_valueChanged(int arg1);
-
-    void on_spinBox19_valueChanged(int arg1);
-
-    void on_spinBox20_valueChanged(int arg1);
-
-    void on_spinBox21_valueChanged(int arg1);
-
-    void on_spinBox22_valueChanged(int arg1);
-
-    void on_spinBox23_valueChanged(int arg1);
-
-    void on_spinBox24_valueChanged(int arg1);
 
 
 
@@ -336,23 +299,10 @@ private slots:
 
     void on_comboPen15_currentIndexChanged(int index);
 
-    void on_comboPen16_currentIndexChanged(int index);
 
-    void on_comboPen17_currentIndexChanged(int index);
 
-    void on_comboPen18_currentIndexChanged(int index);
 
-    void on_comboPen19_currentIndexChanged(int index);
-
-    void on_comboPen20_currentIndexChanged(int index);
-
-    void on_comboPen21_currentIndexChanged(int index);
-
-    void on_comboPen22_currentIndexChanged(int index);
-
-    void on_comboPen23_currentIndexChanged(int index);
-
-    void on_comboPen24_currentIndexChanged(int index);
+    void on_pButtonAddPen_clicked();
 
 private:
 
@@ -388,11 +338,11 @@ private:
     QStringList getPenTypes();
     void initPenStyleCombos();
 
-    int _penStates[24] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                           0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+    int _penStates[15] = { 0, 0, 0, 0, 0, 0, 0, 0,
+                           0, 0, 0, 0, 0, 0, 0};
 
-    int _penThicknesses[24] = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-                           1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+    int _penThicknesses[15] = { 1, 1, 1, 1, 1, 1, 1, 1,
+                                1, 1, 1, 1, 1, 1, 1 };
 
     void updatePenItemsAndNotify(int penNumber);
 

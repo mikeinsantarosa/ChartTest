@@ -77,7 +77,7 @@ private:
 
     void init();
 
-    int findFirstDataRow(QString delimiter);
+    int findFirstDataRow(QStringList list, QString delimiter);
     int setLastDataRow();
     int loadFileIntoList();
     int setColumnHeadersList(QString delim);

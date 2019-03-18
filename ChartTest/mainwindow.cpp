@@ -8,7 +8,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     this->setWindowTitle("Chart Selector");
     this->setAttribute(Qt::WA_DeleteOnClose);
-    ui->lineColor->setText("#000088");
+   // ui->lineColor->setText("#000088");
 
 
     ui->lineDate->setText("July 06 2017");
@@ -72,12 +72,11 @@ void MainWindow::on_btnShowTestChart_clicked()
 {
     //QString fileToOpen = "C:/qtTraining/ChartTest/80M-1G_3_h.txt";
     //QString fileToOpen = "/home/mandbx/Desktop/misc-docs/q241/samples/80M-1G_3_h-LOG.txt";
-    QString fileToOpen = "/home/mandbx/Desktop/misc-docs/q241/samples/80M-1G_3_h-LOG-2_data_Points.txt";
+    QString fileToOpen = "/home/mandbx/Desktop/misc-docs/q241/samples/80M-1G_3_h-LOG-10_data_Points.txt";
 
     testchart = new HtcChart;
 
-    // set the file to use
-    testchart->setFileToOpen(fileToOpen);
+    testchart->setFileToOpen(fileToOpen, ui->checkRescaleFreqs->checkState());
     qDebug() << "Loaded file >> " << fileToOpen;
 
     // load the file and convert to Qlist
@@ -92,30 +91,6 @@ void MainWindow::on_btnShowTestChart_clicked()
     testchart->show();
 }
 
-void MainWindow::on_btnSetColor_clicked()
-{
-    QString newColorString = ui->lineColor->text();
-    if (newColorString.length() != 7)
-    {
-        qDebug() << "Bad color - " << newColorString;
-        exit;
-    }
-    else
-    {
-        qDebug() << "Color used here, changing color - " << newColorString;
-        QColor changedColor = QColor(newColorString);
-        QPalette pal;
-        pal.setColor(QPalette::WindowText,changedColor);
-        //    pal.setColor(QPalette::Text,color);
-        ui->labelColorTest->setPalette(pal);
-       // ui->labelColorTest->update();
-
-
-
-    }
-
-
-}
 
 void MainWindow::on_btnOpenFolders_clicked()
 {
@@ -282,6 +257,25 @@ int MainWindow::loadListFromPath(QString dir, QString fileExtension)
     return result;
 }
 
+QString MainWindow::setDataFileDelim(QString fileName)
+{
+    QString dataFileDelim = "";
+
+    QFileInfo info = QFileInfo(fileName);
+    QString extension = info.suffix();
+
+    if (extension == "txt")
+    {
+        dataFileDelim = "\t";
+    }
+    else
+    {
+        dataFileDelim = ",";
+    }
+
+    return dataFileDelim;
+}
+
 
 void MainWindow::on_btnShowTable_clicked()
 {
@@ -321,46 +315,31 @@ void MainWindow::on_btnLoadFile_clicked()
 void MainWindow::on_btnTutorial_clicked()
 {
 
-    qDebug() << "Clicked the button";
-}
+   QString fileToOpen = "/home/mandbx/Desktop/misc-docs/q241/samples/80M-1G_3_h-LOG-2_data_Points.txt";
 
-void MainWindow::on_btnTest_clicked()
-{
-    QString lineEditName = "linePen";
-    QString spinName = "spinBox";
-
-    QString name = ui->spinBox99->objectName();
-    int len = name.length();
-    int pre = len - 1;
-    QString tail = name.mid(pre-1, len -1);
-    //int penNumber = tail.toInt();
-    lineEditName = lineEditName + tail;
-    spinName = spinName + tail;
-
-    QComboBox* cb;
-    QString target = "combo99";
-    QList<QComboBox*> lstChildren = findChildren<QComboBox*>();
-
-    foreach(QComboBox* pWidget, lstChildren)
-    {
-
-        if (pWidget->objectName() == target)
-        {
-            cb = pWidget;
-            qDebug() << "Found a hit";
-            break;
-        }
-    }
-
-    if (cb->objectName() != "")
-    {
-        qDebug() << " this object name is  " << cb->objectName();
-        qDebug() << "lineEdit name " << lineEditName ;
-        qDebug() << "combo name " << spinName ;
-    }
+   QString delim = setDataFileDelim(fileToOpen);
 
 
 
+   if(!delim.isEmpty())
+   {
+       df = new HTCChartDataFile(fileToOpen, delim);
+   }
+
+   QStringList list = df->getColumnHeaderList();
+
+   for(int i = 0; i < list.count(); i++)
+   {
+       qDebug() << "header item-" << i << " == " << list.at(i);
+   }
+
+   //qDebug() << " found this model number in the file" << df->getOrientationEUTModel();
 
 
 }
+
+
+
+
+
+

@@ -17,6 +17,8 @@
 #include "htctableviewer.h"
 #include "htcdatadialog.h"
 
+#include "htcchartdatafile.h"
+
 #include <QDirIterator>
 
 // for the tutorials
@@ -45,7 +47,7 @@ private slots:
 
     void on_btnShowTestChart_clicked();
 
-    void on_btnSetColor_clicked();
+
 
     void on_btnOpenFolders_clicked();
 
@@ -57,7 +59,7 @@ private slots:
 
     void on_btnTutorial_clicked();
 
-    void on_btnTest_clicked();
+
 
 private:
     Ui::MainWindow *ui;
@@ -67,6 +69,9 @@ private:
     HtcChart * testchart;
     DataManager * dm;
     HtcDataDialog * dd;
+    HTCChartDataFile * df;
+
+
 
     QStringList getListToLoad();
 
@@ -77,6 +82,9 @@ private:
     int loadListFromPath(QString dir, QString fileExtension);
 
     QStringList getFileList();
+
+    QString setDataFileDelim(QString fileName);
+
 };
 
 #endif // MAINWINDOW_H

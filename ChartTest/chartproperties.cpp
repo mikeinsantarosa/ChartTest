@@ -34,6 +34,7 @@ ChartProperties::ChartProperties(QWidget *parent) :
     ui->lineXMax->setValidator(dblValidator);
     ui->lineYMin->setValidator(dblValidator);
     ui->lineYMin->setValidator(dblValidator);
+    ui->linePenValue->setValidator(dblValidator);
 
     // set dialog colors
     // -----------------------------
@@ -69,8 +70,8 @@ ChartProperties::ChartProperties(QWidget *parent) :
     // set non-sizable control fonts
     _controlsDefaualtFontColor = QColor("#000000");
     _controlsDefaualtFontColorPalette.setColor(QPalette::Text, _controlsDefaualtFontColor);
-    _controlsDefaualtPointSize = 10;
-    _controlsDefaualtFontName = "Arial"; //Webdings Courier New
+    _controlsDefaualtPointSize = 9;
+    _controlsDefaualtFontName = "Times New Roman"; //Webdings Courier New
     _controlsDefaualtFont.setPointSize(_controlsDefaualtPointSize);
     _controlsDefaualtFont.setFamily(_controlsDefaualtFontName);
 
@@ -432,101 +433,11 @@ void ChartProperties::setPenItems(int width, QColor color, int penStyle, QString
             enablePen(penNumber);
             break;
 
-        case 16:
-            ui->linePen16->setPalette(palPen);
-            ui->spinBox16->setPalette(palPen);
-            ui->linePen16->setText(penName);
-            ui->spinBox16->setValue(width);
-            ui->comboPen16->setCurrentIndex(penStyle);
-            enablePen(penNumber);
-            break;
-
-        case 17:
-            ui->linePen17->setPalette(palPen);
-            ui->spinBox17->setPalette(palPen);
-            ui->linePen17->setText(penName);
-            ui->spinBox17->setValue(width);
-            ui->comboPen17->setCurrentIndex(penStyle);
-            enablePen(penNumber);
-            break;
-
-        case 18:
-            ui->linePen18->setPalette(palPen);
-            ui->spinBox18->setPalette(palPen);
-            ui->linePen18->setText(penName);
-            ui->spinBox18->setValue(width);
-            ui->comboPen18->setCurrentIndex(penStyle);
-            enablePen(penNumber);
-            break;
-
-        case 19:
-            ui->linePen19->setPalette(palPen);
-            ui->spinBox19->setPalette(palPen);
-            ui->linePen19->setText(penName);
-            ui->spinBox19->setValue(width);
-            ui->comboPen19->setCurrentIndex(penStyle);
-            enablePen(penNumber);
-            break;
-
-        case 20:
-            ui->linePen20->setPalette(palPen);
-            ui->spinBox20->setPalette(palPen);
-            ui->linePen20->setText(penName);
-            ui->spinBox20->setValue(width);
-            ui->comboPen20->setCurrentIndex(penStyle);
-            enablePen(penNumber);
-            break;
-
-        case 21:
-            ui->linePen21->setPalette(palPen);
-            ui->spinBox21->setPalette(palPen);
-            ui->linePen21->setText(penName);
-            ui->spinBox21->setValue(width);
-            ui->comboPen21->setCurrentIndex(penStyle);
-            enablePen(penNumber);
-            break;
-
-        case 22:
-            ui->linePen22->setPalette(palPen);
-            ui->spinBox22->setPalette(palPen);
-            ui->linePen22->setText(penName);
-            ui->spinBox22->setValue(width);
-            ui->comboPen22->setCurrentIndex(penStyle);
-            enablePen(penNumber);
-            break;
-
-        case 23:
-            ui->linePen23->setPalette(palPen);
-            ui->spinBox23->setPalette(palPen);
-            ui->linePen23->setText(penName);
-            ui->spinBox23->setValue(width);
-            ui->comboPen23->setCurrentIndex(penStyle);
-            enablePen(penNumber);
-            break;
-
-        case 24:
-            ui->linePen24->setPalette(palPen);
-            ui->spinBox24->setPalette(palPen);
-            ui->linePen24->setText(penName);
-            ui->spinBox24->setValue(width);
-            ui->comboPen24->setCurrentIndex(penStyle);
-            enablePen(penNumber);
-            break;
-
         default:
+            // we should throw an error here.
             qDebug() << "We don't do this number!";
     }
 
-
-
-
-
-    if (penNumber == 1)
-    {
-
-
-
-    }
 
     _busy = false;
 
@@ -605,16 +516,6 @@ void ChartProperties::initPenStyleCombos()
     ui->comboPen13->addItems(getPenTypes());
     ui->comboPen14->addItems(getPenTypes());
     ui->comboPen15->addItems(getPenTypes());
-    ui->comboPen16->addItems(getPenTypes());
-    ui->comboPen17->addItems(getPenTypes());
-    ui->comboPen18->addItems(getPenTypes());
-    ui->comboPen19->addItems(getPenTypes());
-    ui->comboPen20->addItems(getPenTypes());
-    ui->comboPen21->addItems(getPenTypes());
-    ui->comboPen22->addItems(getPenTypes());
-    ui->comboPen23->addItems(getPenTypes());
-    ui->comboPen24->addItems(getPenTypes());
-
 }
 
 void ChartProperties::updatePenItemsAndNotify(int penNumber)
@@ -747,79 +648,8 @@ void ChartProperties::updatePenItemsAndNotify(int penNumber)
             penName = ui->linePen15->text();
             break;
 
-        case 16:
-            width = ui->spinBox16->value();;
-            palPen = ui->linePen16->palette();
-            color = palPen.color(QPalette::Text);
-            penStyle = ui->comboPen16->currentIndex();
-            penName = ui->linePen16->text();
-            break;
-
-        case 17:
-            width = ui->spinBox17->value();;
-            palPen = ui->linePen17->palette();
-            color = palPen.color(QPalette::Text);
-            penStyle = ui->comboPen17->currentIndex();
-            penName = ui->linePen17->text();
-            break;
-
-        case 18:
-            width = ui->spinBox18->value();;
-            palPen = ui->linePen18->palette();
-            color = palPen.color(QPalette::Text);
-            penStyle = ui->comboPen18->currentIndex();
-            penName = ui->linePen18->text();
-            break;
-
-        case 19:
-            width = ui->spinBox19->value();;
-            palPen = ui->linePen19->palette();
-            color = palPen.color(QPalette::Text);
-            penStyle = ui->comboPen19->currentIndex();
-            penName = ui->linePen19->text();
-            break;
-
-        case 20:
-            width = ui->spinBox20->value();;
-            palPen = ui->linePen20->palette();
-            color = palPen.color(QPalette::Text);
-            penStyle = ui->comboPen20->currentIndex();
-            penName = ui->linePen20->text();
-            break;
-
-        case 21:
-            width = ui->spinBox21->value();;
-            palPen = ui->linePen21->palette();
-            color = palPen.color(QPalette::Text);
-            penStyle = ui->comboPen21->currentIndex();
-            penName = ui->linePen21->text();
-            break;
-
-        case 22:
-            width = ui->spinBox22->value();;
-            palPen = ui->linePen22->palette();
-            color = palPen.color(QPalette::Text);
-            penStyle = ui->comboPen22->currentIndex();
-            penName = ui->linePen22->text();
-            break;
-
-        case 23:
-            width = ui->spinBox23->value();;
-            palPen = ui->linePen23->palette();
-            color = palPen.color(QPalette::Text);
-            penStyle = ui->comboPen23->currentIndex();
-            penName = ui->linePen23->text();
-            break;
-
-        case 24:
-            width = ui->spinBox24->value();;
-            palPen = ui->linePen24->palette();
-            color = palPen.color(QPalette::Text);
-            penStyle = ui->comboPen24->currentIndex();
-            penName = ui->linePen24->text();
-            break;
-
-        default:
+            default:
+            // we need ot throw an error here
             qDebug() << "We don't do this number!";
     }
 
@@ -949,71 +779,10 @@ void ChartProperties::disAblePen(int pen)
             ui->comboPen15->hide();
             break;
 
-        case 16:
-            ui->linePen16->hide();
-            ui->spinBox16->hide();
-            ui->pBttonPen16->hide();
-            ui->comboPen16->hide();
-            break;
 
-        case 17:
-            ui->linePen17->hide();
-            ui->spinBox17->hide();
-            ui->pBttonPen17->hide();
-            ui->comboPen17->hide();
-            break;
-
-        case 18:
-            ui->linePen18->hide();
-            ui->spinBox18->hide();
-            ui->pBttonPen18->hide();
-            ui->comboPen18->hide();
-            break;
-
-        case 19:
-            ui->linePen19->hide();
-            ui->spinBox19->hide();
-            ui->pBttonPen19->hide();
-            ui->comboPen19->hide();
-            break;
-
-        case 20:
-            ui->linePen20->hide();
-            ui->spinBox20->hide();
-            ui->pBttonPen20->hide();
-            ui->comboPen20->hide();
-            break;
-
-        case 21:
-            ui->linePen21->hide();
-            ui->spinBox21->hide();
-            ui->pBttonPen21->hide();
-            ui->comboPen21->hide();
-            break;
-
-        case 22:
-            ui->linePen22->hide();
-            ui->spinBox22->hide();
-            ui->pBttonPen22->hide();
-            ui->comboPen22->hide();
-            break;
-
-        case 23:
-            ui->linePen23->hide();
-            ui->spinBox23->hide();
-            ui->pBttonPen23->hide();
-            ui->comboPen23->hide();
-            break;
-
-        case 24:
-            ui->linePen24->hide();
-            ui->spinBox24->hide();
-            ui->pBttonPen24->hide();
-            ui->comboPen24->hide();
-            break;
-
-        default:
-            qDebug() << "We don't do this number!";
+            default:
+                // we need to throw an error here
+                qDebug() << "We don't do this number!";
     }
 }
 
@@ -1125,70 +894,9 @@ void ChartProperties::enablePen(int pen)
             ui->comboPen15->setVisible(true);
             break;
 
-        case 16:
-            ui->linePen16->setVisible(true);
-            ui->spinBox16->setVisible(true);
-            ui->pBttonPen16->setVisible(true);
-            ui->comboPen16->setVisible(true);
-            break;
-
-        case 17:
-            ui->linePen17->setVisible(true);
-            ui->spinBox17->setVisible(true);
-            ui->pBttonPen17->setVisible(true);
-            ui->comboPen17->setVisible(true);
-        break;
-
-        case 18:
-            ui->linePen18->setVisible(true);
-            ui->spinBox18->setVisible(true);
-            ui->pBttonPen18->setVisible(true);
-            ui->comboPen18->setVisible(true);
-            break;
-
-        case 19:
-            ui->linePen19->setVisible(true);
-            ui->spinBox19->setVisible(true);
-            ui->pBttonPen19->setVisible(true);
-            ui->comboPen19->setVisible(true);
-            break;
-
-        case 20:
-            ui->linePen20->setVisible(true);
-            ui->spinBox20->setVisible(true);
-            ui->pBttonPen20->setVisible(true);
-            ui->comboPen20->setVisible(true);
-            break;
-
-        case 21:
-            ui->linePen21->setVisible(true);
-            ui->spinBox21->setVisible(true);
-            ui->pBttonPen21->setVisible(true);
-            ui->comboPen21->setVisible(true);
-            break;
-
-        case 22:
-            ui->linePen22->setVisible(true);
-            ui->spinBox22->setVisible(true);
-            ui->pBttonPen22->setVisible(true);
-            ui->comboPen22->setVisible(true);
-            break;
-
-        case 23:
-            ui->linePen23->setVisible(true);
-            ui->spinBox23->setVisible(true);
-            ui->pBttonPen23->setVisible(true);
-            ui->comboPen23->setVisible(true);
-            break;
-
-        case 24:
-            ui->linePen24->setVisible(true);
-            ui->spinBox24->setVisible(true);
-            ui->pBttonPen24->setVisible(true);
-            ui->comboPen24->setVisible(true);
-            break;
 
         default:
+            // we need to throw an error here
             qDebug() << "We don't do this number!";
     }
 }
@@ -1256,43 +964,8 @@ void ChartProperties::initPenFont(int pen)
             ui->linePen15->setFont(_controlsDefaualtFont);
             break;
 
-        case 16:
-            ui->linePen16->setFont(_controlsDefaualtFont);
-            break;
-
-        case 17:
-            ui->linePen17->setFont(_controlsDefaualtFont);
-            break;
-
-        case 18:
-            ui->linePen18->setFont(_controlsDefaualtFont);
-            break;
-
-        case 19:
-            ui->linePen19->setFont(_controlsDefaualtFont);
-            break;
-
-        case 20:
-            ui->linePen20->setFont(_controlsDefaualtFont);
-            break;
-
-        case 21:
-            ui->linePen21->setFont(_controlsDefaualtFont);
-            break;
-
-        case 22:
-            ui->linePen22->setFont(_controlsDefaualtFont);
-            break;
-
-        case 23:
-            ui->linePen23->setFont(_controlsDefaualtFont);
-            break;
-
-        case 24:
-            ui->linePen24->setFont(_controlsDefaualtFont);
-            break;
-
         default:
+            // we need to throw an error here
             qDebug() << "We don't do this number!";
     }
 
@@ -1694,54 +1367,6 @@ void ChartProperties::on_checkYMinor_clicked(bool checked)
     }
 }
 
-//void ChartProperties::on_dspinXMajorTics_valueChanged(double arg1)
-//{
-//    if (!_busy)
-//    {
-//        if (ui->checkXMajor->isChecked() == true)
-//        {
-//            emit HTCChartXMajorTicsValueChanged(arg1);
-//        }
-
-//    }
-//}
-
-//void ChartProperties::on_dspinXMinorTics_valueChanged(double arg1)
-//{
-//    if (!_busy)
-//    {
-//        if (ui->checkXMinor->isChecked() == true)
-//        {
-//            emit HTCChartXMinorTicsValueChanged(arg1);
-//        }
-
-//    }
-//}
-
-//void ChartProperties::on_dspinYMajorTics_valueChanged(double arg1)
-//{
-//    if (!_busy)
-//    {
-//        if (ui->checkYMajor->isChecked() == true)
-//        {
-//            emit HTCChartYMajorTicsValueChanged(arg1);
-//        }
-
-//    }
-//}
-
-//void ChartProperties::on_dspinYMinorTics_valueChanged(double arg1)
-//{
-//    if (!_busy)
-//    {
-//        if (ui->checkYMinor->isChecked() == true)
-//        {
-//            emit HTCChartYMinorTicsValueChanged(arg1);
-//        }
-
-//    }
-//}
-
 
 void ChartProperties::on_radioXLin_clicked(bool checked)
 {
@@ -1827,14 +1452,6 @@ void ChartProperties::on_pBttonPen01_clicked()
 
 }
 
-//void ChartProperties::on_spinBox01_valueChanged(int arg1)
-//{
-//    if (!_busy)
-//    {
-//        updatePenItemsAndNotify(1);
-//    }
-
-//}
 
 void ChartProperties::on_linePen01_textChanged(const QString &arg1)
 {
@@ -1903,7 +1520,6 @@ void ChartProperties::on_spinYMajorThickness_valueChanged(int arg1)
 {
     if (!_busy)
     {
-        //qDebug() << "just got a new Y Major value of " << arg1;
         emit HTCChartYMajorThicknessValueChanged(arg1);
     }
 }
@@ -1912,7 +1528,6 @@ void ChartProperties::on_spinYMinorThickness_valueChanged(int arg1)
 {
     if (!_busy)
     {
-        //qDebug() << "just got a new Y Minor value of " << arg1;
         emit HTCChartYMinorThicknessValueChanged(arg1);
     }
 }
@@ -2329,247 +1944,6 @@ void ChartProperties::on_pBttonPen15_clicked()
 
 }
 
-void ChartProperties::on_pBttonPen16_clicked()
-{
-    if (!_busy)
-    {
-        QPalette  pal = ui->linePen16->palette();
-        QColor currentColor = pal.color(QPalette::Text);
-
-        QColor Labelcolor = getNewColor(currentColor);
-        QPalette palPen;
-
-        palPen.setColor(QPalette::Text, Labelcolor);
-        palPen.setColor(QPalette::Base, Qt::white);
-
-
-        if (Labelcolor != currentColor)
-        {
-            ui->linePen16->setPalette(palPen);
-            ui->spinBox16->setPalette(palPen);
-
-            updatePenItemsAndNotify(16);
-
-        }
-    }
-
-}
-
-void ChartProperties::on_pBttonPen17_clicked()
-{
-    if (!_busy)
-    {
-        QPalette  pal = ui->linePen17->palette();
-        QColor currentColor = pal.color(QPalette::Text);
-
-        QColor Labelcolor = getNewColor(currentColor);
-        QPalette palPen;
-
-        palPen.setColor(QPalette::Text, Labelcolor);
-        palPen.setColor(QPalette::Base, Qt::white);
-
-
-        if (Labelcolor != currentColor)
-        {
-            ui->linePen17->setPalette(palPen);
-            ui->spinBox17->setPalette(palPen);
-
-            updatePenItemsAndNotify(17);
-
-        }
-    }
-
-}
-
-void ChartProperties::on_pBttonPen18_clicked()
-{
-    if (!_busy)
-    {
-        QPalette  pal = ui->linePen18->palette();
-        QColor currentColor = pal.color(QPalette::Text);
-
-        QColor Labelcolor = getNewColor(currentColor);
-        QPalette palPen;
-
-        palPen.setColor(QPalette::Text, Labelcolor);
-        palPen.setColor(QPalette::Base, Qt::white);
-
-
-        if (Labelcolor != currentColor)
-        {
-            ui->linePen18->setPalette(palPen);
-            ui->spinBox18->setPalette(palPen);
-
-            updatePenItemsAndNotify(18);
-
-        }
-    }
-
-}
-
-void ChartProperties::on_pBttonPen19_clicked()
-{
-    if (!_busy)
-    {
-        QPalette  pal = ui->linePen19->palette();
-        QColor currentColor = pal.color(QPalette::Text);
-
-        QColor Labelcolor = getNewColor(currentColor);
-        QPalette palPen;
-
-        palPen.setColor(QPalette::Text, Labelcolor);
-        palPen.setColor(QPalette::Base, Qt::white);
-
-
-        if (Labelcolor != currentColor)
-        {
-            ui->linePen19->setPalette(palPen);
-            ui->spinBox19->setPalette(palPen);
-
-            updatePenItemsAndNotify(19);
-
-        }
-    }
-
-}
-
-void ChartProperties::on_pBttonPen20_clicked()
-{
-    if (!_busy)
-    {
-        QPalette  pal = ui->linePen20->palette();
-        QColor currentColor = pal.color(QPalette::Text);
-
-        QColor Labelcolor = getNewColor(currentColor);
-        QPalette palPen;
-
-        palPen.setColor(QPalette::Text, Labelcolor);
-        palPen.setColor(QPalette::Base, Qt::white);
-
-
-        if (Labelcolor != currentColor)
-        {
-            ui->linePen20->setPalette(palPen);
-            ui->spinBox20->setPalette(palPen);
-
-            updatePenItemsAndNotify(20);
-
-        }
-    }
-
-}
-
-void ChartProperties::on_pBttonPen21_clicked()
-{
-    if (!_busy)
-    {
-        QPalette  pal = ui->linePen21->palette();
-        QColor currentColor = pal.color(QPalette::Text);
-
-        QColor Labelcolor = getNewColor(currentColor);
-        QPalette palPen;
-
-        palPen.setColor(QPalette::Text, Labelcolor);
-        palPen.setColor(QPalette::Base, Qt::white);
-
-
-        if (Labelcolor != currentColor)
-        {
-            ui->linePen21->setPalette(palPen);
-            ui->spinBox21->setPalette(palPen);
-
-            updatePenItemsAndNotify(21);
-
-        }
-    }
-
-}
-
-void ChartProperties::on_pBttonPen22_clicked()
-{
-    if (!_busy)
-    {
-        QPalette  pal = ui->linePen22->palette();
-        QColor currentColor = pal.color(QPalette::Text);
-
-        QColor Labelcolor = getNewColor(currentColor);
-        QPalette palPen;
-
-        palPen.setColor(QPalette::Text, Labelcolor);
-        palPen.setColor(QPalette::Base, Qt::white);
-
-
-        if (Labelcolor != currentColor)
-        {
-            ui->linePen22->setPalette(palPen);
-            ui->spinBox22->setPalette(palPen);
-
-            updatePenItemsAndNotify(22);
-
-        }
-    }
-
-}
-
-void ChartProperties::on_pBttonPen23_clicked()
-{
-    if (!_busy)
-    {
-        QPalette  pal = ui->linePen23->palette();
-        QColor currentColor = pal.color(QPalette::Text);
-
-        QColor Labelcolor = getNewColor(currentColor);
-        QPalette palPen;
-
-        palPen.setColor(QPalette::Text, Labelcolor);
-        palPen.setColor(QPalette::Base, Qt::white);
-
-
-        if (Labelcolor != currentColor)
-        {
-            ui->linePen23->setPalette(palPen);
-            ui->spinBox23->setPalette(palPen);
-
-            updatePenItemsAndNotify(23);
-
-        }
-    }
-
-}
-
-void ChartProperties::on_pBttonPen24_clicked()
-{
-    if (!_busy)
-    {
-        QPalette  pal = ui->linePen24->palette();
-        QColor currentColor = pal.color(QPalette::Text);
-
-        QColor Labelcolor = getNewColor(currentColor);
-        QPalette palPen;
-
-        palPen.setColor(QPalette::Text, Labelcolor);
-        palPen.setColor(QPalette::Base, Qt::white);
-
-
-        if (Labelcolor != currentColor)
-        {
-            ui->linePen24->setPalette(palPen);
-            ui->spinBox24->setPalette(palPen);
-
-            updatePenItemsAndNotify(24);
-
-        }
-    }
-
-}
-
-//void ChartProperties::on_spinBox01_editingFinished()
-//{
-//    if (!_busy)
-//    {
-//        updatePenItemsAndNotify(1);
-//    }
-//}
 
 void ChartProperties::on_spinBox01_valueChanged(int arg1)
 {
@@ -2691,78 +2065,6 @@ void ChartProperties::on_spinBox15_valueChanged(int arg1)
     }
 }
 
-void ChartProperties::on_spinBox16_valueChanged(int arg1)
-{
-    if (!_busy)
-    {
-        updatePenItemsAndNotify(16);
-    }
-}
-
-void ChartProperties::on_spinBox17_valueChanged(int arg1)
-{
-    if (!_busy)
-    {
-        updatePenItemsAndNotify(17);
-    }
-}
-
-void ChartProperties::on_spinBox18_valueChanged(int arg1)
-{
-    if (!_busy)
-    {
-        updatePenItemsAndNotify(18);
-    }
-}
-
-void ChartProperties::on_spinBox19_valueChanged(int arg1)
-{
-    if (!_busy)
-    {
-        updatePenItemsAndNotify(19);
-    }
-}
-
-void ChartProperties::on_spinBox20_valueChanged(int arg1)
-{
-    if (!_busy)
-    {
-        updatePenItemsAndNotify(20);
-    }
-}
-
-void ChartProperties::on_spinBox21_valueChanged(int arg1)
-{
-    if (!_busy)
-    {
-        updatePenItemsAndNotify(21);
-    }
-}
-
-void ChartProperties::on_spinBox22_valueChanged(int arg1)
-{
-    if (!_busy)
-    {
-        updatePenItemsAndNotify(22);
-    }
-}
-
-void ChartProperties::on_spinBox23_valueChanged(int arg1)
-{
-    if (!_busy)
-    {
-        updatePenItemsAndNotify(23);
-    }
-}
-
-void ChartProperties::on_spinBox24_valueChanged(int arg1)
-{
-    if (!_busy)
-    {
-        updatePenItemsAndNotify(24);
-    }
-}
-
 
 void ChartProperties::on_comboPen02_currentIndexChanged(int index)
 {
@@ -2876,74 +2178,36 @@ void ChartProperties::on_comboPen15_currentIndexChanged(int index)
     }
 }
 
-void ChartProperties::on_comboPen16_currentIndexChanged(int index)
-{
-    if (!_busy)
-    {
-        updatePenItemsAndNotify(16);
-    }
-}
 
-void ChartProperties::on_comboPen17_currentIndexChanged(int index)
-{
-    if (!_busy)
-    {
-        updatePenItemsAndNotify(17);
-    }
-}
 
-void ChartProperties::on_comboPen18_currentIndexChanged(int index)
+void ChartProperties::on_pButtonAddPen_clicked()
 {
-    if (!_busy)
-    {
-        updatePenItemsAndNotify(18);
-    }
-}
+    double baseValue=0;
+    QString header;
+    bool valuesAreGood = true;
 
-void ChartProperties::on_comboPen19_currentIndexChanged(int index)
-{
-    if (!_busy)
+    if(!ui->linePenValue->text().isEmpty())
     {
-        updatePenItemsAndNotify(19);
+        baseValue = ui->linePenValue->text().toDouble();
     }
-}
+    else
+    {
+        valuesAreGood = false;
+    }
 
-void ChartProperties::on_comboPen20_currentIndexChanged(int index)
-{
-    if (!_busy)
+    if(!ui->linePenName->text().isEmpty() && valuesAreGood == true)
     {
-        updatePenItemsAndNotify(20);
+        header = ui->linePenName->text();
     }
-}
+    else
+    {
+        valuesAreGood = false;
+    }
 
-void ChartProperties::on_comboPen21_currentIndexChanged(int index)
-{
-    if (!_busy)
+    if(valuesAreGood)
     {
-        updatePenItemsAndNotify(21);
+        emit HTCCHartAddPenRequest(baseValue, header);
     }
-}
 
-void ChartProperties::on_comboPen22_currentIndexChanged(int index)
-{
-    if (!_busy)
-    {
-        updatePenItemsAndNotify(22);
-    }
-}
 
-void ChartProperties::on_comboPen23_currentIndexChanged(int index)
-{
-    if (!_busy)
-    {
-        updatePenItemsAndNotify(23);
-    }
-}
-
-void ChartProperties::on_comboPen24_currentIndexChanged(int index)
-{
-    if (!_busy)
-    {
-        updatePenItemsAndNotify(24);
-    }
 }

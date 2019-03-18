@@ -62,7 +62,7 @@ public:
 
     QColor ChartTitleTextColor();
     QFont ChartTitleTextFont();
-    void setFileToOpen(QString fileName);
+    void setFileToOpen(QString fileName, bool RescaleFreq);
 
 
 
@@ -144,6 +144,7 @@ private slots:
     void HTCChartYLinChart(bool checked);
 
     void HTCChartPenValues(int width, QColor color, int penStyle, QString penName, int penNumber);
+    void HTCCHartNewPen(double baseValue, QString header);
 
 
 private:
@@ -246,6 +247,9 @@ private:
     double _XAxisMinValue;
     double _XAxisMaxValue;
     double _XAxisRescaleValue;
+    bool reScaleFreqColumn = false;
+
+    double getFreqRescaleValue();
 
     // Y Axis Scaling
     double _YAxisMinValue;
@@ -264,23 +268,27 @@ private:
                              "Qt::CustomDashLine" };
     int defaultPenStyle;
 
-    QColor _penColors[24] = {QColor("#FF0000"), QColor("#0000FF"), QColor("#00FF00"), QColor("#FA9EF7"),
-                             QColor("#C79EFA"), QColor("#9ECEFA"), QColor("#9EECFA"), QColor("#9EFAE4"),
-                             QColor("#AFFA9E"), QColor("#FADD9E"), QColor("#FAA99E"), QColor("#AB5A50"),
-                            QColor("#AB8E50"), QColor("#83AB50"), QColor("#50ABA4"), QColor("#506EAB"),
-                            QColor("#8A50AB"), QColor("#AB5063"), QColor("#F7B8EF"), QColor("#B8C7F7"),
-                           QColor("#89FBFC"), QColor("#C4D05E"), QColor("#DE77F7"), QColor("#DBF777")};
+    // Max 15 pens
+    QColor _penColors[15] = {QColor("#FF0000"), QColor("#0000FF"), QColor("#2fc50a"), QColor("#f57900"),
+                             QColor("#E61994"), QColor("#4e9a06"), QColor("#204a87"), QColor("#5c3566"),
+                             QColor("#8f5902"), QColor("#FADD9E"), QColor("#FAA99E"), QColor("#AB5A50"),
+                            QColor("#AB8E50"), QColor("#83AB50"), QColor("#50ABA4")};
 
 
-    int _penStates[24] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                           0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-    int _penStyles[24] = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-                           1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
-    int _penWidths[24] = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-                           1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+    int _penStates[15] = { 0, 0, 0, 0, 0, 0, 0, 0,
+                           0, 0, 0, 0, 0, 0, 0 };
+    int _penStyles[15] = { 1, 1, 1, 1, 1, 1, 1, 1,
+                           1, 1, 1, 1, 1, 1, 1 };
+    int _penWidths[15] = { 3, 1, 1, 1, 1, 1, 1, 1,
+                           1, 1, 1, 1, 1, 1, 1 };
 
     QPen defaultChartPenStyle;
     QPen getPenStyle(int style);
+    int _legendFontPointSize = 8;
+
+   void createPen(double baseValue, QString header);
+   void updateHeaderCount();
+
 
     // first run auto discovery
     bool _autoRangesDiscovered;
@@ -299,6 +307,8 @@ private:
     QPen GetNewGirdLinesPen(QColor color, double size, Qt::PenStyle style);
 
     void setChartTitleTextColor(QColor color);
+
+    QString StripQuotesFromString(QString wordToStrip);
 
 
 
