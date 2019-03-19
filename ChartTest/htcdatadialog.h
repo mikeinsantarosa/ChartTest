@@ -33,6 +33,9 @@ public:
 
     QVector <int> getSelectedColumnsList();
 
+signals:
+    void ColumnSelected();
+
 
 private slots:
     void on_btnClose_clicked();

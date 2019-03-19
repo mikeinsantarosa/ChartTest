@@ -1,3 +1,11 @@
+// ++++++++++++++++++++++++++++++++++++++++++++
+// Use this file as a source to figure out
+// Which column to build charts from
+//
+//
+//
+// ++++++++++++++++++++++++++++++++++++++++++++
+
 #include "htcdatadialog.h"
 #include "ui_htcdatadialog.h"
 
@@ -7,7 +15,7 @@ HtcDataDialog::HtcDataDialog(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    QObject::connect( ui->tvData->horizontalHeader(), SIGNAL( sectionClicked( int ) ), this, SLOT( on_tvData_sectionClicked( int ) ) );
+    QObject::connect(ui->tvData->horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(on_tvData_sectionClicked(int)));
 
     _rawList = new QStringList;
     _listToView = new QStringList;
@@ -100,7 +108,11 @@ void HtcDataDialog::on_btnClose_clicked()
 void HtcDataDialog::on_tvData_sectionClicked(int Value)
 {
     _selectedColumnsList = setSelectedColumnsList();
-    //listColumnList();
+    qDebug() << "Column clicked was " << Value;
+
+    emit ColumnSelected();
+    //let the callng program know te user clicked a column
+
 }
 
 QString HtcDataDialog::setDelimiter(QString fName)

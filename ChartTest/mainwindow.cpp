@@ -11,8 +11,7 @@ MainWindow::MainWindow(QWidget *parent) :
    // ui->lineColor->setText("#000088");
 
 
-    ui->lineDate->setText("July 06 2017");
-    ui->lineYears->setText("1");
+
 
 }
 
@@ -106,47 +105,59 @@ void MainWindow::on_btnOpenFolders_clicked()
 
     QString dir = QFileDialog::getExistingDirectory(this, tr("Select a folder to Load files from..."), searchPath, QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
 
-    int numberOfFiles = loadListFromPath(dir, extension);
-
-    qDebug() << "Number of files found - " << numberOfFiles;
-
-    if (numberOfFiles > 0)
-    {
-        QStringList fList = getListToLoad();
+   // int numberOfFiles = loadListFromPath(dir, extension);
 
 
-        if (fList.count() == numberOfFiles)
-        {
-            dm = DataManager::GetInstance();
+    cdf =  new HTCChartFolder();
+    cdf->init(dir, extension);
+
+    qDebug() << "Number of files loaded > " << cdf->GetFolderList().count();
 
 
-            QString delim = getDelimToUse(fList.at(0));
 
 
-            dm->loadFileSetFromList(fList, delim);
-        }
-    }
+
+
+
+
+
+//    if (numberOfFiles > 0)
+//    {
+//        QStringList fList = getListToLoad();
+
+
+//        if (fList.count() == numberOfFiles)
+//        {
+//            dm = DataManager::GetInstance();
+
+
+//            QString delim = getDelimToUse(fList.at(0));
+
+
+//            dm->loadFileSetFromList(fList, delim);
+//        }
+//    }
 }
 
-void MainWindow::on_btnChangeDate_clicked()
-{
-    QString dt = ui->lineDate->text();
-    QString yr = ui->lineYears->text();
-    QStringList group = dt.split(" ");
-    int newYear = (QString(group[2]).trimmed()).toInt();
+//void MainWindow::on_btnChangeDate_clicked()
+//{
+//    QString dt = ui->lineDate->text();
+//    QString yr = ui->lineYears->text();
+//    QStringList group = dt.split(" ");
+//    int newYear = (QString(group[2]).trimmed()).toInt();
 
-    int yearToAdd = QString(yr).toInt();
+//    int yearToAdd = QString(yr).toInt();
 
-    newYear = newYear + yearToAdd;
-    ui->lineDateResult->setText(QString::number(newYear));
-    qDebug() << "newYear after add " << newYear;
+//    newYear = newYear + yearToAdd;
+//    ui->lineDateResult->setText(QString::number(newYear));
+//    qDebug() << "newYear after add " << newYear;
 
-    QString DueYearString = (QString(group[0]).trimmed() + " " + QString(group[1]).trimmed() + " " + QString::number(newYear));
+//    QString DueYearString = (QString(group[0]).trimmed() + " " + QString(group[1]).trimmed() + " " + QString::number(newYear));
 
-   qDebug() << "new date - " << DueYearString;
+//   qDebug() << "new date - " << DueYearString;
 
 
-}
+//}
 
 QStringList MainWindow::getListToLoad()
 {
@@ -276,6 +287,11 @@ QString MainWindow::setDataFileDelim(QString fileName)
     return dataFileDelim;
 }
 
+void MainWindow::initDialogConnects()
+{
+    connect(dd,SIGNAL(ColumnSelected()),this,SLOT(ColumnSelectedByUser()));
+}
+
 
 void MainWindow::on_btnShowTable_clicked()
 {
@@ -288,6 +304,7 @@ void MainWindow::on_btnLoadFile_clicked()
     bool success;
     dd = new HtcDataDialog(this);
 
+    initDialogConnects();
     // linux data file
     // ----------------------------------------------------------------------------------------------------------
     QString fname = "/home/mandbx/Desktop/misc-docs/q241/Data/80M-1G/q241_N9040B_US00091117_3vm_80M-1G_0_BL.csv";
@@ -335,6 +352,19 @@ void MainWindow::on_btnTutorial_clicked()
 
    //qDebug() << " found this model number in the file" << df->getOrientationEUTModel();
 
+
+}
+
+void MainWindow::ColumnSelectedByUser()
+{
+
+    qDebug() << "I got a column click event from the dialog";
+    QVector<int> list = dd->getSelectedColumnsList();
+
+   for(int i = 0;i < list.count(); i++)
+   {
+       qDebug() << "The list has " << list.at(i);
+   }
 
 }
 

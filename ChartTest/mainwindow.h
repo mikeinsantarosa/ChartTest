@@ -18,6 +18,7 @@
 #include "htcdatadialog.h"
 
 #include "htcchartdatafile.h"
+#include "htcchartfolder.h"
 
 #include <QDirIterator>
 
@@ -51,13 +52,15 @@ private slots:
 
     void on_btnOpenFolders_clicked();
 
-    void on_btnChangeDate_clicked();
+
 
     void on_btnShowTable_clicked();
 
     void on_btnLoadFile_clicked();
 
     void on_btnTutorial_clicked();
+
+    void ColumnSelectedByUser();
 
 
 
@@ -70,6 +73,8 @@ private:
     DataManager * dm;
     HtcDataDialog * dd;
     HTCChartDataFile * df;
+    HTCChartFolder * cdf;
+
 
 
 
@@ -84,6 +89,8 @@ private:
     QStringList getFileList();
 
     QString setDataFileDelim(QString fileName);
+
+    void initDialogConnects();
 
 };
 

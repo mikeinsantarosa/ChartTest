@@ -64,36 +64,6 @@
      </size>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineDate">
-    <property name="geometry">
-     <rect>
-      <x>147</x>
-      <y>12</y>
-      <width>125</width>
-      <height>26</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="lineYears">
-    <property name="geometry">
-     <rect>
-      <x>386</x>
-      <y>12</y>
-      <width>125</width>
-      <height>26</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="lineDateResult">
-    <property name="geometry">
-     <rect>
-      <x>624</x>
-      <y>12</y>
-      <width>125</width>
-      <height>26</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QPushButton" name="btnLoadFile">
     <property name="geometry">
      <rect>
@@ -242,31 +212,6 @@
     </property>
     <property name="text">
      <string>Fill a File</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="btnChangeDate">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>20</y>
-      <width>126</width>
-      <height>26</height>
-     </rect>
-    </property>
-    <property name="minimumSize">
-     <size>
-      <width>126</width>
-      <height>26</height>
-     </size>
-    </property>
-    <property name="maximumSize">
-     <size>
-      <width>126</width>
-      <height>26</height>
-     </size>
-    </property>
-    <property name="text">
-     <string>add years</string>
     </property>
    </widget>
    <widget class="QPushButton" name="btnCustomGraph">
