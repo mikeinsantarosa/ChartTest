@@ -5,6 +5,8 @@
 #include <QDir>
 #include <QDebug>
 #include <QDirIterator>
+#include <QFile>
+#include <QFileInfo>
 
 
 
@@ -16,6 +18,7 @@ public:
 
     int init(QString folder, QString extension);
     QStringList GetFolderList();
+    QStringList GetDataSetNames();
 
 signals:
 
@@ -25,6 +28,9 @@ private:
 
     int _numberOfFiles;
     QStringList _folderList;
+    QStringList _sets;
+
+
 
 };
 

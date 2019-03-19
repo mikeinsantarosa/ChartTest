@@ -14,15 +14,29 @@ int HTCChartFolder::init(QString folder, QString extension)
     {
         QString itemName = "";
         int result = 0;
+        QString model = "";
+        QString serial = "";
+        QString temp = "";
+        QStringList theseFnameParts;
+        QString fNameDelim = "_";
+
+        QString thisSet;
 
         bool found = false;
-        QString delim = ",";
+        //fNameDelim
+        //_sets
+
 
         QDir recoredDir(folder);
 
         if(! _folderList.isEmpty())
         {
             _folderList.clear();
+        }
+
+        if(!_sets.isEmpty())
+        {
+            _sets.clear();
         }
 
         QDirIterator it(recoredDir, QDirIterator::Subdirectories);
@@ -39,6 +53,23 @@ int HTCChartFolder::init(QString folder, QString extension)
             itemName = it.next();
             if (itemName.contains(extension))
             {
+                thisSet.clear();
+                QFileInfo file = QFileInfo(itemName);
+                temp = file.fileName();
+                theseFnameParts = temp.split(fNameDelim);
+                model = theseFnameParts.at(1);
+                serial = theseFnameParts.at(2);
+
+                thisSet.append(model);
+                thisSet.append(fNameDelim);
+                thisSet.append(serial);
+
+                //add it to the set if it doesn't exist
+                if(!_sets.contains(thisSet))
+                {
+                    _sets.append(thisSet);
+                }
+
                 _folderList.append(itemName);
                 result += 1;
             }
@@ -52,4 +83,9 @@ int HTCChartFolder::init(QString folder, QString extension)
 QStringList HTCChartFolder::GetFolderList()
 {
     return _folderList;
+}
+
+QStringList HTCChartFolder::GetDataSetNames()
+{
+    return _sets;
 }

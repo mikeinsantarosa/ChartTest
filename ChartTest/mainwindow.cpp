@@ -101,7 +101,7 @@ void MainWindow::on_btnOpenFolders_clicked()
     //QString searchPath = "C:/Users/mpurtell/Desktop/q241/";
 
     QString extension = ".csv";
-
+    QStringList list;
 
     QString dir = QFileDialog::getExistingDirectory(this, tr("Select a folder to Load files from..."), searchPath, QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
 
@@ -110,12 +110,25 @@ void MainWindow::on_btnOpenFolders_clicked()
 
     cdf =  new HTCChartFolder();
     cdf->init(dir, extension);
+    list = cdf->GetDataSetNames();
 
-    qDebug() << "Number of files loaded > " << cdf->GetFolderList().count();
+    QString msg;
+    ui->listWidgetResults->clear();
+    msg.append("Found ");
+    msg.append(QString::number(cdf->GetFolderList().count()));
+    msg.append(" files  and ");
+    msg.append(QString::number(list.count()));
+    msg.append(" set(s)");
+    ui->listWidgetResults->addItem(msg);
+    for(int i = 0; i < list.count(); i++)
+    {
+        msg.clear();
+        msg.append(list.at(i));
+        ui->listWidgetResults->addItem(msg);
+    }
 
 
-
-
+}
 
 
 
@@ -137,7 +150,7 @@ void MainWindow::on_btnOpenFolders_clicked()
 //            dm->loadFileSetFromList(fList, delim);
 //        }
 //    }
-}
+//}
 
 //void MainWindow::on_btnChangeDate_clicked()
 //{
