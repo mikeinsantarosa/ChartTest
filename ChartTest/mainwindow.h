@@ -8,6 +8,7 @@
 #include <QPen>
 #include <QCategoryAxis>
 #include <QPalette>
+#include <QLabel>
 
 #include "loggraph.h"
 #include "lineargraph.h"
@@ -25,6 +26,7 @@
 // for the tutorials
 #include "htcmodel.h"
 #include <QTableView>
+#include <QObjectList>
 
 
 namespace Ui {
@@ -64,6 +66,8 @@ private slots:
 
 
 
+    void on_btnTest_clicked();
+
 private:
     Ui::MainWindow *ui;
 
@@ -74,6 +78,7 @@ private:
     HtcDataDialog * dd;
     HTCChartDataFile * df;
     HTCChartFolder * cdf;
+    QFont _formLabelFont = QFont("Times New Roman",20, QFont::Normal );
 
 
 

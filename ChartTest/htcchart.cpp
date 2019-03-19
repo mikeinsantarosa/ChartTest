@@ -659,6 +659,7 @@ int HtcChart::findFirstNumericRow(QStringList list, QString delimiter)
         {
             _XAxisRescaleValue = 1;
         }
+        return _XAxisRescaleValue;
     }
 
     QPen HtcChart::getPenStyle(int style)

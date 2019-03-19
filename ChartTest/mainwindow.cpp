@@ -207,13 +207,8 @@ QString MainWindow::getDelimToUse(QString fName)
 
 void MainWindow::listFiles(QStringList * flist, QDir directory, QString indent, QString fExtension)
 {
-    //indent += "\t";
     QString target;
-    //QString FullFileName;
     QDir dir(directory);
-    //QStringList FileAndPathList;
-    //extensionFilter << "*.csv" << "*.txt";
-
 
     QFileInfoList list = dir.entryInfoList(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot);
 
@@ -386,3 +381,19 @@ void MainWindow::ColumnSelectedByUser()
 
 
 
+
+void MainWindow::on_btnTest_clicked()
+{
+    QList<QLabel *> butts = ui->centralWidget->findChildren<QLabel *>();
+
+    foreach(QLabel * label, butts)
+    {
+         qDebug() << "label name " << label->objectName();
+         label->setText("Font set to 20");
+         label->setFont(_formLabelFont);
+         QString setto = label->font().family();
+         qDebug() << "font family set to " << setto;
+    }
+
+    qDebug() << "done";
+}

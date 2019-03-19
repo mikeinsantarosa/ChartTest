@@ -23,6 +23,8 @@ ChartProperties::ChartProperties(QWidget *parent) :
 {
     ui->setupUi(this);
     initPenStyleCombos();
+    setAllLabelsFont();
+    setAllCheckboxesFont();
 
 
     _busy = true;
@@ -899,6 +901,37 @@ void ChartProperties::enablePen(int pen)
             // we need to throw an error here
             qDebug() << "We don't do this number!";
     }
+}
+
+void ChartProperties::setAllLabelsFont()
+{
+    QList<QLabel *> butts = this->findChildren<QLabel *>();
+
+    //QList<QLabel *> butts = this->centralWidget->findChildren<QLabel *>();
+
+    foreach(QLabel * label, butts)
+    {
+         label->setFont(_formLabelFont);
+         QString setto = label->font().family();
+         QString name = label->objectName();
+         qDebug() << "label " << name << "font family set to " << setto;
+    }
+
+
+}
+
+void ChartProperties::setAllCheckboxesFont()
+{
+    QList<QCheckBox *> butts = this->findChildren<QCheckBox *>();
+
+    foreach(QCheckBox * box, butts)
+    {
+         box->setFont(_formLabelFont);
+         QString setto = box->font().family();
+         QString name = box->objectName();
+         qDebug() << "label " << name << "font family set to " << setto;
+    }
+
 }
 
 void ChartProperties::initPenFont(int pen)
@@ -2208,6 +2241,14 @@ void ChartProperties::on_pButtonAddPen_clicked()
     {
         emit HTCCHartAddPenRequest(baseValue, header);
     }
+
+
+}
+
+void ChartProperties::setControlStyles()
+{
+    // Get all the labels into a collection
+    // and set their stylesheet.
 
 
 }

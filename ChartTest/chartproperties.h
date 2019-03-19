@@ -11,7 +11,7 @@
 #include <QDoubleValidator>
 #include <QRadioButton>
 #include <QtWidgets/QTabWidget>
-
+#include <QList>
 
 namespace Ui {
 class ChartProperties;
@@ -236,8 +236,6 @@ private slots:
 
     void on_pBttonPen15_clicked();
 
-
-
     void on_spinBox01_valueChanged(int arg1);
 
     void on_spinBox02_valueChanged(int arg1);
@@ -268,9 +266,6 @@ private slots:
 
     void on_spinBox15_valueChanged(int arg1);
 
-
-
-
     void on_comboPen02_currentIndexChanged(int index);
 
     void on_comboPen03_currentIndexChanged(int index);
@@ -299,9 +294,6 @@ private slots:
 
     void on_comboPen15_currentIndexChanged(int index);
 
-
-
-
     void on_pButtonAddPen_clicked();
 
 private:
@@ -317,6 +309,7 @@ private:
 
     bool _busy = true;
 
+    void setControlStyles();
     void setToolTips();
 
     QColor getColorFromPalette(QPalette pal);
@@ -344,6 +337,10 @@ private:
     int _penThicknesses[15] = { 1, 1, 1, 1, 1, 1, 1, 1,
                                 1, 1, 1, 1, 1, 1, 1 };
 
+
+    //QFont _formLabelFont = QFont("Times New Roman",10, QFont::Normal );
+    QFont _formLabelFont = QFont("ariel",10, QFont::Normal );
+
     void updatePenItemsAndNotify(int penNumber);
 
 
@@ -351,6 +348,8 @@ private:
     void initPenFont(int pen);
     void disAblePen(int pen);
     void enablePen(int pen);
+    void setAllLabelsFont();
+    void setAllCheckboxesFont();
 
 };
 
