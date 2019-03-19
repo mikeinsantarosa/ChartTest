@@ -20,11 +20,12 @@
 #include "htcchartdatafile.h"
 
 
-HTCChartDataFile::HTCChartDataFile(QString dataFileName, QString fileDelimiter)
+HTCChartDataFile::HTCChartDataFile(QString dataFileName)
 {
-    _allPoints.clear();
+    setDataFileDelim(dataFileName);
+
+    //_allPoints.clear(); // gets called in init.
     _dataSuccessfullyLoaded = false;
-    _fileDelimiter = fileDelimiter;
     _basedOnThisFile = dataFileName;
 
     init();
@@ -91,11 +92,11 @@ void HTCChartDataFile::init()
 
     if (_totalNumberOfRows > 0)
     {
-       _firstDataRow = findFirstDataRow(_rawDataList, _fileDelimiter);
+       _firstDataRow = findFirstDataRow(_rawDataList, _dataFileDelim);
 
        _lastDataRow = setLastDataRow();
 
-       _numberOfDataColumns = setColumnHeadersList(_fileDelimiter);
+       _numberOfDataColumns = setColumnHeadersList(_dataFileDelim);
        _fileInfo = QFileInfo(_basedOnThisFile);
 
        parseFileProperties();
@@ -106,9 +107,12 @@ void HTCChartDataFile::init()
        if (_numberOfDataColumns >= 2)
        {
            _dataSuccessfullyLoaded = true;
+           setKey();
        }
 
     }
+
+
 }
 
 int HTCChartDataFile::findFirstDataRow(QStringList list, QString delimiter)
@@ -118,7 +122,7 @@ int HTCChartDataFile::findFirstDataRow(QStringList list, QString delimiter)
     QString dataItem;
     int numFinds;
     bool isNumber;
-    int result;
+    int result = -1;
     bool found = false;
 
 
@@ -131,22 +135,17 @@ int HTCChartDataFile::findFirstDataRow(QStringList list, QString delimiter)
             current = list[listRow];
             group = current.split(delimiter);
 
-            qDebug() << "checking this string - " << group;
+
 
             for (int i = 0; i < group.count(); i++)
             {
 
                 dataItem = group[i];
 
-                qDebug() << "Value being checked - " << dataItem;
-
-
                 dataItem = dataItem.trimmed();
                 isNumber = false;
                 if (dataItem.toDouble(&isNumber))
                 {
-
-                    //qDebug() << "That value was a double - " << dataItem;
 
                     numFinds = numFinds + 1;
                     if (numFinds > 1)
@@ -169,15 +168,12 @@ int HTCChartDataFile::findFirstDataRow(QStringList list, QString delimiter)
 
     }
 
-    qDebug() << "Found first data row on line " << result;
-
-
     return result;
 }
 
 int HTCChartDataFile::setLastDataRow()
 {
-    double result = -1;
+    int result = -1;
     if (_rawDataList.count() > 0)
     {
         result = _rawDataList.count() -1;
@@ -201,8 +197,6 @@ int HTCChartDataFile::loadFileIntoList()
             }
                 file.close();
         }
-
-    qDebug() << "in loadFileIntoList() and found " << _rawDataList.count() << " rows.";
 
     if(_rawDataList.count() > 0)
     {
@@ -230,6 +224,23 @@ void HTCChartDataFile::parseFileProperties()
 {
     QString fname = _fileInfo.fileName();
     setFilenameProperties(fname);
+
+
+}
+
+void HTCChartDataFile::setDataFileDelim(QString fileName)
+{
+    QFileInfo info = QFileInfo(fileName);
+    QString extension = info.suffix();
+
+    if (extension == "txt")
+    {
+        _dataFileDelim = "\t";
+    }
+    else
+    {
+        _dataFileDelim = ",";
+    }
 
 
 }
@@ -447,7 +458,7 @@ void HTCChartDataFile::loadDataIntoMemory()
         DataPoint * point = new DataPoint;
         ref = _rawDataList.at(i);
 
-        target = ref.split(_fileDelimiter);
+        target = ref.split(_dataFileDelim);
         freq = QString(target.at(0)).toDouble();
         point->setFreq(freq);
 
@@ -466,7 +477,7 @@ void HTCChartDataFile::loadDataIntoMemory()
 
 void HTCChartDataFile::setFilenameProperties(QString fName)
 {
-    QStringList parts = fName.split("_");
+    QStringList parts = fName.split(_fileNamePartsDelim);
 
     // If the user didn't include
     // additional _ (underscores)
@@ -496,6 +507,7 @@ void HTCChartDataFile::setFilenameProperties(QString fName)
     _rangeIDX = solveRangeIDX(_fRange);
     _orientationOrderIDX = solveOrientationIDX(_polarity, _ttRotation);
     _sortOrderIDX = setSortOrderIndex();
+    setStandardTestType(_fRange);
 
 
     if (numParts - 6 == 1)
@@ -516,7 +528,7 @@ void HTCChartDataFile::setFilenameProperties(QString fName)
 //    qDebug() << "serial - " << _eutSerial;
 //    qDebug() << "range index = " << _rangeIDX;
 //    qDebug() << "Order index = " << _orientationOrderIDX;
-    qDebug() << "Sort Order IDX = " << _sortOrderIDX << " frange/rotation/polarity - " << _fRange << "/" << _ttRotation << "/" << _polarity;
+//    qDebug() << "Sort Order IDX = " << _sortOrderIDX << " frange/rotation/polarity - " << _fRange << "/" << _ttRotation << "/" << _polarity;
 
 
 //    qDebug() << "<! -----------------------------  //>";
@@ -535,7 +547,7 @@ void HTCChartDataFile::setFirstFreq()
     if (_rawDataList.count() > 0)
    {
        QString rowData = _rawDataList.at(_firstDataRow);
-       QStringList values = rowData.split(_fileDelimiter);
+       QStringList values = rowData.split(_dataFileDelim);
        _firstFreq = QString(values.at(0)).toDouble();
    }
 }
@@ -546,9 +558,32 @@ void HTCChartDataFile::setLastFreq()
      if (_rawDataList.count() > 0)
     {
         QString rowData = _rawDataList.at(_lastDataRow);
-        QStringList values = rowData.split(_fileDelimiter);
+        QStringList values = rowData.split(_dataFileDelim);
        _lastFreq = QString(values.at(0)).toDouble();
+     }
+}
+
+void HTCChartDataFile::setStandardTestType(QString rangeString)
+{
+    if(_standardTestRanges->contains(rangeString))
+    {
+        _isStandardTestType = 1;
     }
+    else
+    {
+        _isStandardTestType = 0;
+    }
+}
+
+void HTCChartDataFile::setKey()
+{
+    _SetKey.clear();
+    _SetKey.append(_eutModel);
+    _SetKey.append(_fileNamePartsDelim);
+    _SetKey.append(_eutSerial);
+    _SetKey.append(_fileNamePartsDelim);
+    _SetKey.append(QString::number(_isStandardTestType));
+
 }
 
 QFileInfo HTCChartDataFile::getDataFileInfo()
@@ -599,4 +634,9 @@ int HTCChartDataFile::getOrientationRangeIndex()
 int HTCChartDataFile::getOrientationOrderIndex()
 {
     return _orientationOrderIDX;
+}
+
+QString HTCChartDataFile::getKey()
+{
+    return _SetKey;
 }

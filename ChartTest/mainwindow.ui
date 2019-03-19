@@ -64,31 +64,6 @@
      </size>
     </property>
    </widget>
-   <widget class="QPushButton" name="btnLoadFile">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>50</y>
-      <width>127</width>
-      <height>27</height>
-     </rect>
-    </property>
-    <property name="minimumSize">
-     <size>
-      <width>127</width>
-      <height>27</height>
-     </size>
-    </property>
-    <property name="maximumSize">
-     <size>
-      <width>127</width>
-      <height>27</height>
-     </size>
-    </property>
-    <property name="text">
-     <string>Load Data</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="btnClose">
     <property name="geometry">
      <rect>
@@ -192,8 +167,8 @@
    <widget class="QPushButton" name="btnTutorial">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>80</y>
+      <x>10</x>
+      <y>40</y>
       <width>127</width>
       <height>27</height>
      </rect>
@@ -212,56 +187,6 @@
     </property>
     <property name="text">
      <string>Fill a File</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="btnCustomGraph">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>140</y>
-      <width>127</width>
-      <height>27</height>
-     </rect>
-    </property>
-    <property name="minimumSize">
-     <size>
-      <width>127</width>
-      <height>27</height>
-     </size>
-    </property>
-    <property name="maximumSize">
-     <size>
-      <width>127</width>
-      <height>27</height>
-     </size>
-    </property>
-    <property name="text">
-     <string>Show Linear graph</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="btnLogGraph">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>110</y>
-      <width>127</width>
-      <height>27</height>
-     </rect>
-    </property>
-    <property name="minimumSize">
-     <size>
-      <width>127</width>
-      <height>27</height>
-     </size>
-    </property>
-    <property name="maximumSize">
-     <size>
-      <width>127</width>
-      <height>27</height>
-     </size>
-    </property>
-    <property name="text">
-     <string>Show Log Graph</string>
     </property>
    </widget>
    <widget class="QCheckBox" name="checkRescaleFreqs">
@@ -318,23 +243,17 @@
      <string>Test</string>
     </property>
    </widget>
-   <widget class="QLabel" name="labelTest">
+   <widget class="QPushButton" name="btnLoadFile">
     <property name="geometry">
      <rect>
-      <x>110</x>
+      <x>550</x>
       <y>10</y>
-      <width>671</width>
-      <height>20</height>
+      <width>80</width>
+      <height>26</height>
      </rect>
     </property>
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-      <horstretch>0</horstretch>
-      <verstretch>0</verstretch>
-     </sizepolicy>
-    </property>
     <property name="text">
-     <string>TextLabel</string>
+     <string>Load File</string>
     </property>
    </widget>
   </widget>

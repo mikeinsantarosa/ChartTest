@@ -58,11 +58,12 @@ int DataManager::initLibrary()
 
 void DataManager::listLoadedFiles()
 {
-    HTCChartDataFile df;
+    // not sure what this is for?
+    //HTCChartDataFile df;
     int numberOfFiles = _fileSet->count();
     for (int i = 0; i < numberOfFiles; i++)
     {
-        df = _fileSet->at(i);
+        //df = _fileSet->at(i);
        //
     }
 
@@ -87,7 +88,7 @@ int DataManager::loadFileSetFromList(QStringList list, QString delim)
 
         for (int i = 0; i < list.count(); i++)
         {
-            HTCChartDataFile * df = new HTCChartDataFile(list.at(i), _fileDelim);
+            HTCChartDataFile * df = new HTCChartDataFile(list.at(i));
 
             _fileSet->append(*df);
         }

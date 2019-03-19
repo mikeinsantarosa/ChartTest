@@ -31,26 +31,26 @@ MainWindow::~MainWindow()
 
 }
 
-void MainWindow::on_btnLogGraph_clicked()
-{
-    // show log graph
-    logGraph = new LogGraph;
-    logGraph->show();
+//void MainWindow::on_btnLogGraph_clicked()
+//{
+//    // show log graph
+//    logGraph = new LogGraph;
+//    logGraph->show();
 
-    qDebug() << "Executed the LOG show() command ";
+//    qDebug() << "Executed the LOG show() command ";
 
-}
+//}
 
-void MainWindow::on_btnCustomGraph_clicked()
-{
-    // show custom graph
-    linGraph = new LinearGraph;
-    linGraph->show();
+//void MainWindow::on_btnCustomGraph_clicked()
+//{
+//    // show custom graph
+//    linGraph = new LinearGraph;
+//    linGraph->show();
 
-    qDebug() << "Executed the LIN show() command ";
+//    qDebug() << "Executed the LIN show() command ";
 
 
-}
+//}
 
 
 void MainWindow::on_btnClose_clicked()
@@ -152,25 +152,6 @@ void MainWindow::on_btnOpenFolders_clicked()
 //    }
 //}
 
-//void MainWindow::on_btnChangeDate_clicked()
-//{
-//    QString dt = ui->lineDate->text();
-//    QString yr = ui->lineYears->text();
-//    QStringList group = dt.split(" ");
-//    int newYear = (QString(group[2]).trimmed()).toInt();
-
-//    int yearToAdd = QString(yr).toInt();
-
-//    newYear = newYear + yearToAdd;
-//    ui->lineDateResult->setText(QString::number(newYear));
-//    qDebug() << "newYear after add " << newYear;
-
-//    QString DueYearString = (QString(group[0]).trimmed() + " " + QString(group[1]).trimmed() + " " + QString::number(newYear));
-
-//   qDebug() << "new date - " << DueYearString;
-
-
-//}
 
 QStringList MainWindow::getListToLoad()
 {
@@ -220,7 +201,6 @@ void MainWindow::listFiles(QStringList * flist, QDir directory, QString indent, 
             target = finfo.fileName();
             if (target.contains(fExtension))
             {
-                //FullFileName = finfo.absoluteFilePath();
                 flist->append(finfo.absoluteFilePath());
                 ui->lstFolders->addItem(target);
             }
@@ -340,26 +320,24 @@ void MainWindow::on_btnLoadFile_clicked()
 void MainWindow::on_btnTutorial_clicked()
 {
 
-   QString fileToOpen = "/home/mandbx/Desktop/misc-docs/q241/samples/80M-1G_3_h-LOG-2_data_Points.txt";
-
-   QString delim = setDataFileDelim(fileToOpen);
+   QString fileToOpen = "/home/mandbx/Desktop/misc-docs/q241/samples/q241_N9040B_US00091117_3vm_80M-1G_0_H.txt";
 
 
+   df = new HTCChartDataFile(fileToOpen);
 
-   if(!delim.isEmpty())
-   {
-       df = new HTCChartDataFile(fileToOpen, delim);
-   }
+//   QStringList list = df->getColumnHeaderList();
 
-   QStringList list = df->getColumnHeaderList();
+//   for(int i = 0; i < list.count(); i++)
+//   {
+//       //qDebug() << "header item-" << i << " == " << list.at(i);
+//   }
 
-   for(int i = 0; i < list.count(); i++)
-   {
-       qDebug() << "header item-" << i << " == " << list.at(i);
-   }
 
-   //qDebug() << " found this model number in the file" << df->getOrientationEUTModel();
+   qDebug() << " here's the file key" << df->getKey();
 
+   delete df;
+
+   qDebug() << "deleted df";
 
 }
 

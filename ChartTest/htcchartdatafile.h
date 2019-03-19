@@ -11,7 +11,7 @@ class HTCChartDataFile
 {
 
 public:
-    explicit HTCChartDataFile(QString dataFileName = "", QString fileDelimiter = "," );
+    explicit HTCChartDataFile(QString dataFileName );
 
     QVector <DataPoint> getAllPoints();
 
@@ -33,6 +33,7 @@ public:
     QString getOrientationTestCode();
     int getOrientationRangeIndex();
     int getOrientationOrderIndex();
+    QString getKey();
 
 
 
@@ -48,7 +49,7 @@ private:
 
     QFileInfo _fileInfo;
     QString _basedOnThisFile;
-    QString _fileDelimiter;
+    QString _dataFileDelim;
     bool _dataSuccessfullyLoaded;
     int _totalNumberOfRows;
     int _firstDataRow;
@@ -57,6 +58,10 @@ private:
     int _numberOfDataColumns;
     QStringList _rawDataList;
     QStringList _ColumnHeaderlist;
+    int _isStandardTestType;
+    QString _fileNamePartsDelim = "_";
+    QString _standardTestRanges[4] = {"80M-1G","1G-2G","2G-27G","1G-6G"};
+    QString _SetKey = "";
 
     // file sort properties
     QString _polarity;
@@ -75,6 +80,7 @@ private:
     double _firstFreq;
     double _lastFreq;
 
+
     void init();
 
     int findFirstDataRow(QStringList list, QString delimiter);
@@ -82,6 +88,7 @@ private:
     int loadFileIntoList();
     int setColumnHeadersList(QString delim);
     void parseFileProperties();
+    void setDataFileDelim(QString fileName);
 
     int solveRangeIDX(QString rangeString);
     int solveOrientationIDX(QString polarity, QString rotation);
@@ -94,6 +101,8 @@ private:
     void setFilenameProperties(QString fName);
     void setFirstFreq();
     void setLastFreq();
+    void setStandardTestType(QString rangeString);
+    void setKey();
 
 
 };

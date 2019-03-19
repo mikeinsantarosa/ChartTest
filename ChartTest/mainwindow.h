@@ -14,7 +14,7 @@
 #include "lineargraph.h"
 #include "htcchart.h"
 #include "htcchartdatafile.h"
-#include "datamanager.h"
+//#include "datamanager.h"
 #include "htctableviewer.h"
 #include "htcdatadialog.h"
 
@@ -42,9 +42,9 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_btnLogGraph_clicked();
+    //void on_btnLogGraph_clicked();
 
-    void on_btnCustomGraph_clicked();
+    //void on_btnCustomGraph_clicked();
 
     void on_btnClose_clicked();
 
@@ -74,7 +74,7 @@ private:
     LogGraph * logGraph;
     LinearGraph * linGraph;
     HtcChart * testchart;
-    DataManager * dm;
+    //DataManager * dm;
     HtcDataDialog * dd;
     HTCChartDataFile * df;
     HTCChartFolder * cdf;

@@ -32,7 +32,7 @@ SOURCES += main.cpp\
     htcchart.cpp \
     htcchartdatafile.cpp \
     datapoint.cpp \
-    datamanager.cpp \
+#    datamanager.cpp \
     htctableviewer.cpp \
     htcdatadialog.cpp \
     htcmodel.cpp \
@@ -48,7 +48,7 @@ HEADERS  += mainwindow.h \
     htcchart.h \
     htcchartdatafile.h \
     datapoint.h \
-    datamanager.h \
+#    datamanager.h \
     htctableviewer.h \
     htcdatadialog.h \
     htcmodel.h \
