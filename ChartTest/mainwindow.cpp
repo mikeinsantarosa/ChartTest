@@ -31,6 +31,23 @@ MainWindow::~MainWindow()
 
 }
 
+// don't ever toss this snip
+//
+// How to get a list of a specific type of controls on a form
+//
+// code
+//QList<QLabel *> butts = ui->centralWidget->findChildren<QLabel *>();
+
+//foreach(QLabel * label, butts)
+//{
+//     qDebug() << "label name " << label->objectName();
+//     label->setText("Font set to 20");
+//     label->setFont(_formLabelFont);
+//     QString setto = label->font().family();
+//     qDebug() << "font family set to " << setto;
+//}
+
+
 //void MainWindow::on_btnLogGraph_clicked()
 //{
 //    // show log graph
@@ -155,17 +172,17 @@ void MainWindow::on_btnOpenFolders_clicked()
 
 QStringList MainWindow::getListToLoad()
 {
-    QStringList result;
-    result.clear();
+//    QStringList result;
+//    result.clear();
 
-    int numEntries = ui->lstFolders->count();
+//    int numEntries = ui->lstFolders->count();
 
-    for (int i = 0; i < numEntries; i++)
-    {
-        result.append(ui->lstFolders->item(i)->text());
-    }
+//    for (int i = 0; i < numEntries; i++)
+//    {
+//        result.append(ui->lstFolders->item(i)->text());
+//    }
 
-    return result;
+//    return result;
 }
 
 QString MainWindow::getDelimToUse(QString fName)
@@ -188,27 +205,27 @@ QString MainWindow::getDelimToUse(QString fName)
 
 void MainWindow::listFiles(QStringList * flist, QDir directory, QString indent, QString fExtension)
 {
-    QString target;
-    QDir dir(directory);
+//    QString target;
+//    QDir dir(directory);
 
-    QFileInfoList list = dir.entryInfoList(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot);
+//    QFileInfoList list = dir.entryInfoList(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot);
 
-    foreach(QFileInfo finfo, list)
-    {
-        if (!finfo.isDir() )
-        {
+//    foreach(QFileInfo finfo, list)
+//    {
+//        if (!finfo.isDir() )
+//        {
 
-            target = finfo.fileName();
-            if (target.contains(fExtension))
-            {
-                flist->append(finfo.absoluteFilePath());
-                ui->lstFolders->addItem(target);
-            }
-        }
-        if (finfo.isDir()) {
-                    listFiles(flist, QDir(finfo.absoluteFilePath()), indent, fExtension);
-            }
-    }
+//            target = finfo.fileName();
+//            if (target.contains(fExtension))
+//            {
+//                flist->append(finfo.absoluteFilePath());
+//                ui->lstFolders->addItem(target);
+//            }
+//        }
+//        if (finfo.isDir()) {
+//                    listFiles(flist, QDir(finfo.absoluteFilePath()), indent, fExtension);
+//            }
+//    }
 
 
 
@@ -236,22 +253,22 @@ int MainWindow::loadListFromPath(QString dir, QString fileExtension)
     QDirIterator it(recoredDir, QDirIterator::Subdirectories);
 
 
-    while (it.hasNext())
-    {
-        if (!found)
-        {
-            found = true;
+//    while (it.hasNext())
+//    {
+//        if (!found)
+//        {
+//            found = true;
 
-        }
+//        }
 
-        itemName = it.next();
-        if (itemName.contains(fileExtension))
-        {
-             ui->lstFolders->addItem(itemName);
-             result += 1;
-        }
+//        itemName = it.next();
+//        if (itemName.contains(fileExtension))
+//        {
+//             ui->lstFolders->addItem(itemName);
+//             result += 1;
+//        }
 
-    }
+//    }
 
     return result;
 }
@@ -362,16 +379,18 @@ void MainWindow::ColumnSelectedByUser()
 
 void MainWindow::on_btnTest_clicked()
 {
-    QList<QLabel *> butts = ui->centralWidget->findChildren<QLabel *>();
+    //QString folderToOpen = "/home/mandbx/Desktop/misc-docs/q241/Data/";
+    QString folderToOpen = "/home/mandbx/Desktop/misc-docs/q241/multiple-data-sets/";
+    QString filter = ".csv";
 
-    foreach(QLabel * label, butts)
-    {
-         qDebug() << "label name " << label->objectName();
-         label->setText("Font set to 20");
-         label->setFont(_formLabelFont);
-         QString setto = label->font().family();
-         qDebug() << "font family set to " << setto;
-    }
+    ds = new HTCDataSelector;
 
-    qDebug() << "done";
+    ds->SetFolderInService(folderToOpen, filter);
+    ds->move(10,10);
+    ds->show();
+//    ds->LoadSetFromPath(folderToOpen, filter);
+
+//    qDebug() << "folder/extension loaded = " << ds->GetFolderInService() << "/" << ds->GetExtensionFilter();
+
+//    delete ds;
 }

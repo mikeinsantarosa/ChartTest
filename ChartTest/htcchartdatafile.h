@@ -12,6 +12,7 @@ class HTCChartDataFile
 
 public:
     explicit HTCChartDataFile(QString dataFileName );
+    HTCChartDataFile();
 
     QVector <DataPoint> getAllPoints();
 
@@ -60,7 +61,7 @@ private:
     QStringList _ColumnHeaderlist;
     int _isStandardTestType;
     QString _fileNamePartsDelim = "_";
-    QString _standardTestRanges[4] = {"80M-1G","1G-2G","2G-27G","1G-6G"};
+    QStringList _standardTestRanges;//{"80M-1G","1G-2G","2G-27G","1G-6G"};
     QString _SetKey = "";
 
     // file sort properties
@@ -93,6 +94,8 @@ private:
     int solveRangeIDX(QString rangeString);
     int solveOrientationIDX(QString polarity, QString rotation);
     int setSortOrderIndex();
+
+    void initProperties();
 
     // file data
     QVector <DataPoint> _allPoints;

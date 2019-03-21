@@ -13,7 +13,7 @@ class DataManager
 public:
 
     static DataManager * GetInstance();
-    int loadFileSetFromList(QStringList list, QString delim);
+    int loadFileSetFromList(QStringList list);
     int getNumberOfFiles();
     QVector <HTCChartDataFile> * getFileSet();
     HTCChartDataFile getFile(int atPos);

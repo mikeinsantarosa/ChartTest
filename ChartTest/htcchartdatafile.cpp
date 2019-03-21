@@ -23,12 +23,18 @@
 HTCChartDataFile::HTCChartDataFile(QString dataFileName)
 {
     setDataFileDelim(dataFileName);
-
-    //_allPoints.clear(); // gets called in init.
+    initProperties();
     _dataSuccessfullyLoaded = false;
     _basedOnThisFile = dataFileName;
+    _isStandardTestType = 0;
 
     init();
+    setKey();
+}
+
+HTCChartDataFile::HTCChartDataFile()
+{
+
 }
 
 QVector<DataPoint> HTCChartDataFile::getAllPoints()
@@ -107,7 +113,6 @@ void HTCChartDataFile::init()
        if (_numberOfDataColumns >= 2)
        {
            _dataSuccessfullyLoaded = true;
-           setKey();
        }
 
     }
@@ -279,8 +284,6 @@ int HTCChartDataFile::solveRangeIDX(QString rangeString)
 int HTCChartDataFile::solveOrientationIDX(QString polarity, QString rotation)
 {
     int result = -1;
-    // solve for all standard orientations
-    //qDebug() << "solving for polarity/rotation/rangeIDX/fRange " << polarity << "/" << rotation << "/" << _rangeIDX << "/" << _fRange;
 
     if (polarity == "BL" && rotation == "0")
     {
@@ -441,6 +444,14 @@ int HTCChartDataFile::setSortOrderIndex()
 
 }
 
+void HTCChartDataFile::initProperties()
+{
+    _standardTestRanges.append("80M-1G");
+    _standardTestRanges.append("1G-2G");
+    _standardTestRanges.append("2G-27G");
+    _standardTestRanges.append("1G-6G");
+}
+
 
 
 
@@ -518,25 +529,11 @@ void HTCChartDataFile::setFilenameProperties(QString fName)
     {
         _eutModel = "UNKNOWN";
     }
-//    qDebug() << "parts for fName - " << fName;
-//    qDebug() << "test code - " << _testCode;
-//    qDebug() << "polarity - " << _polarity;
-//    qDebug() << "rotation - " << _ttRotation;
-//    qDebug() << "freq range - " << _fRange;
-//    qDebug() << "test level - " << _tLevel;
-//    qDebug() << "model - " << _eutModel;
-//    qDebug() << "serial - " << _eutSerial;
-//    qDebug() << "range index = " << _rangeIDX;
-//    qDebug() << "Order index = " << _orientationOrderIDX;
-//    qDebug() << "Sort Order IDX = " << _sortOrderIDX << " frange/rotation/polarity - " << _fRange << "/" << _ttRotation << "/" << _polarity;
 
-
-//    qDebug() << "<! -----------------------------  //>";
-
-if (_orientationOrderIDX == -1)
-{
-    qDebug() << _eutModel << " - " << _eutSerial << " has a bad order index for polarity/rotation " << _polarity << ":" << _ttRotation;
-}
+    if (_orientationOrderIDX == -1)
+    {
+        qDebug() << _eutModel << " - " << _eutSerial << " has a bad order index for polarity/rotation " << _polarity << ":" << _ttRotation;
+    }
 
 
 }
@@ -565,7 +562,10 @@ void HTCChartDataFile::setLastFreq()
 
 void HTCChartDataFile::setStandardTestType(QString rangeString)
 {
-    if(_standardTestRanges->contains(rangeString))
+    _isStandardTestType = 0;
+
+
+    if(_standardTestRanges.indexOf(rangeString) > -1)
     {
         _isStandardTestType = 1;
     }
@@ -573,6 +573,8 @@ void HTCChartDataFile::setStandardTestType(QString rangeString)
     {
         _isStandardTestType = 0;
     }
+
+
 }
 
 void HTCChartDataFile::setKey()
@@ -590,7 +592,7 @@ QFileInfo HTCChartDataFile::getDataFileInfo()
 {
     return _fileInfo;
 }
-
+;
 QString HTCChartDataFile::getOrientationPolarity()
 {
     return _polarity;

@@ -14,12 +14,12 @@
 #include "lineargraph.h"
 #include "htcchart.h"
 #include "htcchartdatafile.h"
-//#include "datamanager.h"
 #include "htctableviewer.h"
 #include "htcdatadialog.h"
 
 #include "htcchartdatafile.h"
 #include "htcchartfolder.h"
+#include "htcdataselector.h"
 
 #include <QDirIterator>
 
@@ -78,6 +78,9 @@ private:
     HtcDataDialog * dd;
     HTCChartDataFile * df;
     HTCChartFolder * cdf;
+
+
+    HTCDataSelector * ds;
     QFont _formLabelFont = QFont("Times New Roman",20, QFont::Normal );
 
 

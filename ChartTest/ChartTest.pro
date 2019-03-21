@@ -32,14 +32,15 @@ SOURCES += main.cpp\
     htcchart.cpp \
     htcchartdatafile.cpp \
     datapoint.cpp \
-#    datamanager.cpp \
+    datamanager.cpp \
     htctableviewer.cpp \
     htcdatadialog.cpp \
     htcmodel.cpp \
     htcfilelibrary.cpp \
     htcdatasetitem.cpp \
     htcchartfolder.cpp \
-    htcdatasetselector.cpp
+    # htcdataselector.cpp
+    htcdataselector.cpp
 
 HEADERS  += mainwindow.h \
     loggraph.h \
@@ -48,14 +49,16 @@ HEADERS  += mainwindow.h \
     htcchart.h \
     htcchartdatafile.h \
     datapoint.h \
-#    datamanager.h \
+    datamanager.h \
     htctableviewer.h \
     htcdatadialog.h \
     htcmodel.h \
     htcfilelibrary.h \
     htcdatasetitem.h \
     htcchartfolder.h \
-    htcdatasetselector.h
+    # htcdataselector.h
+    htcdataselector.h
+
 
 FORMS    += mainwindow.ui \
     loggraph.ui \
@@ -63,7 +66,9 @@ FORMS    += mainwindow.ui \
     chartproperties.ui \
     htcchart.ui \
     htctableviewer.ui \
-    htcdatadialog.ui
+    htcdatadialog.ui \
+    # htcdataselector.ui
+    htcdataselector.ui
 
 RESOURCES += \
     resources.qrc

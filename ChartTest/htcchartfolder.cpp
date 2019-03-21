@@ -12,6 +12,9 @@ int HTCChartFolder::init(QString folder, QString extension)
 {
     if(!folder.isEmpty())
     {
+
+        HTCChartDataFile filObj;
+
         QString itemName = "";
         int result = 0;
         QString model = "";
@@ -20,18 +23,24 @@ int HTCChartFolder::init(QString folder, QString extension)
         QStringList theseFnameParts;
         QString fNameDelim = "_";
 
-        QString thisSet;
+        QString thisSet = "";
+        QString thisTag = "";
+        QString fileToLoad = "";
+
+
 
         bool found = false;
-        //fNameDelim
-        //_sets
 
-
-        QDir recoredDir(folder);
+        QDir recordDir(folder);
 
         if(! _folderList.isEmpty())
         {
             _folderList.clear();
+
+        }
+        if(!_TaggedList.isEmpty())
+        {
+            _TaggedList.clear();
         }
 
         if(!_sets.isEmpty())
@@ -39,7 +48,7 @@ int HTCChartFolder::init(QString folder, QString extension)
             _sets.clear();
         }
 
-        QDirIterator it(recoredDir, QDirIterator::Subdirectories);
+        QDirIterator it(recordDir, QDirIterator::Subdirectories);
 
 
         while (it.hasNext())
@@ -51,28 +60,47 @@ int HTCChartFolder::init(QString folder, QString extension)
             }
 
             itemName = it.next();
+            // make sure the found file has the correct extension
             if (itemName.contains(extension))
             {
-                thisSet.clear();
-                QFileInfo file = QFileInfo(itemName);
-                temp = file.fileName();
-                theseFnameParts = temp.split(fNameDelim);
-                model = theseFnameParts.at(1);
-                serial = theseFnameParts.at(2);
-
-                thisSet.append(model);
-                thisSet.append(fNameDelim);
-                thisSet.append(serial);
-
-                //add it to the set if it doesn't exist
-                if(!_sets.contains(thisSet))
+                if(itemName.contains("q241") || itemName.contains("q242") || itemName.contains("q243"))
                 {
-                    _sets.append(thisSet);
+                    thisSet.clear();
+                    QFileInfo file = QFileInfo(itemName);
+                    temp = file.fileName();
+                    HTCChartDataFile *  filObj = new HTCChartDataFile(itemName);
+                    model = filObj->getOrientationEUTModel();
+                    serial = filObj->getOrientationEUTSerial();
+
+                    thisSet.append(model);
+                    thisSet.append(fNameDelim);
+                    thisSet.append(serial);
+
+                    thisTag.append(filObj->getKey());
+                    thisTag.append(",");
+                    thisTag.append(itemName);
+
+                    //add it to the set if it doesn't exist
+                    if(!_sets.contains(thisSet))
+                    {
+                        _sets.append(thisSet);
+                    }
+
+                    _folderList.append(itemName);
+                    _TaggedList.append(thisTag);
+
+                    result += 1;
+
+                    thisTag.clear();
+                    thisSet.clear();
+
+                    // the filObj got created so delete it
+                    delete filObj;
                 }
 
-                _folderList.append(itemName);
-                result += 1;
             }
+
+
 
         }
 
@@ -88,4 +116,9 @@ QStringList HTCChartFolder::GetFolderList()
 QStringList HTCChartFolder::GetDataSetNames()
 {
     return _sets;
+}
+
+QStringList HTCChartFolder::GetTaggedList()
+{
+    return _TaggedList;
 }

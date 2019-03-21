@@ -7,6 +7,7 @@
 #include <QDirIterator>
 #include <QFile>
 #include <QFileInfo>
+#include "htcchartdatafile.h"
 
 
 
@@ -19,6 +20,8 @@ public:
     int init(QString folder, QString extension);
     QStringList GetFolderList();
     QStringList GetDataSetNames();
+    QStringList GetTaggedList();
+
 
 signals:
 
@@ -29,6 +32,10 @@ private:
     int _numberOfFiles;
     QStringList _folderList;
     QStringList _sets;
+
+    QStringList _TaggedList;
+
+    void fillTaggedList();
 
 
 

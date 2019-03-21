@@ -36,34 +36,6 @@
     <normaloff>:/images/images/charts2.png</normaloff>:/images/images/charts2.png</iconset>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QListWidget" name="lstFolders">
-    <property name="geometry">
-     <rect>
-      <x>147</x>
-      <y>44</y>
-      <width>710</width>
-      <height>200</height>
-     </rect>
-    </property>
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
-      <horstretch>0</horstretch>
-      <verstretch>0</verstretch>
-     </sizepolicy>
-    </property>
-    <property name="minimumSize">
-     <size>
-      <width>710</width>
-      <height>200</height>
-     </size>
-    </property>
-    <property name="maximumSize">
-     <size>
-      <width>710</width>
-      <height>200</height>
-     </size>
-    </property>
-   </widget>
    <widget class="QPushButton" name="btnClose">
     <property name="geometry">
      <rect>
@@ -168,7 +140,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>40</y>
+      <y>50</y>
       <width>127</width>
       <height>27</height>
      </rect>
@@ -220,16 +192,6 @@
      <string>Rescale Freqs</string>
     </property>
    </widget>
-   <widget class="QListWidget" name="listWidgetResults">
-    <property name="geometry">
-     <rect>
-      <x>250</x>
-      <y>250</y>
-      <width>491</width>
-      <height>151</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QPushButton" name="btnTest">
     <property name="geometry">
      <rect>
@@ -240,7 +202,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Test</string>
+     <string>Select Data</string>
     </property>
    </widget>
    <widget class="QPushButton" name="btnLoadFile">
@@ -254,6 +216,26 @@
     </property>
     <property name="text">
      <string>Load File</string>
+    </property>
+   </widget>
+   <widget class="QListWidget" name="lstFolders">
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>40</y>
+      <width>561</width>
+      <height>161</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QListWidget" name="listWidgetResults">
+    <property name="geometry">
+     <rect>
+      <x>280</x>
+      <y>221</y>
+      <width>461</width>
+      <height>171</height>
+     </rect>
     </property>
    </widget>
   </widget>

@@ -532,7 +532,7 @@ void ChartProperties::updatePenItemsAndNotify(int penNumber)
     {
         case 1:
             width = ui->spinBox01->value();
-            qDebug() << "Sending pen1 thickness = " << width;
+
             palPen = ui->linePen01->palette();
             color = palPen.color(QPalette::Text);
             penStyle = ui->comboPen01->currentIndex();
@@ -907,14 +907,11 @@ void ChartProperties::setAllLabelsFont()
 {
     QList<QLabel *> butts = this->findChildren<QLabel *>();
 
-    //QList<QLabel *> butts = this->centralWidget->findChildren<QLabel *>();
-
     foreach(QLabel * label, butts)
     {
          label->setFont(_formLabelFont);
          QString setto = label->font().family();
          QString name = label->objectName();
-         qDebug() << "label " << name << "font family set to " << setto;
     }
 
 
@@ -929,7 +926,6 @@ void ChartProperties::setAllCheckboxesFont()
          box->setFont(_formLabelFont);
          QString setto = box->font().family();
          QString name = box->objectName();
-         qDebug() << "label " << name << "font family set to " << setto;
     }
 
 }
@@ -1254,7 +1250,7 @@ void ChartProperties::on_txtYAxisLabelText_textChanged()
 void ChartProperties::on_radioYLog_clicked(bool checked)
 {
     emit HTCChartYLogChartRequest(checked);
-    qDebug() << "Y log Request " << checked;
+
 }
 
 
@@ -1426,7 +1422,7 @@ void ChartProperties::on_radioYLin_clicked(bool checked)
     if (!_busy)
     {
         emit HTCChartYLinChartRequest(checked);
-        qDebug() << "Y lin Request " << checked;
+
     }
 }
 

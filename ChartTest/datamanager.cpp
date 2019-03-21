@@ -58,12 +58,11 @@ int DataManager::initLibrary()
 
 void DataManager::listLoadedFiles()
 {
-    // not sure what this is for?
-    //HTCChartDataFile df;
+    HTCChartDataFile df;
     int numberOfFiles = _fileSet->count();
     for (int i = 0; i < numberOfFiles; i++)
     {
-        //df = _fileSet->at(i);
+        df = _fileSet->at(i);
        //
     }
 
@@ -74,13 +73,13 @@ void DataManager::listLoadedFiles()
 
 
 // needs translation to HTCDatafile type
-int DataManager::loadFileSetFromList(QStringList list, QString delim)
+int DataManager::loadFileSetFromList(QStringList list)
 {
 
     _fileSet = new QVector <HTCChartDataFile> ;
     int result = 0;
 
-    _fileDelim = delim;
+   // _fileDelim = delim;
 
     if (list.count() > 0)
     {
