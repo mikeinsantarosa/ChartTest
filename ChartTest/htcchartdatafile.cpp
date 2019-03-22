@@ -50,6 +50,7 @@ QStringList HTCChartDataFile::getColumnHeaderList()
 
 bool HTCChartDataFile::getDataSuccessfullyLoaded()
 {
+    qDebug() << "getting file loaded as " << _dataSuccessfullyLoaded;
     return _dataSuccessfullyLoaded;
 
 }
@@ -100,7 +101,11 @@ void HTCChartDataFile::init()
     {
        _firstDataRow = findFirstDataRow(_rawDataList, _dataFileDelim);
 
+       //qDebug() << "found first data row @ " << _firstDataRow;
+
        _lastDataRow = setLastDataRow();
+
+       //qDebug() << "found last data row @ " << _lastDataRow;
 
        _numberOfDataColumns = setColumnHeadersList(_dataFileDelim);
        _fileInfo = QFileInfo(_basedOnThisFile);
@@ -110,6 +115,7 @@ void HTCChartDataFile::init()
        setLastFreq();
 
        loadDataIntoMemory();
+
        if (_numberOfDataColumns >= 2)
        {
            _dataSuccessfullyLoaded = true;
@@ -129,6 +135,8 @@ int HTCChartDataFile::findFirstDataRow(QStringList list, QString delimiter)
     bool isNumber;
     int result = -1;
     bool found = false;
+    QRegExp re("^-?\\d*\\.?\\d+");
+
 
 
     for (int listRow = 0; listRow < list.count(); listRow++)
@@ -148,21 +156,39 @@ int HTCChartDataFile::findFirstDataRow(QStringList list, QString delimiter)
                 dataItem = group[i];
 
                 dataItem = dataItem.trimmed();
+
+
+
                 isNumber = false;
-                if (dataItem.toDouble(&isNumber))
+
+                //qDebug() << " row / dataItem to chech to be a number is >> " << listRow << " / " << dataItem;
+
+                if (!dataItem.isEmpty())
                 {
+                    //qDebug() << "Value is not empty";
 
-                    numFinds = numFinds + 1;
-                    if (numFinds > 1)
+                    if(re.exactMatch(dataItem))
                     {
-                        result = listRow;
-                        found = true;
-                        break;
 
+                        //qDebug() << "Value is a number";
+
+                        numFinds = numFinds + 1;
+
+                        //qDebug() << "finds = " << numFinds;
+
+                        if (numFinds > 1)
+                        {
+                            result = listRow;
+                            found = true;
+                            break;
+
+                        }
                     }
+
+
                 }
 
-            }
+             }
 
         }
         else
@@ -202,6 +228,8 @@ int HTCChartDataFile::loadFileIntoList()
             }
                 file.close();
         }
+
+    qDebug() << "loaded this many lines into the list " << _rawDataList.count();
 
     if(_rawDataList.count() > 0)
     {
@@ -471,6 +499,7 @@ void HTCChartDataFile::loadDataIntoMemory()
 
         target = ref.split(_dataFileDelim);
         freq = QString(target.at(0)).toDouble();
+
         point->setFreq(freq);
 
         for (int i = 1; i < target.count(); i++)

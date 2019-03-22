@@ -7,7 +7,9 @@ HTCDataSelector::HTCDataSelector(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    // create new Chart Data Folder
     cdf = new HTCChartFolder;
+    qDebug() << "created new Chart Data Folder";
     connect(ui->treeDatasets, SIGNAL(itemSelectionChanged()), this, SLOT(mySlot_Changed()));
 
     //fillTree();

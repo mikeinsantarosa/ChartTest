@@ -37,6 +37,8 @@ private:
 
     void fillTaggedList();
 
+    int CountFiles(QString path);
+
 
 
 };

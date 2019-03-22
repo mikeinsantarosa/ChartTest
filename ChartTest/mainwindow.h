@@ -28,6 +28,8 @@
 #include <QTableView>
 #include <QObjectList>
 
+#include <QRegExp>
+
 
 namespace Ui {
 class MainWindow;
@@ -67,6 +69,8 @@ private slots:
 
 
     void on_btnTest_clicked();
+
+    void on_pushButton_clicked();
 
 private:
     Ui::MainWindow *ui;

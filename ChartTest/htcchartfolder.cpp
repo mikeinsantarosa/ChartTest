@@ -10,6 +10,15 @@ HTCChartFolder::HTCChartFolder(QObject *parent) : QObject(parent)
 
 int HTCChartFolder::init(QString folder, QString extension)
 {
+
+    // ++++++++++++++++++++++++++++++++++++++++++++++++
+    // check for file count first
+    // we might need to protect against too many files
+    // ++++++++++++++++++++++++++++++++++++++++++++++++
+    int fileCount = CountFiles(folder);
+    qDebug() << "number of files in that path is " << fileCount;
+
+
     if(!folder.isEmpty())
     {
 
@@ -20,24 +29,25 @@ int HTCChartFolder::init(QString folder, QString extension)
         QString model = "";
         QString serial = "";
         QString temp = "";
-        QStringList theseFnameParts;
+        //QStringList theseFnameParts;
         QString fNameDelim = "_";
-
         QString thisSet = "";
         QString thisTag = "";
-        QString fileToLoad = "";
-
+        //QString fileToLoad = "";
+        //QString fileToCheck = "";
+        QString nameToTest = "";
 
 
         bool found = false;
 
         QDir recordDir(folder);
+        recordDir.setSorting(QDir::Name);
 
         if(! _folderList.isEmpty())
         {
             _folderList.clear();
-
         }
+
         if(!_TaggedList.isEmpty())
         {
             _TaggedList.clear();
@@ -60,15 +70,31 @@ int HTCChartFolder::init(QString folder, QString extension)
             }
 
             itemName = it.next();
-            // make sure the found file has the correct extension
-            if (itemName.contains(extension))
+            // qDebug() << "Checking itemname  -> " << itemName;
+
+
+            QFileInfo info = QFileInfo(itemName);
+            nameToTest = info.fileName();
+
+            //qDebug() << "What's being tested -> " << nameToTest;
+
+            if (nameToTest.contains(extension))
             {
-                if(itemName.contains("q241") || itemName.contains("q242") || itemName.contains("q243"))
+
+                //qDebug() << "Suffix is a match! " ;
+
+
+                if(nameToTest.contains("q241") || nameToTest.contains("q242") || nameToTest.contains("q243") == true)
                 {
+
+                    //qDebug() << "filter says this is a q241 file";
+
                     thisSet.clear();
-                    QFileInfo file = QFileInfo(itemName);
-                    temp = file.fileName();
                     HTCChartDataFile *  filObj = new HTCChartDataFile(itemName);
+
+
+                   qDebug() << "File got loaded successfully ->" << filObj->getDataSuccessfullyLoaded();
+
                     model = filObj->getOrientationEUTModel();
                     serial = filObj->getOrientationEUTSerial();
 
@@ -80,9 +106,13 @@ int HTCChartFolder::init(QString folder, QString extension)
                     thisTag.append(",");
                     thisTag.append(itemName);
 
+                    // qDebug() << "This key " << thisTag;
+
                     //add it to the set if it doesn't exist
                     if(!_sets.contains(thisSet))
                     {
+
+                        qDebug() << "Adding a set -> " << thisSet;
                         _sets.append(thisSet);
                     }
 
@@ -90,6 +120,8 @@ int HTCChartFolder::init(QString folder, QString extension)
                     _TaggedList.append(thisTag);
 
                     result += 1;
+
+                    //qDebug() << "result count is @ " << result;
 
                     thisTag.clear();
                     thisSet.clear();
@@ -121,4 +153,24 @@ QStringList HTCChartFolder::GetDataSetNames()
 QStringList HTCChartFolder::GetTaggedList()
 {
     return _TaggedList;
+}
+
+int HTCChartFolder::CountFiles(QString path)
+{
+    int suma = 0;
+    QDir dir(path);
+    dir.setFilter(QDir::AllEntries | QDir::NoDotAndDotDot);
+    if(!dir.exists()) {
+    return 1;
+    }
+    QFileInfoList sList = dir.entryInfoList(QDir::AllEntries | QDir::NoDotAndDotDot);
+
+    foreach(QFileInfo ruta, sList){
+    if(ruta.isDir()){
+    suma += CountFiles(ruta.path() + "/" + ruta.completeBaseName()+"/");
+    }
+    suma++;
+    }
+    return suma;
+
 }

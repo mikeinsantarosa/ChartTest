@@ -107,7 +107,7 @@ void MainWindow::on_btnShowTestChart_clicked()
     testchart->show();
 }
 
-
+// Open Folders
 void MainWindow::on_btnOpenFolders_clicked()
 {
     // linux
@@ -374,13 +374,17 @@ void MainWindow::ColumnSelectedByUser()
 
 
 
-
-
-
+// ++++++++++++++++++++++++++++++ //
+// Select Data Button
+// ++++++++++++++++++++++++++++++ //
 void MainWindow::on_btnTest_clicked()
 {
     //QString folderToOpen = "/home/mandbx/Desktop/misc-docs/q241/Data/";
-    QString folderToOpen = "/home/mandbx/Desktop/misc-docs/q241/multiple-data-sets/";
+    //QString folderToOpen = "/home/mandbx/Desktop/misc-docs/q241/multiple-data-sets/";
+
+    QString searchPath = "/home/mandbx/Desktop/misc-docs/q241/";
+    QString folderToOpen = QFileDialog::getExistingDirectory(this, tr("Select a folder to Load files from..."), searchPath, QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+
     QString filter = ".csv";
 
     ds = new HTCDataSelector;
@@ -393,4 +397,36 @@ void MainWindow::on_btnTest_clicked()
 //    qDebug() << "folder/extension loaded = " << ds->GetFolderInService() << "/" << ds->GetExtensionFilter();
 
 //    delete ds;
+}
+
+void MainWindow::on_pushButton_clicked()
+{
+    //QRegExp re("\\d*");
+    //QRegExp re("[0-9].*");
+    QRegExp re("^-?\\d*\\.?\\d+");
+
+    QString WholeNumber = "1000000000";
+    QString decimalNumber = "1.72";
+
+
+    if(re.exactMatch(WholeNumber))
+    {
+        qDebug() << "Wholenumber is a match!";
+    }
+    else
+    {
+        qDebug() << "Wholenumber is NOT a number";
+    }
+
+    if(re.exactMatch(decimalNumber))
+    {
+        qDebug() << "decimal is a match!";
+    }
+    else
+    {
+        qDebug() << "Decimal is NOT a number";
+    }
+
+
+
 }

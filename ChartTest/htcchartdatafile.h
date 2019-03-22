@@ -4,6 +4,9 @@
 //#include <QObject>
 #include <QFileInfo>
 #include <QDebug>
+#include <QRegExp>
+
+
 #include "datapoint.h"
 
 
