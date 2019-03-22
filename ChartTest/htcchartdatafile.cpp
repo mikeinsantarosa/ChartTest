@@ -50,7 +50,7 @@ QStringList HTCChartDataFile::getColumnHeaderList()
 
 bool HTCChartDataFile::getDataSuccessfullyLoaded()
 {
-    qDebug() << "getting file loaded as " << _dataSuccessfullyLoaded;
+    //qDebug() << "getting file loaded as " << _dataSuccessfullyLoaded;
     return _dataSuccessfullyLoaded;
 
 }
@@ -101,25 +101,37 @@ void HTCChartDataFile::init()
     {
        _firstDataRow = findFirstDataRow(_rawDataList, _dataFileDelim);
 
-       //qDebug() << "found first data row @ " << _firstDataRow;
+       // if there is no numerical data, the firstDataRow
+       // will be -1. Let's check that here and do something about it
+       // before continuing.
 
-       _lastDataRow = setLastDataRow();
+       if(_firstDataRow > -1)
+       {
+           _lastDataRow = setLastDataRow();
 
-       //qDebug() << "found last data row @ " << _lastDataRow;
+           //qDebug() << "found last data row @ " << _lastDataRow;
 
-       _numberOfDataColumns = setColumnHeadersList(_dataFileDelim);
-       _fileInfo = QFileInfo(_basedOnThisFile);
+           _numberOfDataColumns = setColumnHeadersList(_dataFileDelim);
+           _fileInfo = QFileInfo(_basedOnThisFile);
 
-       parseFileProperties();
-       setFirstFreq();
-       setLastFreq();
+           parseFileProperties();
+           setFirstFreq();
+           setLastFreq();
 
-       loadDataIntoMemory();
+           loadDataIntoMemory();
 
+
+       }
        if (_numberOfDataColumns >= 2)
        {
            _dataSuccessfullyLoaded = true;
        }
+       else
+       {
+           _dataSuccessfullyLoaded = false;
+       }
+
+
 
     }
 
@@ -228,8 +240,6 @@ int HTCChartDataFile::loadFileIntoList()
             }
                 file.close();
         }
-
-    qDebug() << "loaded this many lines into the list " << _rawDataList.count();
 
     if(_rawDataList.count() > 0)
     {
@@ -557,11 +567,13 @@ void HTCChartDataFile::setFilenameProperties(QString fName)
     else
     {
         _eutModel = "UNKNOWN";
+
     }
 
     if (_orientationOrderIDX == -1)
     {
         qDebug() << _eutModel << " - " << _eutSerial << " has a bad order index for polarity/rotation " << _polarity << ":" << _ttRotation;
+        qDebug() << "for file -> " << _fileInfo.fileName();
     }
 
 
@@ -608,12 +620,21 @@ void HTCChartDataFile::setStandardTestType(QString rangeString)
 
 void HTCChartDataFile::setKey()
 {
-    _SetKey.clear();
-    _SetKey.append(_eutModel);
-    _SetKey.append(_fileNamePartsDelim);
-    _SetKey.append(_eutSerial);
-    _SetKey.append(_fileNamePartsDelim);
-    _SetKey.append(QString::number(_isStandardTestType));
+    if(_firstDataRow > -1)
+    {
+        _SetKey.clear();
+        _SetKey.append(_eutModel);
+        _SetKey.append(_fileNamePartsDelim);
+        _SetKey.append(_eutSerial);
+        _SetKey.append(_fileNamePartsDelim);
+        _SetKey.append(QString::number(_isStandardTestType));
+    }
+    else
+    {
+        _SetKey.clear();
+        _SetKey.append("UNKNOWN-NO-DATA");
+    }
+
 
 }
 

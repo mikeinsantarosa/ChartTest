@@ -16,7 +16,6 @@ int HTCChartFolder::init(QString folder, QString extension)
     // we might need to protect against too many files
     // ++++++++++++++++++++++++++++++++++++++++++++++++
     int fileCount = CountFiles(folder);
-    qDebug() << "number of files in that path is " << fileCount;
 
 
     if(!folder.isEmpty())
@@ -76,57 +75,52 @@ int HTCChartFolder::init(QString folder, QString extension)
             QFileInfo info = QFileInfo(itemName);
             nameToTest = info.fileName();
 
-            //qDebug() << "What's being tested -> " << nameToTest;
 
             if (nameToTest.contains(extension))
             {
-
-                //qDebug() << "Suffix is a match! " ;
 
 
                 if(nameToTest.contains("q241") || nameToTest.contains("q242") || nameToTest.contains("q243") == true)
                 {
 
-                    //qDebug() << "filter says this is a q241 file";
-
                     thisSet.clear();
                     HTCChartDataFile *  filObj = new HTCChartDataFile(itemName);
 
+                    // need to guard against there being a file that
+                    // passes inspection but doesn't have any numerical
+                    // data in it.
 
-                   qDebug() << "File got loaded successfully ->" << filObj->getDataSuccessfullyLoaded();
-
-                    model = filObj->getOrientationEUTModel();
-                    serial = filObj->getOrientationEUTSerial();
-
-                    thisSet.append(model);
-                    thisSet.append(fNameDelim);
-                    thisSet.append(serial);
-
-                    thisTag.append(filObj->getKey());
-                    thisTag.append(",");
-                    thisTag.append(itemName);
-
-                    // qDebug() << "This key " << thisTag;
-
-                    //add it to the set if it doesn't exist
-                    if(!_sets.contains(thisSet))
+                    if(filObj->getDataSuccessfullyLoaded())
                     {
+                        model = filObj->getOrientationEUTModel();
+                        serial = filObj->getOrientationEUTSerial();
 
-                        qDebug() << "Adding a set -> " << thisSet;
-                        _sets.append(thisSet);
+                        thisSet.append(model);
+                        thisSet.append(fNameDelim);
+                        thisSet.append(serial);
+
+                        thisTag.append(filObj->getKey());
+                        thisTag.append(",");
+                        thisTag.append(itemName);
+
+                        //add it to the set if it doesn't exist
+                        if(!_sets.contains(thisSet))
+                        {
+
+                            _sets.append(thisSet);
+                        }
+
+                        _folderList.append(itemName);
+                        _TaggedList.append(thisTag);
+
+                        result += 1;
+
+                        thisTag.clear();
+                        thisSet.clear();
+
                     }
 
-                    _folderList.append(itemName);
-                    _TaggedList.append(thisTag);
 
-                    result += 1;
-
-                    //qDebug() << "result count is @ " << result;
-
-                    thisTag.clear();
-                    thisSet.clear();
-
-                    // the filObj got created so delete it
                     delete filObj;
                 }
 

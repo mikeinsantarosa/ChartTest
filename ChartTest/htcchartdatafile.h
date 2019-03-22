@@ -54,6 +54,7 @@ private:
     QFileInfo _fileInfo;
     QString _basedOnThisFile;
     QString _dataFileDelim;
+
     bool _dataSuccessfullyLoaded;
     int _totalNumberOfRows;
     int _firstDataRow;

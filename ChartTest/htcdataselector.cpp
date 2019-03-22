@@ -9,7 +9,7 @@ HTCDataSelector::HTCDataSelector(QWidget *parent) :
 
     // create new Chart Data Folder
     cdf = new HTCChartFolder;
-    qDebug() << "created new Chart Data Folder";
+
     connect(ui->treeDatasets, SIGNAL(itemSelectionChanged()), this, SLOT(mySlot_Changed()));
 
     //fillTree();
@@ -79,7 +79,7 @@ void HTCDataSelector::fillTree()
 {
 
 
-            ui->treeDatasets->setHeaderLabel("My files");
+            ui->treeDatasets->setHeaderLabel("Radiated Immunity Data - Find  your data and Click Select");
 
 
             QTreeWidgetItem *topLevelItem = NULL;
