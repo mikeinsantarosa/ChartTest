@@ -39,6 +39,8 @@ QStringList *HtcDataDialog::getHeader()
 
 bool HtcDataDialog::Init(QString filename)
 {
+
+    _busy = true;
     bool result;
 
     // assign file name to local variable
@@ -76,6 +78,8 @@ bool HtcDataDialog::Init(QString filename)
 
     }
 
+    _busy = false;
+
     return result;
 }
 
@@ -110,7 +114,7 @@ void HtcDataDialog::on_tvData_sectionClicked(int Value)
     _selectedColumnsList = setSelectedColumnsList();
     qDebug() << "Column clicked was " << Value;
 
-    emit ColumnSelected();
+   emit ColumnSelected();
     //let the callng program know te user clicked a column
 
 }

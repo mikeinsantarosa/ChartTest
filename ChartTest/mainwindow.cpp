@@ -72,10 +72,11 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_btnClose_clicked()
 {
-    if (testchart == NULL)
+    if (!testchart == NULL)
     {
-       qDebug() << "the textChart was not NULL";
-        delete testchart;
+       //qDebug() << "the textChart was not NULL";
+       delete testchart;
+
        //testchart->close();
     }
 
@@ -387,16 +388,11 @@ void MainWindow::on_btnTest_clicked()
 
     QString filter = ".csv";
 
-    ds = new HTCDataSelector;
+    ds = new HTCDataSelector(this);
 
     ds->SetFolderInService(folderToOpen, filter);
     ds->move(10,10);
     ds->show();
-//    ds->LoadSetFromPath(folderToOpen, filter);
-
-//    qDebug() << "folder/extension loaded = " << ds->GetFolderInService() << "/" << ds->GetExtensionFilter();
-
-//    delete ds;
 }
 
 void MainWindow::on_pushButton_clicked()

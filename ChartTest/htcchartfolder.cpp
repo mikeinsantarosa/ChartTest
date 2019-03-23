@@ -69,7 +69,7 @@ int HTCChartFolder::init(QString folder, QString extension)
             }
 
             itemName = it.next();
-            // qDebug() << "Checking itemname  -> " << itemName;
+            qDebug() << "Checking itemname  -> " << itemName;
 
 
             QFileInfo info = QFileInfo(itemName);

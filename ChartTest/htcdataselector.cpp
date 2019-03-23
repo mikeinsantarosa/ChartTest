@@ -12,6 +12,7 @@ HTCDataSelector::HTCDataSelector(QWidget *parent) :
 
     connect(ui->treeDatasets, SIGNAL(itemSelectionChanged()), this, SLOT(mySlot_Changed()));
 
+
     //fillTree();
 
 }
@@ -55,7 +56,20 @@ void HTCDataSelector::mySlot_Changed()
         selectedSet.append(QString::number(numberOfkids));
         ui->labelSelectedDataSet->setText(selectedSet);
 
+        FillTaggedList(item);
+
     }
+}
+
+void HTCDataSelector::ColumnsHaveBeenSelected()
+{
+    _selectedColumnsList = dd->getSelectedColumnsList();
+
+    for(int i = 0; i < _selectedColumnsList.count(); i++)
+    {
+        qDebug() << "selected column " << i << " is " << _selectedColumnsList.at(i);
+    }
+
 }
 
 void HTCDataSelector::FillListFromPath()
@@ -124,5 +138,40 @@ void HTCDataSelector::fillTree()
                 childItem->setText(0, splitFileName.last());
             }
 
+
+}
+
+void HTCDataSelector::FillTaggedList(QTreeWidgetItem *item)
+{
+
+    qDebug() << "filling tagged lsit for " << item->text(0);
+
+    if (!_taggedList.isEmpty())
+    {
+        _taggedList.clear();
+    }
+
+    for (int i = 0; i < item->childCount(); i++)
+    {
+        _taggedList.append(item->child(i)->text(0));
+    }
+
+}
+
+void HTCDataSelector::on_btnSelectColumns_clicked()
+{
+    QString file = _taggedList.at(0);
+    qDebug() << "tagged list has " << _taggedList.count() << " elements";
+    qDebug() << "Sending file " << file;
+
+    if(_taggedList.count() > 0)
+    {
+        dd = new HtcDataDialog(this);
+        dd->move(6,6);
+        dd->Init(_taggedList.at(0));
+        dd->show();
+
+        connect(dd,SIGNAL(ColumnSelected()),this,SLOT(ColumnsHaveBeenSelected()));
+    }
 
 }

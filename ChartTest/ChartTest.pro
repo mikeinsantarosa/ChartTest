@@ -39,7 +39,6 @@ SOURCES += main.cpp\
     htcfilelibrary.cpp \
     htcdatasetitem.cpp \
     htcchartfolder.cpp \
-    # htcdataselector.cpp
     htcdataselector.cpp
 
 HEADERS  += mainwindow.h \
@@ -56,7 +55,6 @@ HEADERS  += mainwindow.h \
     htcfilelibrary.h \
     htcdatasetitem.h \
     htcchartfolder.h \
-    # htcdataselector.h
     htcdataselector.h
 
 

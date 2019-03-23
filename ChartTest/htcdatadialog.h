@@ -58,6 +58,8 @@ private:
     int _numberOfDataRows;
     int _numberOfHeaderRows;
 
+    bool _busy;
+
 
     QString setDelimiter(QString fName);
     int findFirstDataRow(QString delimiter);

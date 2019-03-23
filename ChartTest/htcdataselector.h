@@ -9,6 +9,8 @@
 
 #include "htcchartfolder.h"
 #include "htcchartdatafile.h"
+#include "htcdatadialog.h"
+
 
 namespace Ui {
 class HTCDataSelector;
@@ -30,11 +32,15 @@ void SetFolderInService(QString folder, QString filter);
 private slots:
     void on_btnClose_clicked();
     void mySlot_Changed();
+    void ColumnsHaveBeenSelected();
 
 
+
+    void on_btnSelectColumns_clicked();
 
 private:
     Ui::HTCDataSelector *ui;
+
 
     QString _folderInService;
     QString _filterInService;
@@ -42,12 +48,16 @@ private:
 
     QStringList _folderList;
 
+    QStringList _taggedList;
+    QVector <int> _selectedColumnsList;
+
     HTCChartFolder * cdf;
+    HtcDataDialog * dd;
 
     void FillListFromPath();
-
-
     void fillTree();
+
+    void FillTaggedList(QTreeWidgetItem * item);
 };
 
 #endif // HTCDATASELECTOR_H
