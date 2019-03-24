@@ -37,8 +37,10 @@ public:
     QString getOrientationTestCode();
     int getOrientationRangeIndex();
     int getOrientationOrderIndex();
+    int GetSortOrderIndex();
     QString getKey();
 
+    int SortOrderIndex;
 
 
 
@@ -48,6 +50,7 @@ signals:
 public slots:
 
 private:
+
 
 
 
@@ -80,6 +83,7 @@ private:
     int _rangeIDX;
     int _orientationOrderIDX;
     int _sortOrderIDX;
+    int _rangeOrderMult;
 
     // data values
     double _firstFreq;
@@ -91,6 +95,7 @@ private:
     int findFirstDataRow(QStringList list, QString delimiter);
     int setLastDataRow();
     int loadFileIntoList();
+    void setRangeOrderMult();
     int setColumnHeadersList(QString delim);
     void parseFileProperties();
     void setDataFileDelim(QString fileName);

@@ -39,7 +39,8 @@ SOURCES += main.cpp\
     htcfilelibrary.cpp \
     htcdatasetitem.cpp \
     htcchartfolder.cpp \
-    htcdataselector.cpp
+    htcdataselector.cpp \
+    htcchartdatamangler.cpp
 
 HEADERS  += mainwindow.h \
     loggraph.h \
@@ -55,7 +56,8 @@ HEADERS  += mainwindow.h \
     htcfilelibrary.h \
     htcdatasetitem.h \
     htcchartfolder.h \
-    htcdataselector.h
+    htcdataselector.h \
+    htcchartdatamangler.h
 
 
 FORMS    += mainwindow.ui \

@@ -250,6 +250,28 @@ int HTCChartDataFile::loadFileIntoList()
 
 }
 
+void HTCChartDataFile::setRangeOrderMult()
+{
+
+    if (_fRange.contains("80M-1G"))
+    {
+        _rangeOrderMult = 0;
+    }
+    else if (_fRange.contains("1G-2G"))
+    {
+        _rangeOrderMult = 10;
+    }
+    else if (_fRange.contains("1G-6G"))
+    {
+        _rangeOrderMult = 20;
+    }
+    else if (_fRange.contains("2G-27G"))
+    {
+        _rangeOrderMult = 20;
+    }
+
+}
+
 int HTCChartDataFile::setColumnHeadersList(QString delim)
 {
     QStringList Headers;
@@ -296,6 +318,7 @@ int HTCChartDataFile::solveRangeIDX(QString rangeString)
     // this does not solve for the custom ranges like:
     // 800M-880M ...
     // ----------------------------------------------
+
 
 
     if (rangeString.contains("80M-1G"))
@@ -371,36 +394,36 @@ int HTCChartDataFile::setSortOrderIndex()
     {
         if (_orientationOrderIDX == 0)
         {
-            result = 0;
+            result = 0 + _rangeOrderMult;
         }
         else if (_orientationOrderIDX == 1)
         {
-            result = 1;
+            result = 1 + _rangeOrderMult;
         }
         else if (_orientationOrderIDX == 2)
         {
-            result = 2;
+            result = 2 + _rangeOrderMult;
         }
         else if (_orientationOrderIDX == 3)
         {
-            result = 3;
+            result = 3 + _rangeOrderMult;
         }
         else if (_orientationOrderIDX == 4)
         {
-            result = 4;
+            result = 4 + _rangeOrderMult;
         }
         else if (_orientationOrderIDX == 5)
         {
-            result = 5;
+            result = 5 + _rangeOrderMult;
         }else if (_orientationOrderIDX == 6)
         {
-            result = 6;
+            result = 6 + _rangeOrderMult;
         }else if (_orientationOrderIDX == 7)
         {
-            result = 7;
+            result = 7 + _rangeOrderMult;
         }else if (_orientationOrderIDX == 8)
         {
-            result = 8;
+            result = 8 + _rangeOrderMult;
         }
     }
     else if (_rangeIDX == 1)
@@ -549,6 +572,9 @@ void HTCChartDataFile::setFilenameProperties(QString fName)
 
     _ttRotation = parts.at(numParts - 2);
     _fRange = parts.at(numParts - 3);
+
+    setRangeOrderMult();
+
     _tLevel = parts.at(numParts - 4);
     _eutSerial = parts.at(numParts - 5);
 
@@ -557,6 +583,8 @@ void HTCChartDataFile::setFilenameProperties(QString fName)
     _rangeIDX = solveRangeIDX(_fRange);
     _orientationOrderIDX = solveOrientationIDX(_polarity, _ttRotation);
     _sortOrderIDX = setSortOrderIndex();
+    SortOrderIndex = _sortOrderIDX;
+
     setStandardTestType(_fRange);
 
 
@@ -686,6 +714,11 @@ int HTCChartDataFile::getOrientationRangeIndex()
 int HTCChartDataFile::getOrientationOrderIndex()
 {
     return _orientationOrderIDX;
+}
+
+int HTCChartDataFile::GetSortOrderIndex()
+{
+    return _sortOrderIDX;
 }
 
 QString HTCChartDataFile::getKey()

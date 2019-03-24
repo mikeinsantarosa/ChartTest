@@ -15,5 +15,7 @@
         <file>images/fontIcon3.jpg</file>
         <file>images/fontIcon4.jpg</file>
         <file>images/rotate1.png</file>
+        <file>images/gears.png</file>
+        <file>images/spreadsheet.png</file>
     </qresource>
 </RCC>

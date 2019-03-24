@@ -95,6 +95,9 @@ int HTCChartFolder::init(QString folder, QString extension)
                         model = filObj->getOrientationEUTModel();
                         serial = filObj->getOrientationEUTSerial();
 
+                        // make sure the oriderIDX is set
+                        qDebug() << "oreder IDX = "<< filObj->getOrientationOrderIndex();
+
                         thisSet.append(model);
                         thisSet.append(fNameDelim);
                         thisSet.append(serial);

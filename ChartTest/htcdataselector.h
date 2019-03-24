@@ -10,6 +10,7 @@
 #include "htcchartfolder.h"
 #include "htcchartdatafile.h"
 #include "htcdatadialog.h"
+#include "htcchartdatamangler.h"
 
 
 namespace Ui {
@@ -38,6 +39,8 @@ private slots:
 
     void on_btnSelectColumns_clicked();
 
+    void on_btnPlot_clicked();
+
 private:
     Ui::HTCDataSelector *ui;
 
@@ -53,6 +56,7 @@ private:
 
     HTCChartFolder * cdf;
     HtcDataDialog * dd;
+    HTCChartDataMangler * dm;
 
     void FillListFromPath();
     void fillTree();

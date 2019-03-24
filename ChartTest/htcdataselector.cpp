@@ -6,6 +6,8 @@ HTCDataSelector::HTCDataSelector(QWidget *parent) :
     ui(new Ui::HTCDataSelector)
 {
     ui->setupUi(this);
+    ui->btnPlot->setEnabled(false);
+    ui->btnSelectColumns->setEnabled(false);
 
     // create new Chart Data Folder
     cdf = new HTCChartFolder;
@@ -13,7 +15,6 @@ HTCDataSelector::HTCDataSelector(QWidget *parent) :
     connect(ui->treeDatasets, SIGNAL(itemSelectionChanged()), this, SLOT(mySlot_Changed()));
 
 
-    //fillTree();
 
 }
 
@@ -58,6 +59,8 @@ void HTCDataSelector::mySlot_Changed()
 
         FillTaggedList(item);
 
+        ui->btnSelectColumns->setEnabled(true);
+
     }
 }
 
@@ -65,10 +68,15 @@ void HTCDataSelector::ColumnsHaveBeenSelected()
 {
     _selectedColumnsList = dd->getSelectedColumnsList();
 
-    for(int i = 0; i < _selectedColumnsList.count(); i++)
+    if(!_selectedColumnsList.isEmpty())
     {
-        qDebug() << "selected column " << i << " is " << _selectedColumnsList.at(i);
+        ui->btnPlot->setEnabled(true);
     }
+
+//    for(int i = 0; i < _selectedColumnsList.count(); i++)
+//    {
+//        qDebug() << "selected column " << i << " is " << _selectedColumnsList.at(i);
+//    }
 
 }
 
@@ -161,8 +169,6 @@ void HTCDataSelector::FillTaggedList(QTreeWidgetItem *item)
 void HTCDataSelector::on_btnSelectColumns_clicked()
 {
     QString file = _taggedList.at(0);
-    qDebug() << "tagged list has " << _taggedList.count() << " elements";
-    qDebug() << "Sending file " << file;
 
     if(_taggedList.count() > 0)
     {
@@ -174,4 +180,15 @@ void HTCDataSelector::on_btnSelectColumns_clicked()
         connect(dd,SIGNAL(ColumnSelected()),this,SLOT(ColumnsHaveBeenSelected()));
     }
 
+}
+
+void HTCDataSelector::on_btnPlot_clicked()
+{
+
+    dm = new HTCChartDataMangler(this);
+
+
+    dm->Init(_taggedList, _selectedColumnsList);
+
+    qDebug() << "dropped out of the button click";
 }
