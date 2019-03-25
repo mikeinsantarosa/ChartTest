@@ -15,7 +15,7 @@ HtcDataDialog::HtcDataDialog(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    QObject::connect(ui->tvData->horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(on_tvData_sectionClicked(int)));
+    //QObject::connect(ui->tvData->horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(on_tvData_sectionClicked(int)));
 
     _rawList = new QStringList;
     _listToView = new QStringList;
@@ -42,6 +42,7 @@ bool HtcDataDialog::Init(QString filename)
 
     _busy = true;
     bool result;
+    QObject::connect(ui->tvData->horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(on_tvData_sectionClicked(int)));
 
     // assign file name to local variable
     _dataFileName = filename;
@@ -55,26 +56,10 @@ bool HtcDataDialog::Init(QString filename)
 
     if (result == true)
     {
-        // figure out what row of the listis the beginning
-        // of data
         _firstDataRow = findFirstDataRow(_delimiter);
-
-        // Get just the data rows from the raw list
-        // into _listToView and return the number of data rows
         _numberOfDataRows = setListToView(_listToView);
-
-        qDebug() << "Number of data rows => " << _numberOfHeaderRows;
-
-        // Get just the header rows from the raw list
-        // into _fileHeaderList and return the number of header rows
         _numberOfHeaderRows = setHeaderList(_FileHeaderList);
-
-        qDebug() << "Number of header rows => " << _numberOfHeaderRows;
-
-        // put  the data into a model that can be
-        // presented in a table
         loadModel();
-
 
     }
 
@@ -111,8 +96,14 @@ void HtcDataDialog::on_btnClose_clicked()
 
 void HtcDataDialog::on_tvData_sectionClicked(int Value)
 {
+
+    // +++++++++++++++++++++++++++++++++++++++++++
+    // need to check if any of the selected
+    // columns are not numeric.
+    // if it isn't numeric, reject it
+    // +++++++++++++++++++++++++++++++++++++++++++
     _selectedColumnsList = setSelectedColumnsList();
-    qDebug() << "Column clicked was " << Value;
+    //qDebug() << "Column clicked was " << Value;
 
    emit ColumnSelected();
     //let the callng program know te user clicked a column
@@ -252,6 +243,7 @@ QVector<int> HtcDataDialog::setSelectedColumnsList()
     QString values = "";
     QString value;
     QVector <int> result;
+    QRegExp re("^-?\\d*\\.?\\d+");
 
     int col;
     int row;
@@ -271,12 +263,31 @@ QVector<int> HtcDataDialog::setSelectedColumnsList()
             {
                 if (!isValueInList(values, value, del))
                 {
-                    values.append(value + del);
+
+                    QModelIndex index = model->index(row, col, QModelIndex());
+                    QString checkValue = ui->tvData->model()->data(index).toString();
+                    // make sure the data is plotable
+                    // ------------------------------
+                    if(re.exactMatch(checkValue))
+                    {
+                        values.append(value + del);
+                    }
                 }
             }
             else
             {
-                values.append(value + del);
+
+                QModelIndex index = model->index(row, col, QModelIndex());
+                QString checkValue = ui->tvData->model()->data(index).toString();
+
+                // make sure the data is plotable
+                // ------------------------------
+                if(re.exactMatch(checkValue))
+                {
+                    values.append(value + del);
+                }
+
+
             }
 
             result = StringToList(values, del);

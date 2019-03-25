@@ -20,6 +20,7 @@ public:
     QVector <DataPoint> getAllPoints();
 
     QStringList getColumnHeaderList();
+    QString GetTableDataByRow(int rowNumber);
     bool getDataSuccessfullyLoaded();
     int getFirstDataRowNumber();
     int getlastDataRowNumber();
@@ -39,6 +40,7 @@ public:
     int getOrientationOrderIndex();
     int GetSortOrderIndex();
     QString getKey();
+    QString getFileDelim();
 
     int SortOrderIndex;
 
@@ -97,7 +99,7 @@ private:
     int loadFileIntoList();
     void setRangeOrderMult();
     int setColumnHeadersList(QString delim);
-    void parseFileProperties();
+    void parseFileProperties(QString fileName);
     void setDataFileDelim(QString fileName);
 
     int solveRangeIDX(QString rangeString);
@@ -108,9 +110,10 @@ private:
 
     // file data
     QVector <DataPoint> _allPoints;
+    QStringList _tableData;
     void loadDataIntoMemory();
 
-    void setFilenameProperties(QString fName);
+//    void setFilenameProperties(QString fName);
     void setFirstFreq();
     void setLastFreq();
     void setStandardTestType(QString rangeString);

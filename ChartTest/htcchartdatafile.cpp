@@ -48,6 +48,15 @@ QStringList HTCChartDataFile::getColumnHeaderList()
 
 }
 
+QString HTCChartDataFile::GetTableDataByRow(int rowNumber)
+{
+
+    QString result = _tableData.at(rowNumber);
+
+    return result;
+
+}
+
 bool HTCChartDataFile::getDataSuccessfullyLoaded()
 {
     //qDebug() << "getting file loaded as " << _dataSuccessfullyLoaded;
@@ -114,7 +123,7 @@ void HTCChartDataFile::init()
            _numberOfDataColumns = setColumnHeadersList(_dataFileDelim);
            _fileInfo = QFileInfo(_basedOnThisFile);
 
-           parseFileProperties();
+           parseFileProperties(_fileInfo.fileName());
            setFirstFreq();
            setLastFreq();
 
@@ -285,11 +294,61 @@ int HTCChartDataFile::setColumnHeadersList(QString delim)
     return Headers.count();
 }
 
-void HTCChartDataFile::parseFileProperties()
+void HTCChartDataFile::parseFileProperties(QString fileName)
 {
-    QString fname = _fileInfo.fileName();
-    setFilenameProperties(fname);
+    QStringList parts = fileName.split(_fileNamePartsDelim);
 
+    // If the user didn't include
+    // additional _ (underscores)
+    // in the model/serial fields
+    // there should be 7 fields
+    // in the data file names
+    // for an RI test.
+    //
+    // RI base program fixed
+    // so that extra underscores
+    // can't occur. Mar-26-2018
+    //
+    // -----------------------------
+    int numParts = parts.count();
+
+    QString last = parts.at(numParts - 1);
+    QStringList tail = last.split(".");
+    _polarity = tail.at(0);
+
+    _ttRotation = parts.at(numParts - 2);
+    _fRange = parts.at(numParts - 3);
+
+    setRangeOrderMult();
+
+    _tLevel = parts.at(numParts - 4);
+    _eutSerial = parts.at(numParts - 5);
+
+    // the previous must be set first
+    _testCode = parts.at(0);
+    _rangeIDX = solveRangeIDX(_fRange);
+    _orientationOrderIDX = solveOrientationIDX(_polarity, _ttRotation);
+    _sortOrderIDX = setSortOrderIndex();
+    SortOrderIndex = _sortOrderIDX;
+
+    setStandardTestType(_fRange);
+
+
+    if (numParts - 6 == 1)
+    {
+        _eutModel = parts.at(1);
+    }
+    else
+    {
+        _eutModel = "UNKNOWN";
+
+    }
+
+    if (_orientationOrderIDX == -1)
+    {
+        qDebug() << _eutModel << " - " << _eutSerial << " has a bad order index for polarity/rotation " << _polarity << ":" << _ttRotation;
+        qDebug() << "for file -> " << _fileInfo.fileName();
+    }
 
 }
 
@@ -522,13 +581,30 @@ void HTCChartDataFile::loadDataIntoMemory()
     QStringList target;
     double freq;
     QString YValue;
+
+    //QString newValue = "";
     int thisLastRow = _lastDataRow + 1;
+
+    // clear the lists
+    if(!_tableData.isEmpty())
+    {
+        _tableData.clear();
+    }
+
+    if(!_allPoints.isEmpty())
+    {
+        _allPoints.clear();
+    }
+
 
 
     for (int i = _firstDataRow; i < thisLastRow; i++)
     {
         DataPoint * point = new DataPoint;
         ref = _rawDataList.at(i);
+
+        // fill the table data list
+        _tableData.append(ref);
 
         target = ref.split(_dataFileDelim);
         freq = QString(target.at(0)).toDouble();
@@ -548,64 +624,7 @@ void HTCChartDataFile::loadDataIntoMemory()
 
 }
 
-void HTCChartDataFile::setFilenameProperties(QString fName)
-{
-    QStringList parts = fName.split(_fileNamePartsDelim);
 
-    // If the user didn't include
-    // additional _ (underscores)
-    // in the model/serial fields
-    // there should be 7 fields
-    // in the data file names
-    // for an RI test.
-    //
-    // RI base program fixed
-    // so that extra underscores
-    // can't occur. Mar-26-2018
-    //
-    // -----------------------------
-    int numParts = parts.count();
-
-    QString last = parts.at(numParts - 1);
-    QStringList tail = last.split(".");
-    _polarity = tail.at(0);
-
-    _ttRotation = parts.at(numParts - 2);
-    _fRange = parts.at(numParts - 3);
-
-    setRangeOrderMult();
-
-    _tLevel = parts.at(numParts - 4);
-    _eutSerial = parts.at(numParts - 5);
-
-    // the previous must be set first
-    _testCode = parts.at(0);
-    _rangeIDX = solveRangeIDX(_fRange);
-    _orientationOrderIDX = solveOrientationIDX(_polarity, _ttRotation);
-    _sortOrderIDX = setSortOrderIndex();
-    SortOrderIndex = _sortOrderIDX;
-
-    setStandardTestType(_fRange);
-
-
-    if (numParts - 6 == 1)
-    {
-        _eutModel = parts.at(1);
-    }
-    else
-    {
-        _eutModel = "UNKNOWN";
-
-    }
-
-    if (_orientationOrderIDX == -1)
-    {
-        qDebug() << _eutModel << " - " << _eutSerial << " has a bad order index for polarity/rotation " << _polarity << ":" << _ttRotation;
-        qDebug() << "for file -> " << _fileInfo.fileName();
-    }
-
-
-}
 
 void HTCChartDataFile::setFirstFreq()
 {
@@ -724,4 +743,9 @@ int HTCChartDataFile::GetSortOrderIndex()
 QString HTCChartDataFile::getKey()
 {
     return _SetKey;
+}
+
+QString HTCChartDataFile::getFileDelim()
+{
+    return _dataFileDelim;
 }

@@ -69,7 +69,7 @@ int HTCChartFolder::init(QString folder, QString extension)
             }
 
             itemName = it.next();
-            qDebug() << "Checking itemname  -> " << itemName;
+            //qDebug() << "Checking itemname  -> " << itemName;
 
 
             QFileInfo info = QFileInfo(itemName);
@@ -96,7 +96,7 @@ int HTCChartFolder::init(QString folder, QString extension)
                         serial = filObj->getOrientationEUTSerial();
 
                         // make sure the oriderIDX is set
-                        qDebug() << "oreder IDX = "<< filObj->getOrientationOrderIndex();
+                        //qDebug() << "oreder IDX = "<< filObj->getOrientationOrderIndex();
 
                         thisSet.append(model);
                         thisSet.append(fNameDelim);

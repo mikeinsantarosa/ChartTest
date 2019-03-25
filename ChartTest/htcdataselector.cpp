@@ -39,6 +39,8 @@ void HTCDataSelector::SetFolderInService(QString folder, QString filter)
 
 void HTCDataSelector::on_btnClose_clicked()
 {
+
+    delete dd;
     close();
 }
 
@@ -152,8 +154,6 @@ void HTCDataSelector::fillTree()
 void HTCDataSelector::FillTaggedList(QTreeWidgetItem *item)
 {
 
-    qDebug() << "filling tagged lsit for " << item->text(0);
-
     if (!_taggedList.isEmpty())
     {
         _taggedList.clear();
@@ -186,9 +186,6 @@ void HTCDataSelector::on_btnPlot_clicked()
 {
 
     dm = new HTCChartDataMangler(this);
-
-
     dm->Init(_taggedList, _selectedColumnsList);
 
-    qDebug() << "dropped out of the button click";
 }

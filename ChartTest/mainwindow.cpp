@@ -74,12 +74,9 @@ void MainWindow::on_btnClose_clicked()
 {
     if (!testchart == NULL)
     {
-       //qDebug() << "the textChart was not NULL";
        delete testchart;
-
-       //testchart->close();
     }
-
+    delete ds;
 
     close();
 

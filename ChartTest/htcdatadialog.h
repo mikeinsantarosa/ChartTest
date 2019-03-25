@@ -8,6 +8,7 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QStandardItemModel>
+#include <QRegExp>
 
 
 namespace Ui {
@@ -51,7 +52,7 @@ private:
     QStringList * _rawList;
     QStringList * _listToView;
     QStringList * _FileHeaderList;
-    //QStringList _selectedColumnsList;
+
     QVector <int> _selectedColumnsList;
 
     int _firstDataRow;
@@ -68,10 +69,10 @@ private:
     int setListToView(QStringList * list);
     int setHeaderList(QStringList * list);
 
-    //QStringList setSelectedColumnsList();
+
     QVector <int> setSelectedColumnsList();
     QVector <int>  StringToList(QString value, QString del);
-    //QVector <int> StringToList(QString value, QString del);
+
     // test functions:
     void listColumnList();
 
