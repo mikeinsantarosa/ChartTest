@@ -71,7 +71,7 @@ int HTCChartDataFile::getFirstDataRowNumber()
 
 int HTCChartDataFile::getlastDataRowNumber()
 {
-    return _lastDataRow;
+    return _lastDataRow - _firstDataRow;
 }
 
 double HTCChartDataFile::getFirstFreq()

@@ -359,19 +359,14 @@ QStringList HTCChartDataMangler::BuildDataSet(QString columns)
 
     QStringList buildColumns = columns.split(_dataFileDelim);
 
-    qDebug() << "header = " << result.at(0);
 
-    result = getDataChunkByRange(result,columns,0);
+    for (int x = 0; x < _numberOfRanges; x++)
+    {
+        result = getDataChunkByRange(result,columns,x);
+
+    }
 
     listThisList(result);
-
-
-//    for (int x = 0; x < _numberOfRanges; x++)
-//    {
-//        qDebug() << "loopping from " << FileStartIDX[x] << " to " << FileStopIDX[x];
-
-//    }
-
 
     return result;
 
@@ -436,28 +431,26 @@ QStringList HTCChartDataMangler::getDataChunkByRange(QStringList list, QString c
     QString rowInfo;
     QStringList Hdr;
 
+    //QStringList whatever = list;
     QStringList result = list;
+
+
+
     int StartRangeIDX = FileStartIDX[range];
     HTCChartDataFile df = _dataFiles[StartRangeIDX];
     int lastDataRow = df.getlastDataRowNumber();
     QStringList buildColumns = columns.split(_dataFileDelim);
 
-    for(int rowNum = 0; rowNum < lastDataRow; rowNum++)
+    for(int rowNum = 0; rowNum < lastDataRow + 1; rowNum++)
     {
 
         line.clear();
         for(int r = FileStartIDX[range]; r < FileStopIDX[range]; r++)
         {
 
-            qDebug() << "getting for file start/stop " << FileStartIDX[range] << "/" << FileStopIDX[range];
-            qDebug() << "current file num is " << r;
-
             HTCChartDataFile df = _dataFiles[r];
-
             rowInfo = df.GetTableDataByRow(rowNum);
-
             Hdr = rowInfo.split(_dataFileDelim);
-
 
             if(r == 0)
             {
@@ -486,22 +479,25 @@ QStringList HTCChartDataMangler::getDataChunkByRange(QStringList list, QString c
                  }
             }
 
+
         }
 
         // do the last file
         // ++++++++++++++++++++++++++++++++++++++++++++++++++
-        qDebug() << "doing the last file now";
+
+
         HTCChartDataFile df = _dataFiles[FileStopIDX[range]];
         rowInfo = df.GetTableDataByRow(rowNum);
         Hdr = rowInfo.split(_dataFileDelim);
         pos = buildColumns.at(1).toInt();
         line.append(Hdr.at(pos));
 
-        qDebug() << "line is now " << line;
+        //qDebug() << "line is now " << line;
 
         result.append(line);
-        qDebug() << "number of rows is now " << result.count();
 
+        //qDebug() << "number of rows is now " << result.count();
+        // qDebug() << "bang!";
     }
 
     return result;
