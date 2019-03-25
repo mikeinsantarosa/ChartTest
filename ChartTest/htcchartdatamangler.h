@@ -62,6 +62,8 @@ private:
     int _numberOfChartsToBuild;
     QString _dataFileDelim;
 
+    double _lastFreqInList;
+
     int FileStartIDX[3] = {-1,-1,-1};
     int FileStopIDX[3] = {-1,-1,-1};
 

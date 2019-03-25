@@ -329,16 +329,19 @@ void HTCChartDataMangler::setFileDelim()
 void HTCChartDataMangler::BuildAllChartDataSets()
 {
 
-   if(!_dataSets.isEmpty())
+   QStringList dataset;
+
+    if(!_dataSets.isEmpty())
    {
        _dataSets.clear();
    }
 
-    for(int i = 0; i < _numberOfChartsToBuild; i++)
+   for(int i = 0; i < _numberOfChartsToBuild; i++)
     {
-        QStringList dataset = BuildDataSet(_columnSets.at(i));
+        dataset = BuildDataSet(_columnSets.at(i));
        _dataSets.append(dataset);
     }
+
 
 
 }
@@ -348,25 +351,16 @@ QStringList HTCChartDataMangler::BuildDataSet(QString columns)
 
     QStringList result;
 
-    QString line = "";
-    int pos;
-    int loop = 0;
-
-
-    // get the header
-    // +++++++++++++++++
     result = getDataSetHeader(columns, FileStartIDX[0], FileStopIDX[0]);
 
     QStringList buildColumns = columns.split(_dataFileDelim);
 
 
-    for (int x = 0; x < _numberOfRanges; x++)
+    for (int i = 0; i < _numberOfRanges; i++)
     {
-        result = getDataChunkByRange(result,columns,x);
+        result = getDataChunkByRange(result,columns,i);
 
     }
-
-    listThisList(result);
 
     return result;
 
@@ -430,6 +424,7 @@ QStringList HTCChartDataMangler::getDataChunkByRange(QStringList list, QString c
     int pos;
     QString rowInfo;
     QStringList Hdr;
+    int offSetStart;
 
     //QStringList whatever = list;
     QStringList result = list;
@@ -438,11 +433,22 @@ QStringList HTCChartDataMangler::getDataChunkByRange(QStringList list, QString c
 
     int StartRangeIDX = FileStartIDX[range];
     HTCChartDataFile df = _dataFiles[StartRangeIDX];
-    int lastDataRow = df.getlastDataRowNumber();
+    int lastDataRow = df.getlastDataRowNumber() - df.getFirstDataRowNumber();
+    //qDebug() << "number of data rows " << lastDataRow;
     QStringList buildColumns = columns.split(_dataFileDelim);
 
-    for(int rowNum = 0; rowNum < lastDataRow + 1; rowNum++)
+    if (range == 0)
     {
+        offSetStart = 0;
+    }
+    else
+    {
+        offSetStart = 1;
+    }
+
+    for(int rowNum = offSetStart; rowNum < lastDataRow + 1; rowNum++)
+    {
+
 
         line.clear();
         for(int r = FileStartIDX[range]; r < FileStopIDX[range]; r++)
@@ -452,7 +458,7 @@ QStringList HTCChartDataMangler::getDataChunkByRange(QStringList list, QString c
             rowInfo = df.GetTableDataByRow(rowNum);
             Hdr = rowInfo.split(_dataFileDelim);
 
-            if(r == 0)
+            if(r == FileStartIDX[range])
             {
 
                 int numberOfBuildColumns = buildColumns.count();
@@ -461,9 +467,9 @@ QStringList HTCChartDataMangler::getDataChunkByRange(QStringList list, QString c
                     pos = buildColumns.at(i).toInt();
                     line.append(Hdr.at(pos));
                     line.append(_dataFileDelim);
-                    //qDebug() << "line is now " << line;
-
                 }
+
+
            }
             else
             {
@@ -473,32 +479,23 @@ QStringList HTCChartDataMangler::getDataChunkByRange(QStringList list, QString c
                      pos = buildColumns.at(i).toInt();
                      line.append(Hdr.at(pos));
                      line.append(_dataFileDelim);
-
-                     //qDebug() << "line is now " << line;
-
                  }
             }
 
-
         }
+        _lastFreqInList = Hdr.at(0).toDouble();
 
         // do the last file
         // ++++++++++++++++++++++++++++++++++++++++++++++++++
-
-
         HTCChartDataFile df = _dataFiles[FileStopIDX[range]];
         rowInfo = df.GetTableDataByRow(rowNum);
         Hdr = rowInfo.split(_dataFileDelim);
         pos = buildColumns.at(1).toInt();
         line.append(Hdr.at(pos));
 
-        //qDebug() << "line is now " << line;
-
         result.append(line);
-
-        //qDebug() << "number of rows is now " << result.count();
-        // qDebug() << "bang!";
     }
+
 
     return result;
 
