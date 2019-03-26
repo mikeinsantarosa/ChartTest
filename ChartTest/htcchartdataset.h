@@ -5,9 +5,9 @@
 #include <QDebug>
 #include <QStringList>
 
-class HTCChartDataSet : public QObject
+class HTCChartDataSet
 {
-    Q_OBJECT
+
 public:
     explicit HTCChartDataSet(QObject *parent = nullptr);
 
@@ -19,6 +19,7 @@ public:
     void SetYAxisTitle(QString title);
     void SetXAxisScale(QString scale);
     void SetYAxisScale(QString scale);
+    void SetSampleFileName(QString file);
 
     QStringList GetData();
     QString GetChartTitle();
@@ -28,6 +29,7 @@ public:
     QString GetYAxisTitle();
     QString GetXAxisScale();
     QString GetYAxisScale();
+    QString GetSampleFileName();
     bool GetInitializedOK();
 
 
@@ -46,6 +48,7 @@ private:
     QString _xAxisScaling = "LIN";
     QString _yAxisScaling = "LIN";
     bool _initializedOK;
+    QString _sampleFileName;
 
     void setInitializedOKState();
 

@@ -44,6 +44,7 @@
 #include <QStringList>
 #include <QTextStream>
 #include <QString>
+#include "htcchartdataset.h"
 
 QT_CHARTS_USE_NAMESPACE
 
@@ -63,6 +64,7 @@ public:
     QColor ChartTitleTextColor();
     QFont ChartTitleTextFont();
     void setFileToOpen(QString fileName, bool RescaleFreq);
+    void setChartByDataSet(HTCChartDataSet * ds, bool RescaleFreq);
 
 
 
@@ -152,6 +154,8 @@ private:
     ChartProperties * cp = new ChartProperties;
 
     QChartView *chartView;
+
+    HTCChartDataSet *_dataSet;
 
 
     void initProperties();

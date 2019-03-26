@@ -2,7 +2,7 @@
 
 
 
-HTCChartDataSet::HTCChartDataSet(QObject *parent) : QObject(parent)
+HTCChartDataSet::HTCChartDataSet(QObject *parent)
 {
 
 }
@@ -48,6 +48,11 @@ void HTCChartDataSet::SetYAxisScale(QString scale)
     _yAxisTitle = scale;
 }
 
+void HTCChartDataSet::SetSampleFileName(QString file)
+{
+    _sampleFileName = file;
+}
+
 QStringList HTCChartDataSet::GetData()
 {
     return _data;
@@ -86,6 +91,11 @@ QString HTCChartDataSet::GetXAxisScale()
 QString HTCChartDataSet::GetYAxisScale()
 {
     return _yAxisScaling;
+}
+
+QString HTCChartDataSet::GetSampleFileName()
+{
+    return _sampleFileName;
 }
 
 bool HTCChartDataSet::GetInitializedOK()

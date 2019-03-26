@@ -15,6 +15,9 @@ HTCDataSelector::HTCDataSelector(QWidget *parent) :
     connect(ui->treeDatasets, SIGNAL(itemSelectionChanged()), this, SLOT(mySlot_Changed()));
 
 
+    qDebug() << "connected signal/slots";
+
+
 
 }
 
@@ -39,8 +42,12 @@ void HTCDataSelector::SetFolderInService(QString folder, QString filter)
 
 void HTCDataSelector::on_btnClose_clicked()
 {
+    dm = new HTCChartDataMangler(this);
+    connect(dm,SIGNAL(sendMsg(QString)),this,SLOT(receivedMsg(QString)));
+    connect(dm,SIGNAL(ChartDataSetsReady(QVector <HTCChartDataSet> )),this,SLOT(ChartDataSetsReceived(QVector <HTCChartDataSet> )));
+    dm->Init(_taggedList, _selectedColumnsList);
 
-    delete dd;
+    //delete dd;
     close();
 }
 
@@ -81,6 +88,19 @@ void HTCDataSelector::ColumnsHaveBeenSelected()
 //    }
 
 }
+
+void HTCDataSelector::receivedMsg(QString msg)
+{
+    qDebug() << "Received message - " << msg;
+
+}
+
+void HTCDataSelector::ChartDataSetsReceived(QVector<HTCChartDataSet> DataSets)
+{
+    qDebug() << "got the data sets msg!";
+}
+
+
 
 void HTCDataSelector::FillListFromPath()
 {

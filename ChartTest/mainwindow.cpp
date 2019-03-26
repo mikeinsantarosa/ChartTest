@@ -88,18 +88,9 @@ void MainWindow::on_btnShowTestChart_clicked()
     //QString fileToOpen = "/home/mandbx/Desktop/misc-docs/q241/samples/80M-1G_3_h-LOG.txt";
     QString fileToOpen = "/home/mandbx/Desktop/misc-docs/q241/samples/80M-1G_3_h-LOG-10_data_Points.txt";
 
-    testchart = new HtcChart;
+    testchart = new HtcChart(this);
 
     testchart->setFileToOpen(fileToOpen, ui->checkRescaleFreqs->checkState());
-    qDebug() << "Loaded file >> " << fileToOpen;
-
-    // load the file and convert to Qlist
-
-    // determin X & Y min & max values
-
-    // Load list into chart
-
-
 
 
     testchart->show();

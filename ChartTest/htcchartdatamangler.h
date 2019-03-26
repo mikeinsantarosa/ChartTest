@@ -3,9 +3,16 @@
 
 #include <QObject>
 #include <QDebug>
+#include <QFileInfo>
 
 #include "htcchartdatafile.h"
+#include "htcchartdataset.h"
+
+#include "htcchart.h"
+
 #include <algorithm>
+
+
 
 
 class HTCChartDataMangler : public QObject
@@ -19,6 +26,12 @@ public:
 
 
 signals:
+
+    void ChartDataSetsReady(QVector <HTCChartDataSet> DataSets);
+
+    void sendMsg(QString msg);
+
+    //emit ChartDataSetsReady(_dataSets);
 
 public slots:
 
@@ -49,9 +62,10 @@ private:
     void BuildAllChartDataSets();
     QStringList BuildDataSet(QString columns);
 
-    QStringList getDataSetHeader(QString columns, int startFileNum, int stopFileNum);
+    QStringList getDataSetHeader(QString columns, int startFileNum, int stopFileNum, bool LoadFromFilePositions);
     QStringList getDataChunkByRange(QStringList list, QString columns, int range);
 
+    void setDataSetProperties(HTCChartDataSet * ChartDataSet, QString columns, int chartNumber);
 
     bool _initialized = false;
     QStringList _columnSets;
@@ -61,6 +75,8 @@ private:
     int _numberOfRanges;
     int _numberOfChartsToBuild;
     QString _dataFileDelim;
+
+    bool _loadHeaderFromFilePositions = true;
 
     double _lastFreqInList;
 
@@ -72,7 +88,10 @@ private:
     QVector <HTCChartDataFile> _dataFiles;
 
 
-    QVector <QStringList> _dataSets;
+    //QVector <QStringList> _dataSets;
+
+    QVector  <HTCChartDataSet>  _dataSets;
+    HtcChart * testchart;
 
 
 

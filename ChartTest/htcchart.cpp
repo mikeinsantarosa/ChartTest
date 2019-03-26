@@ -49,6 +49,28 @@ void HtcChart::setFileToOpen(QString fileName, bool RescaleFreq)
 
 }
 
+void HtcChart::setChartByDataSet(HTCChartDataSet *ds, bool RescaleFreq)
+{
+
+    _dataSet = ds;
+    _masterlist = ds->GetData();
+    _chartTitleText = ds->GetChartTitle();
+
+    _chartXAxisUnitsText = ds->GetXAxisTitle();
+    _chartYAxisUnitsText = ds->GetYAxisTitle();
+
+    _chartXAxisLinLogScale = ds->GetXAxisScale();
+    _chartYAxisLinLogScale = ds->GetYAxisScale();
+
+    reScaleFreqColumn = RescaleFreq;
+    _rawDataFileAndPath = ds->GetSampleFileName();
+    qDebug() << "Filename read in is " << _rawDataFileAndPath;
+
+    initChart();
+
+
+}
+
 
 void HtcChart::on_actionProperties_triggered()
 {

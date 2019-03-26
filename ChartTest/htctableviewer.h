@@ -7,6 +7,7 @@
 #include <QModelIndex>
 #include <QDebug>
 
+
 namespace Ui {
 class HTCTableViewer;
 }
@@ -28,6 +29,7 @@ private slots:
 
     void on_tblFileData_sectionClicked(int Value);
     void on_btnClose_clicked();
+//    void ChartDataSetsReceived(QVector <HTCChartDataSet> DataSets);
 
 private:
     Ui::HTCTableViewer *ui;

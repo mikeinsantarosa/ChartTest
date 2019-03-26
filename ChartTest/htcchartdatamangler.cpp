@@ -158,13 +158,14 @@ void HTCChartDataMangler::listDataFiles()
 
 void HTCChartDataMangler::listDataSets()
 {
-    QStringList target;
-    foreach (QStringList list,_dataSets)
-    {
-        qDebug() << "number of rows " << list.count();
 
-        qDebug() << "row 1 " << list.at(0);
+
+    foreach(HTCChartDataSet ds,_dataSets)
+    {
+        qDebug() << "chart title - " << ds.GetChartTitle();
     }
+
+
 
 }
 
@@ -338,11 +339,25 @@ void HTCChartDataMangler::BuildAllChartDataSets()
 
    for(int i = 0; i < _numberOfChartsToBuild; i++)
     {
-        dataset = BuildDataSet(_columnSets.at(i));
-       _dataSets.append(dataset);
+       HTCChartDataSet * dset = new HTCChartDataSet();
+       dataset = BuildDataSet(_columnSets.at(i));
+       dset->SetData(dataset);
+
+       setDataSetProperties(dset, _columnSets.at(i), i);
+       testchart = new HtcChart();
+       testchart->setChartByDataSet(dset, true);
+       testchart->show();
+
+       qDebug() << "Chart created!";
+
+       _dataSets.append(*dset);
     }
 
+   // listDataSets();
+   qDebug() << "calling emit for datasets";
 
+   emit sendMsg("Message from Data Manger is HI!");
+   emit ChartDataSetsReady(_dataSets);
 
 }
 
@@ -351,7 +366,7 @@ QStringList HTCChartDataMangler::BuildDataSet(QString columns)
 
     QStringList result;
 
-    result = getDataSetHeader(columns, FileStartIDX[0], FileStopIDX[0]);
+    result = getDataSetHeader(columns, FileStartIDX[0], FileStopIDX[0], _loadHeaderFromFilePositions);
 
     QStringList buildColumns = columns.split(_dataFileDelim);
 
@@ -367,51 +382,90 @@ QStringList HTCChartDataMangler::BuildDataSet(QString columns)
 
 }
 
-QStringList HTCChartDataMangler::getDataSetHeader(QString columns, int startFileNum, int stopFileNum)
+QStringList HTCChartDataMangler::getDataSetHeader(QString columns, int startFileNum, int stopFileNum, bool LoadFromFilePositions)
 {
     QStringList result;
     QString line = "";
     int pos;
 
-    QStringList buildColumns = columns.split(_dataFileDelim);
 
-    for(int r = startFileNum; r < stopFileNum ; r++)
+    if (LoadFromFilePositions ==  false)
     {
+        QStringList buildColumns = columns.split(_dataFileDelim);
 
-        HTCChartDataFile df = _dataFiles[r];
-
-        QStringList Hdr = _dataFiles[r].getColumnHeaderList();
-
-        if(r == 0)
+        for(int r = startFileNum; r < stopFileNum ; r++)
         {
-            int numberOfBuildColumns = buildColumns.count();
-            for(int i = 0; i < numberOfBuildColumns; i++)
+
+            HTCChartDataFile df = _dataFiles[r];
+
+            QStringList Hdr = _dataFiles[r].getColumnHeaderList();
+
+            if(r == 0)
             {
-                pos = buildColumns.at(i).toInt();
-                line.append(Hdr.at(pos));
-                line.append(_dataFileDelim);
+                int numberOfBuildColumns = buildColumns.count();
+                for(int i = 0; i < numberOfBuildColumns; i++)
+                {
+                    pos = buildColumns.at(i).toInt();
+                    line.append(Hdr.at(pos));
+                    line.append(_dataFileDelim);
+                }
+           }
+            else
+            {
+                 int numberOfBuildColumns = buildColumns.count();
+                 for(int i = 1; i < numberOfBuildColumns; i++)
+                 {
+                     pos = buildColumns.at(i).toInt();
+                     line.append(Hdr.at(pos));
+                     line.append(_dataFileDelim);
+                 }
             }
-       }
-        else
-        {
-             int numberOfBuildColumns = buildColumns.count();
-             for(int i = 1; i < numberOfBuildColumns; i++)
-             {
-                 pos = buildColumns.at(i).toInt();
-                 line.append(Hdr.at(pos));
-                 line.append(_dataFileDelim);
-             }
-        }
 
+
+
+        }
+        // do the last column
+        QStringList Hdr = _dataFiles[stopFileNum].getColumnHeaderList();
+        pos = buildColumns.at(1).toInt();
+        line.append(Hdr.at(pos));
+
+        result.append(line);
 
 
     }
-    // do the last column
-    QStringList Hdr = _dataFiles[stopFileNum].getColumnHeaderList();
-    pos = buildColumns.at(1).toInt();
-    line.append(Hdr.at(pos));
+    else
+    {
+        for(int r = startFileNum; r < stopFileNum ; r++)
+        {
 
-    result.append(line);
+            HTCChartDataFile df = _dataFiles[r];
+
+            if(r==0)
+            {
+                line.append("Test Frequency");
+                line.append(_dataFileDelim);
+            }
+
+            line.append(df.getOrientationTTRotation());
+            line.append("_");
+            line.append(df.getOrientationPolarity());
+            line.append(_dataFileDelim);
+
+
+
+
+        }
+
+        // do last
+        HTCChartDataFile df = _dataFiles[stopFileNum];
+        line.append(df.getOrientationTTRotation());
+        line.append("_");
+        line.append(df.getOrientationPolarity());
+
+
+        result.append(line);
+
+    }
 
     return result;
 
@@ -502,4 +556,58 @@ QStringList HTCChartDataMangler::getDataChunkByRange(QStringList list, QString c
 
 
 }
+
+void HTCChartDataMangler::setDataSetProperties(HTCChartDataSet *ChartDataSet, QString columns, int chartNumber)
+{
+
+    QString chartTitle;
+    QStringList columnValues;
+    QString yName;
+    QString model;
+    QString serial;
+    //QFileInfo finfo;
+
+    QStringList values;
+    int pos;
+
+
+    HTCChartDataFile df = _dataFiles[0];
+    model = df.getOrientationEUTModel();
+    serial = df.getOrientationEUTSerial();
+    ChartDataSet->SetModel(model);
+    ChartDataSet->SetSerial(serial);
+    ChartDataSet->SetXAxisScale("LIN");
+    ChartDataSet->SetYAxisScale("LIN");
+
+    values = df.getColumnHeaderList();
+    columnValues = columns.split(",");
+    pos = columnValues.at(1).toInt();
+    yName = values.at(pos);
+    ChartDataSet->SetYAxisTitle(yName);
+    QFileInfo finfo = df.getDataFileInfo();
+
+    ChartDataSet->SetSampleFileName(finfo.fileName());
+
+
+
+    ChartDataSet->SetXAxisTitle("Test Frequency (MHz)");
+
+    // set chart title
+    chartTitle.append("Radiated Immunity Composite Data for ");
+    chartTitle.append(model);
+    chartTitle.append(" - ");
+    chartTitle.append(serial);
+    chartTitle.append(" for ");
+    chartTitle.append(yName);
+    ChartDataSet->SetChartTitle(chartTitle);
+
+
+
+    //yName =
+
+
+
+}
+
+
 

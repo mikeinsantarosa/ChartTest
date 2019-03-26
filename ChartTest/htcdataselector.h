@@ -34,6 +34,8 @@ private slots:
     void on_btnClose_clicked();
     void mySlot_Changed();
     void ColumnsHaveBeenSelected();
+    void receivedMsg(QString msg);
+    void ChartDataSetsReceived(QVector <HTCChartDataSet> DataSets);
 
 
 
