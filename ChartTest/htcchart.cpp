@@ -124,16 +124,19 @@ void HtcChart::initProperties()
 {
     // Chart Title font
     _chartTitleText = "Simple Linear Example <br> with 3 lines <br> I hope";
-    _chartTitleTextFont = QFont("Arial",20, QFont::Normal );
+    _chartTitleTextFont = QFont("Arial",_chartTitleFontSize, QFont::Normal );
     _chartTitleTextColor = QColor("#000000");
+
+
+
 
 
     _chartXAxisUnitsText = "Test Frequency (Hz)";
     _chartXAxisUnitsBrush.setColor(QColor("#000000"));
-    _chartXAxisUnitsTextFont = QFont("Arial",20, QFont::Normal);
+    _chartXAxisUnitsTextFont = QFont("Arial",_chartXAxisUnitsFontSize, QFont::Normal);
 
     _chartXAxisLabelColor = QColor("#000000");
-    _chartXAxisLabelFont = QFont("Arial",14, QFont::Normal );
+    _chartXAxisLabelFont = QFont("Arial",_chartXAxisLabelFontSize, QFont::Normal );
     _chartXAxisLabelRotation = -45;
 
 
@@ -154,9 +157,9 @@ void HtcChart::initProperties()
 
     _chartYAxisUnitsText = "Correction Factor";
     _chartYAxisUnitsBrush.setColor(QColor("#000000"));
-    _chartYAxisUnitsTextFont = QFont("Arial",20, QFont::Normal);
+    _chartYAxisUnitsTextFont = QFont("Arial",_chartXAxisUnitsFontSize, QFont::Normal);
 
-    _chartYAxisLabelFont = QFont("Arial",14, QFont::Normal );
+    _chartYAxisLabelFont = QFont("Arial",_chartYAxisLabelFontSize, QFont::Normal );
     _chartYAxisLabelColor = QColor("#000000");
     _chartYAxisLabelRotation = 0;
 
@@ -677,7 +680,7 @@ int HtcChart::findFirstNumericRow(QStringList list, QString delimiter)
         _YAxisMinValue= _minlevel  - (rangePaddingLevel * (_maxlevel - _minlevel) );
         _YAxisMaxValue = _maxlevel  + (rangePaddingLevel * (_maxlevel - _minlevel)  );
 
-        qDebug() << "reranged freq & level";
+        //qDebug() << "reranged freq & level";
     }
 }
 

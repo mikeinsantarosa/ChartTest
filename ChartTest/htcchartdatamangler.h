@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QDebug>
 #include <QFileInfo>
+#include <QMessageBox>
 
 #include "htcchartdatafile.h"
 #include "htcchartdataset.h"
@@ -44,6 +45,9 @@ private:
     void listDataSets();
     void listThisList(QStringList list);
 
+    void listTheFileStates();
+    void listTheRangeFileStates();
+
 
 
     int findFirstDataRow(QStringList list, QString delimiter);
@@ -58,6 +62,17 @@ private:
     void setNumberOfChartsTobuild();
     void setColumnLists();
     void setFileDelim();
+
+    bool getMetrics();
+    int getFileSetStatus();
+
+    void showBadFileDataMessage(QString key);
+
+    void setFilesPerRange();
+    int getNumberOfFilesPerRange(QString range, int rangeID);
+
+    void setRowCountsStatus();
+    int setRowCountStatusByRange(QString range, int rangeID);
 
     void BuildAllChartDataSets();
     QStringList BuildDataSet(QString columns);
@@ -76,12 +91,24 @@ private:
     int _numberOfChartsToBuild;
     QString _dataFileDelim;
 
+//    maybe add gets for these
+//
+//    _numberOfChartsToBuild
+//    int _numberOfRanges
+//    QStringList _rangeList
+//    int NumFilesPerRange[3]
+//    int RowCountsGoodPerRange[3]
+
     bool _loadHeaderFromFilePositions = true;
 
     double _lastFreqInList;
 
     int FileStartIDX[3] = {-1,-1,-1};
     int FileStopIDX[3] = {-1,-1,-1};
+    int NumFilesPerRange[3] = {-1,-1,-1};
+    int RowCountsGoodPerRange[3] = {-1,-1,-1};
+
+    QMap <int,QStringList> RowCountsPerFile;
 
     QVector <int> _selectedColumns;
     QVector <int> _rangeIDList;

@@ -18,18 +18,27 @@ void HTCChartDataMangler::Init(QStringList fileList, QVector<int> columns)
         setNumberOfChartsTobuild();
         setColumnLists();
         setFileDelim();
-        BuildAllChartDataSets();
-
-        //listDataSets();
 
 
+        //listFiles();
+        getMetrics();
 
-        _initialized = true;
-        qDebug() << "initialized OK!";
+        listTheRangeFileStates();
+
+        if( getFileSetStatus())
+        {
+            BuildAllChartDataSets();
+            _initialized = true;
+        }
+        else
+        {
+           _initialized = false;
+           showBadFileDataMessage("BadFileData");
+
+        }
+
+
     }
-
-
-
 
 }
 
@@ -123,8 +132,8 @@ bool HTCChartDataMangler::sortFileset()
 
     if(!_dataFiles.isEmpty())
     {
-        qSort(_dataFiles.begin(), _dataFiles.end(), [](const HTCChartDataFile& a, const HTCChartDataFile& b) { return a.SortOrderIndex < b.SortOrderIndex; });
-
+        //qSort(_dataFiles.begin(), _dataFiles.end(), [](const HTCChartDataFile& a, const HTCChartDataFile& b) { return a.SortOrderIndex < b.SortOrderIndex; });
+        std::sort(_dataFiles.begin(), _dataFiles.end(), [](const HTCChartDataFile& a, const HTCChartDataFile& b) { return a.SortOrderIndex < b.SortOrderIndex; });
         result = true;
     }
 }
@@ -178,6 +187,31 @@ void HTCChartDataMangler::listThisList(QStringList list)
 
 }
 
+void HTCChartDataMangler::listTheFileStates()
+{
+    QStringList list;
+    for (int x = 0; x < RowCountsPerFile.count(); x++)
+    {
+        list.clear();
+        list = RowCountsPerFile[x];
+
+        for(int i = 0; i < list.count(); i++)
+        {
+            qDebug() << "List " << x << " file " << i << " state is " << list.at(i) ;
+        }
+    }
+
+}
+
+void HTCChartDataMangler::listTheRangeFileStates()
+{
+    for (int i = 0; i < _rangeList.count(); i++ )
+    {
+        qDebug() << "range " << i << " file count status is " << RowCountsGoodPerRange[i];
+    }
+
+}
+
 void HTCChartDataMangler::discoverRanges()
 {
 
@@ -196,6 +230,8 @@ void HTCChartDataMangler::discoverRanges()
             if(!_rangeList.contains(range))
             {
                 _rangeList.append(range);
+
+
             }
 
         }
@@ -327,6 +363,175 @@ void HTCChartDataMangler::setFileDelim()
 
 }
 
+bool HTCChartDataMangler::getMetrics()
+{
+    setFilesPerRange();
+    setRowCountsStatus();
+
+}
+
+int HTCChartDataMangler::getFileSetStatus()
+{
+    int result = 1;
+    int count = 0;
+    for (int i = 0; i < _rangeList.count(); i++)
+    {
+        if(RowCountsGoodPerRange[i] == 1)
+        {
+            count++;
+        }
+
+    }
+    if(count != _rangeList.count())
+    {
+        result = 0;
+    }
+
+    return result;
+
+}
+
+void HTCChartDataMangler::showBadFileDataMessage(QString key)
+{
+    QMessageBox msgBox;
+    QString badRange = "";
+    QString badFileName = "";
+    int badRageIDX = -1;
+    int badFileNumber = -1;
+
+
+    QString message = "";
+
+    if(key == "BadFileData")
+    {
+        //find the bad range
+        // ------------------------------------------
+        for(int i = 0; i < _rangeList.count(); i++)
+        if (RowCountsGoodPerRange[i] == 0)
+        {
+            badRange = _rangeList.at(i);
+            badRageIDX = i;
+            break;
+        }
+
+        // find at least one bad file
+        QStringList list = RowCountsPerFile[badRageIDX];
+
+        for (int i = 0; i < list.count(); i++)
+        {
+            if(list.at(i).toInt() == 0)
+            {
+                badFileNumber = i;
+                badFileName.append(_baseFileList.at(badFileNumber));
+                break;
+            }
+        }
+
+        message.append("Range: ");
+        message.append(badRange);
+        message.append(" Has a file with an incorrect number of rows. ");
+        message.append(" -- in Filename: ");
+        message.append(badFileName);
+
+        qDebug() << "Bad File message = " << message;
+        msgBox.setText(message);
+        msgBox.setInformativeText("Please correct the problem and try again");
+        msgBox.setStandardButtons(QMessageBox::Ok);
+        msgBox.setDefaultButton(QMessageBox::Ok);
+    }
+
+    int ret = msgBox.exec();
+    qDebug() << "return is " << ret;
+
+}
+
+void HTCChartDataMangler::setFilesPerRange()
+{
+    for (int i = 0; i < _rangeList.count(); i++)
+    {
+        NumFilesPerRange[i] =  getNumberOfFilesPerRange(_rangeList.at(i),i);
+    }
+}
+
+int HTCChartDataMangler::getNumberOfFilesPerRange(QString range, int rangeID)
+{
+    int result = 0;
+    foreach(HTCChartDataFile df, _dataFiles)
+    {
+        if(df.getOrientationFRange() == range)
+        {
+            result++;
+        }
+    }
+
+    return result;
+
+}
+
+void HTCChartDataMangler::setRowCountsStatus()
+{
+    for (int i = 0; i < _rangeList.count(); i++)
+    {
+        RowCountsGoodPerRange[i] =  setRowCountStatusByRange(_rangeList.at(i),i);
+
+    }
+}
+
+int HTCChartDataMangler::setRowCountStatusByRange(QString range, int rangeID)
+{
+    int result = 0;
+    int base = 0;
+    int next = 0;
+    int count = 0;
+    int numberOfFiles = NumFilesPerRange[rangeID];
+
+    bool foundRange = false;
+
+    if (!RowCountsPerFile[rangeID].isEmpty())
+    {
+        RowCountsPerFile[rangeID].clear();
+    }
+    RowCountsPerFile[rangeID].clear();
+
+    foreach(HTCChartDataFile df, _dataFiles)
+    {
+        if(df.getOrientationFRange() == range)
+        {
+            if (!foundRange)
+            {
+                base = df.getlastDataRowNumber() - df.getFirstDataRowNumber();
+                next = base;
+                foundRange = true;
+                RowCountsPerFile[rangeID].append("1");
+                count++;
+
+            }
+            else
+            {
+                next = df.getlastDataRowNumber() - df.getFirstDataRowNumber();
+
+                if (base == next)
+                {
+                    RowCountsPerFile[rangeID].append("1");
+                    count++;
+                }
+                else
+                {
+                    RowCountsPerFile[rangeID].append("0");
+                }
+            }
+
+        }
+    }
+
+    if (count == numberOfFiles)
+    {
+        result = 1;
+    }
+
+    return result;
+}
+
 void HTCChartDataMangler::BuildAllChartDataSets()
 {
 
@@ -417,8 +622,6 @@ QStringList HTCChartDataMangler::getDataSetHeader(QString columns, int startFile
                  }
             }
 
-
-
         }
         // do the last column
         QStringList Hdr = _dataFiles[stopFileNum].getColumnHeaderList();
@@ -426,7 +629,6 @@ QStringList HTCChartDataMangler::getDataSetHeader(QString columns, int startFile
         line.append(Hdr.at(pos));
 
         result.append(line);
-
 
     }
     else
@@ -446,9 +648,6 @@ QStringList HTCChartDataMangler::getDataSetHeader(QString columns, int startFile
             line.append("_");
             line.append(df.getOrientationPolarity());
             line.append(_dataFileDelim);
-
-
-
 
         }
 
@@ -589,10 +788,13 @@ void HTCChartDataMangler::setDataSetProperties(HTCChartDataSet *ChartDataSet, QS
     ChartDataSet->SetXAxisTitle("Test Frequency (MHz)");
 
     // set chart title
-    chartTitle.append("Radiated Immunity Composite Data for ");
+    chartTitle.append("Radiated Immunity Composite Data ");
+    chartTitle.append("<br>");
+    chartTitle.append("for :: ");
     chartTitle.append(model);
     chartTitle.append(" - ");
     chartTitle.append(serial);
+    chartTitle.append("<br>");
     chartTitle.append(" for ");
     chartTitle.append(yName);
     ChartDataSet->SetChartTitle(chartTitle);

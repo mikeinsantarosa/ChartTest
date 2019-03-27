@@ -72,9 +72,10 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_btnClose_clicked()
 {
-    if (!testchart == NULL)
+    if (!testchart->isEnabled())
     {
-       delete testchart;
+       qDebug() << "killed the testChart";
+        delete testchart;
     }
     delete ds;
 
@@ -376,11 +377,16 @@ void MainWindow::on_btnTest_clicked()
 
     QString filter = ".csv";
 
-    ds = new HTCDataSelector(this);
+    if (!folderToOpen.isEmpty())
+    {
+        ds = new HTCDataSelector(this);
 
-    ds->SetFolderInService(folderToOpen, filter);
-    ds->move(10,10);
-    ds->show();
+        ds->SetFolderInService(folderToOpen, filter);
+        ds->move(10,10);
+        ds->show();
+    }
+
+
 }
 
 void MainWindow::on_pushButton_clicked()

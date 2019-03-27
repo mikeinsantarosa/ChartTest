@@ -2,9 +2,10 @@
 #define HTCCHART_H
 
 #include <QMainWindow>
-#include <QMainWindow>
 #include <QtCharts/QChartView>
 #include <QtCharts/QLineSeries>
+#include <QtCharts/QLegendMarker>
+#include <QtCharts/QXYLegendMarker>
 #include <QPen>
 #include <QCategoryAxis>
 #include <QChart>
@@ -19,7 +20,6 @@
 #include <QFontDialog>
 #include <QFont>
 #include <QBoxLayout>
-#include "chartproperties.h"
 #include <QPixmap>
 #include <QFileDialog>
 #include <QPen>
@@ -27,24 +27,13 @@
 #include <QString>
 
 
-
-// added for a legend test
-// Feb-02-2018
-// -----------------------------
-#include <QtCharts/QLegendMarker>
-#include <QtCharts/QXYLegendMarker>
-// --------------------------------------
-
-
-
-// the file stuff should be in another object
-// but we'll do it here for now
-// ----------------------------------------------
 #include <QFile>
 #include <QStringList>
 #include <QTextStream>
 #include <QString>
 #include "htcchartdataset.h"
+#include "chartproperties.h"
+
 
 QT_CHARTS_USE_NAMESPACE
 
@@ -165,8 +154,6 @@ private:
     QString _rawDataFileAndPath;
 
     void readfileIntoList(QString fileName);
-    //QLineSeries * FillListFromFile();
-
     void listTheList(QStringList list);
 
     int _firstNumericRow;
@@ -185,13 +172,11 @@ private:
 
 
     void setDataFileDelim(QString fileName);
-
     void setHeaderValues(QStringList list);
-
-
-
     int findFirstNumericRow(QStringList list, QString delimiter);
     void fillSeriesfromList(QLineSeries * series, int dataSet);
+
+
 
     QStringList _masterlist;
 
@@ -199,13 +184,16 @@ private:
     QColor _chartTitleTextColor;
     QFont _chartTitleTextFont;
     QString _chartTitleText;
+    int _chartTitleFontSize = 16;
 
     // X Axis Label
     QFont _chartXAxisUnitsTextFont;
     QString _chartXAxisUnitsText;
     QBrush _chartXAxisUnitsBrush;
+    int _chartXAxisUnitsFontSize = 16;
     QColor _chartXAxisLabelColor;
     QFont _chartXAxisLabelFont;
+    int _chartXAxisLabelFontSize = 14;
     // rotation was double
     int _chartXAxisLabelRotation;
     QString _chartXAxisLinLogScale;
@@ -229,8 +217,10 @@ private:
     QFont _chartYAxisUnitsTextFont;
     QString _chartYAxisUnitsText;
     QBrush _chartYAxisUnitsBrush;
+    int _chartYAxisUnitsFontSize = 16;
     QColor _chartYAxisLabelColor;
     QFont _chartYAxisLabelFont;
+    int _chartYAxisLabelFontSize = 14;
     int _chartYAxisLabelRotation;
     QString _chartYAxisLinLogScale;
 
@@ -289,7 +279,7 @@ private:
 
     QPen defaultChartPenStyle;
     QPen getPenStyle(int style);
-    int _legendFontPointSize = 8;
+    int _legendFontPointSize = 10;
 
    void createPen(double baseValue, QString header);
    void updateHeaderCount();
