@@ -167,6 +167,7 @@ private:
     void readfileIntoList(QString fileName);
     //QLineSeries * FillListFromFile();
 
+    void listTheList(QStringList list);
 
     int _firstNumericRow;
     int _currentHeaderRow;

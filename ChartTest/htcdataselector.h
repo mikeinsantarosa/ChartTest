@@ -41,7 +41,6 @@ private slots:
 
     void on_btnSelectColumns_clicked();
 
-    void on_btnPlot_clicked();
 
 private:
     Ui::HTCDataSelector *ui;

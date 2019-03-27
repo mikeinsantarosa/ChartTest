@@ -348,15 +348,11 @@ void HTCChartDataMangler::BuildAllChartDataSets()
        testchart->setChartByDataSet(dset, true);
        testchart->show();
 
-       qDebug() << "Chart created!";
-
        _dataSets.append(*dset);
-    }
 
-   // listDataSets();
-   qDebug() << "calling emit for datasets";
+   }
 
-   emit sendMsg("Message from Data Manger is HI!");
+
    emit ChartDataSetsReady(_dataSets);
 
 }

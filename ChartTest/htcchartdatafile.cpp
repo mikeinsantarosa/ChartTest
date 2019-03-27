@@ -182,20 +182,15 @@ int HTCChartDataFile::findFirstDataRow(QStringList list, QString delimiter)
 
                 isNumber = false;
 
-                //qDebug() << " row / dataItem to chech to be a number is >> " << listRow << " / " << dataItem;
 
                 if (!dataItem.isEmpty())
                 {
-                    //qDebug() << "Value is not empty";
 
                     if(re.exactMatch(dataItem))
                     {
 
-                        //qDebug() << "Value is a number";
 
                         numFinds = numFinds + 1;
-
-                        //qDebug() << "finds = " << numFinds;
 
                         if (numFinds > 1)
                         {

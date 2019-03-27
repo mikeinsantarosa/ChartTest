@@ -6,7 +6,7 @@ HTCDataSelector::HTCDataSelector(QWidget *parent) :
     ui(new Ui::HTCDataSelector)
 {
     ui->setupUi(this);
-    ui->btnPlot->setEnabled(false);
+    //ui->btnPlot->setEnabled(false);
     ui->btnSelectColumns->setEnabled(false);
 
     // create new Chart Data Folder
@@ -77,10 +77,10 @@ void HTCDataSelector::ColumnsHaveBeenSelected()
 {
     _selectedColumnsList = dd->getSelectedColumnsList();
 
-    if(!_selectedColumnsList.isEmpty())
-    {
-        ui->btnPlot->setEnabled(true);
-    }
+//    if(!_selectedColumnsList.isEmpty())
+//    {
+//        ui->btnPlot->setEnabled(true);
+//    }
 
 //    for(int i = 0; i < _selectedColumnsList.count(); i++)
 //    {
@@ -202,10 +202,10 @@ void HTCDataSelector::on_btnSelectColumns_clicked()
 
 }
 
-void HTCDataSelector::on_btnPlot_clicked()
-{
+//void HTCDataSelector::on_btnPlot_clicked()
+//{
 
-    dm = new HTCChartDataMangler(this);
-    dm->Init(_taggedList, _selectedColumnsList);
+//    dm = new HTCChartDataMangler(this);
+//    dm->Init(_taggedList, _selectedColumnsList);
 
-}
+//}

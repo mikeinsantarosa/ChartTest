@@ -52,8 +52,15 @@ void HtcChart::setFileToOpen(QString fileName, bool RescaleFreq)
 void HtcChart::setChartByDataSet(HTCChartDataSet *ds, bool RescaleFreq)
 {
 
+   _autoRangesDiscovered = false;
     _dataSet = ds;
+
+
     _masterlist = ds->GetData();
+
+
+   // listTheList(_masterlist);
+
     _chartTitleText = ds->GetChartTitle();
 
     _chartXAxisUnitsText = ds->GetXAxisTitle();
@@ -64,7 +71,9 @@ void HtcChart::setChartByDataSet(HTCChartDataSet *ds, bool RescaleFreq)
 
     reScaleFreqColumn = RescaleFreq;
     _rawDataFileAndPath = ds->GetSampleFileName();
-    qDebug() << "Filename read in is " << _rawDataFileAndPath;
+    setDataFileDelim(_rawDataFileAndPath);
+    setHeaderValues(_masterlist);
+    qDebug() << " " << _rawDataFileAndPath;
 
     initChart();
 
@@ -479,6 +488,16 @@ void HtcChart::readfileIntoList(QString fileName)
 
 }
 
+void HtcChart::listTheList(QStringList list)
+{
+    int count = list.count();
+    for(int i = 0; i < count;i++)
+    {
+        qDebug() << " row " << i  << " is " << list.at(i);
+    }
+
+}
+
 void HtcChart::setDataFileDelim(QString fileName)
 {
     QFileInfo info = QFileInfo(fileName);
@@ -527,6 +546,7 @@ int HtcChart::findFirstNumericRow(QStringList list, QString delimiter)
     bool isNumber;
     int result;
     bool found = false;
+    QRegExp re("^-?\\d*\\.?\\d+");
 
 
     for (int listRow = 0; listRow < list.count(); listRow++)
@@ -550,7 +570,7 @@ int HtcChart::findFirstNumericRow(QStringList list, QString delimiter)
 
                 dataItem = dataItem.trimmed();
                 isNumber = false;
-                if (dataItem.toDouble(&isNumber))
+                if(re.exactMatch(dataItem))
                 {
 
                     //qDebug() << "That value was a double - " << dataItem;
@@ -580,23 +600,6 @@ int HtcChart::findFirstNumericRow(QStringList list, QString delimiter)
 }
 
 
-    // ----------------------------------------------------
-    // todo:
-    // Make this thing smarter.
-    // - find the first numeric row
-    //      and use that as the starting point
-    //      for the numeric data
-    //      If there is no numeric row - fail
-    //      at least return something that be
-    //      detected to be a faile value.
-    //
-    // - if the first row is not numeric
-    //      check to see if the value can be
-    //      used as a series title and
-    //      do that here.
-    //
-    // -----------------------------------------------------
-
 
     void HtcChart::fillSeriesfromList(QLineSeries *series, int dataSet)
 {
@@ -606,6 +609,13 @@ int HtcChart::findFirstNumericRow(QStringList list, QString delimiter)
     int start;
     double freq;
     double level;
+    QString l1;
+
+    double rangePaddingLevel = 0.2;
+
+
+
+
 
     if (!_masterlist.isEmpty())
     {
@@ -625,51 +635,51 @@ int HtcChart::findFirstNumericRow(QStringList list, QString delimiter)
 
         for (int i = start; i < _masterlist.count(); i++)
         {
+
             group = _masterlist[i].split(_dataFileDelim);
 
             freq = QString(group.at(0)).toDouble()/getFreqRescaleValue();
-            level = QString(group.at(dataSet)).toDouble();
+            level = group.at(dataSet).toDouble();
 
             if (_minfreq > freq)
             {
                 _minfreq = freq;
             }
+
             if (_maxfreq < freq)
             {
                 _maxfreq = freq;
             }
+
             if (_minlevel > level)
             {
                 _minlevel = level;
             }
-            if (_maxlevel < level)
+
+            if (_maxlevel < level )
             {
+
                 _maxlevel = level;
+
             }
+
 
             series->append(freq, level);
         }
 
     }
 
-    if (_autoRangesDiscovered == false)
+
+    if (!_UpdatingFromProperties)
     {
         _XAxisMinValue= _minfreq;
         _XAxisMaxValue = _maxfreq;
-        _YAxisMinValue= _minlevel;
-        _YAxisMaxValue = _maxlevel;
+        _YAxisMinValue= _minlevel  - (rangePaddingLevel * (_maxlevel - _minlevel) );
+        _YAxisMaxValue = _maxlevel  + (rangePaddingLevel * (_maxlevel - _minlevel)  );
 
-        qDebug() << "AutoDiscovered  min/max freq values of " << _minfreq << "/" << _maxfreq;
-
-        _autoRangesDiscovered = true;
-
+        qDebug() << "reranged freq & level";
     }
-
-
-
-
-
-    }
+}
 
     double HtcChart::getFreqRescaleValue()
     {
@@ -815,8 +825,8 @@ void HtcChart::ChartTitleText(QString title)
 
     if (_chartTitleText != title)
     {
+        _UpdatingFromProperties = true;
         _chartTitleText = title;
-        qDebug() << "New title - " << title;
         clearLayout(ui->chartLayout);
         initChart();
     }
@@ -829,6 +839,7 @@ void HtcChart::ChartTitleTextFont(QFont font)
 
     if (_chartTitleTextFont != font)
     {
+        _UpdatingFromProperties = true;
         _chartTitleTextFont = font;
         qDebug() << "New font is - " << font;
         clearLayout(ui->chartLayout);
@@ -840,9 +851,9 @@ void HtcChart::ChartTitleTextFont(QFont font)
 void HtcChart::ChartTitleTextColor(QColor color)
 {
 
-    qDebug() << "color Sent to SLOT is - " << color;
     if (_chartTitleTextColor != color)
     {
+        _UpdatingFromProperties = true;
         _chartTitleTextColor = color;
 
         clearLayout(ui->chartLayout);
@@ -856,6 +867,7 @@ void HtcChart::HTCChartXAxisUnitsText(QString text)
     //qDebug() << "Text returned from Slot - " << text;
     if (_chartXAxisUnitsText != text)
     {
+        _UpdatingFromProperties = true;
         _chartXAxisUnitsText =  text;
         clearLayout(ui->chartLayout);
         initChart();
@@ -867,6 +879,7 @@ void HtcChart::HTCChartXAxisUnitsTextFont(QFont font)
     //qDebug() << "Font returned from Slot - " << font;
     if (_chartXAxisUnitsTextFont != font)
     {
+        _UpdatingFromProperties = true;
         _chartXAxisUnitsTextFont = font;
         clearLayout(ui->chartLayout);
         initChart();
@@ -879,6 +892,7 @@ void HtcChart::HTCChartXAxisUnitsTextColor(QColor color)
     //qDebug() << "Color returned from Slot - " << color;
     if (_chartXAxisUnitsBrush.color() != color)
     {
+        _UpdatingFromProperties = true;
         _chartXAxisUnitsBrush.setColor(color);
         clearLayout(ui->chartLayout);
         initChart();
@@ -889,8 +903,8 @@ void HtcChart::HTCChartXAxisLabelsTextRotation(qint32 value)
 {
     if (_chartXAxisLabelRotation != value)
     {
+        _UpdatingFromProperties = true;
         _chartXAxisLabelRotation = value;
-        qDebug() << "X Axis Rotation returned from Slot - " << _chartXAxisLabelRotation;
         clearLayout(ui->chartLayout);
         initChart();
     }
@@ -900,6 +914,7 @@ void HtcChart::HTCChartXAxisLabelsTextFont(QFont font)
 {
     if (_chartXAxisLabelFont != font)
     {
+        _UpdatingFromProperties = true;
         _chartXAxisLabelFont = font;
         clearLayout(ui->chartLayout);
         initChart();
@@ -910,6 +925,7 @@ void HtcChart::HTCChartXAxisLabelsTextColor(QColor color)
 {
     if (_chartXAxisLabelColor != color)
     {
+        _UpdatingFromProperties = true;
         _chartXAxisLabelColor = color;
         clearLayout(ui->chartLayout);
         initChart();
@@ -923,6 +939,7 @@ void HtcChart::HTCChartXAxisLabelsTextScaleMin(double value)
     QString v2 = QString::number(_XAxisMinValue);
     if (v1 != v2)
     {
+        _UpdatingFromProperties = true;
         _XAxisMinValue = value;
         clearLayout(ui->chartLayout);
         initChart();
@@ -936,8 +953,8 @@ void HtcChart::HTCChartXAxisLabelsTextScaleMax(double value)
     QString v2 = QString::number(_XAxisMaxValue);
     if (v1 != v2)
     {
+        _UpdatingFromProperties = true;
         _XAxisMaxValue = value;
-        qDebug() << "Changed variable and rebuilt chart";
         clearLayout(ui->chartLayout);
         initChart();
     }
@@ -947,6 +964,7 @@ void HtcChart::HTCChartXMajorThickness(double arg1)
 {
     if (_chartXAxisMajorGridLineSize != arg1)
     {
+        _UpdatingFromProperties = true;
         _chartXAxisMajorGridLineSize = arg1;
         _chartXAxisMajorGridLinesPen = GetNewGirdLinesPen(_chartXAxisMajorGridLinesColor,
                                                           _chartXAxisMajorGridLineSize, Qt::SolidLine);
@@ -961,6 +979,7 @@ void HtcChart::HTCChartXMinorThickness(double arg1)
 {
     if (_chartXAxisMinorGridLineSize != arg1)
     {
+        _UpdatingFromProperties = true;
         _chartXAxisMinorGridLineSize = arg1;
         _chartXAxisMinorGridLinesPen = GetNewGirdLinesPen(_chartXAxisMinorGridLinesColor,
                                                           _chartXAxisMinorGridLineSize, Qt::SolidLine);
@@ -975,6 +994,7 @@ void HtcChart::HTCChartXAxisMajorTicsColor(QColor color)
 {
     if(_chartXAxisMajorGridLinesColor != color)
     {
+        _UpdatingFromProperties = true;
         _chartXAxisMajorGridLinesColor = color;
         _chartXAxisMajorGridLinesPen = GetNewGirdLinesPen(_chartXAxisMajorGridLinesColor,
                                                           _chartXAxisMajorGridLineSize, Qt::SolidLine);
@@ -988,6 +1008,7 @@ void HtcChart::HTCChartXAxisMinorTicsColor(QColor color)
 {
     if(_chartXAxisMinorGridLinesColor != color)
     {
+        _UpdatingFromProperties = true;
         _chartXAxisMinorGridLinesColor = color;
         _chartXAxisMinorGridLinesPen = GetNewGirdLinesPen(_chartXAxisMinorGridLinesColor,
                                                           _chartXAxisMinorGridLineSize, Qt::SolidLine);
@@ -1000,6 +1021,7 @@ void HtcChart::HTCChartXMajorTicsEnabled(bool checked)
 {
     if(_chartXAxisMajorGridLinesVisible != checked)
     {
+        _UpdatingFromProperties = true;
         _chartXAxisMajorGridLinesVisible = checked;
         clearLayout(ui->chartLayout);
         initChart();
@@ -1010,6 +1032,7 @@ void HtcChart::HTCChartXMinorTicsEnabled(bool checked)
 {
     if (_chartXAxisMinorGridLinesVisible != checked)
     {
+        _UpdatingFromProperties = true;
         _chartXAxisMinorGridLinesVisible = checked;
         clearLayout(ui->chartLayout);
         initChart();
@@ -1021,6 +1044,7 @@ void HtcChart::HTCChartXMinorTicsValue(double arg1)
     int value = static_cast<int>(arg1);
     if(_chartXAxisMinorGridLinesCount != value)
     {
+        _UpdatingFromProperties = true;
         _chartXAxisMinorGridLinesCount = value;
         clearLayout(ui->chartLayout);
         initChart();
@@ -1032,6 +1056,7 @@ void HtcChart::HTCChartXMajorTicsValue(double arg1)
     int value = static_cast<int>(arg1);
     if (_chartXAxisMajorGridLinesCount != value)
     {
+        _UpdatingFromProperties = true;
         _chartXAxisMajorGridLinesCount = value;
         clearLayout(ui->chartLayout);
         initChart();
@@ -1041,6 +1066,7 @@ void HtcChart::HTCChartXMajorTicsValue(double arg1)
 void HtcChart::HTCChartXLogChart(bool checked)
 {
     //qDebug() << "X Log request value " << checked;
+    _UpdatingFromProperties = true;
     _chartXAxisLinLogScale = "LOG";
     clearLayout(ui->chartLayout);
     initChart();
@@ -1049,6 +1075,7 @@ void HtcChart::HTCChartXLogChart(bool checked)
 void HtcChart::HTCChartXLinChart(bool checked)
 {
     //qDebug() << "X Lin request value " << checked;
+    _UpdatingFromProperties = true;
     _chartXAxisLinLogScale = "LIN";
     clearLayout(ui->chartLayout);
     initChart();
@@ -1059,6 +1086,7 @@ void HtcChart::HTCChartYAxisUnitsText(QString text)
     //qDebug() << "Text returned from Slot - " << text;
     if (_chartYAxisUnitsText != text)
     {
+        _UpdatingFromProperties = true;
         _chartYAxisUnitsText =  text;
         clearLayout(ui->chartLayout);
         initChart();
@@ -1071,6 +1099,7 @@ void HtcChart::HTCChartYAxisUnitsTextFont(QFont font)
     //qDebug() << "Font returned from Slot - " << font;
     if (_chartYAxisUnitsTextFont != font)
     {
+        _UpdatingFromProperties = true;
         _chartYAxisUnitsTextFont = font;
         clearLayout(ui->chartLayout);
         initChart();
@@ -1082,6 +1111,7 @@ void HtcChart::HTCChartYAxisUnitsTextColor(QColor color)
     //qDebug() << "Color returned from Slot - " << color;
     if (_chartXAxisUnitsBrush.color() != color)
     {
+        _UpdatingFromProperties = true;
         _chartXAxisUnitsBrush.setColor(color);
         clearLayout(ui->chartLayout);
         initChart();
@@ -1092,8 +1122,8 @@ void HtcChart::HTCChartYAxisLabelsTextRotation(qint32 value)
 {
     if (_chartYAxisLabelRotation != value)
     {
+        _UpdatingFromProperties = true;
         _chartYAxisLabelRotation = value;
-        qDebug() << "Y Axis Rotation returned from Slot - " << _chartYAxisLabelRotation;
         clearLayout(ui->chartLayout);
         initChart();
     }
@@ -1104,6 +1134,7 @@ void HtcChart::HTCChartYAxisLabelsTextFont(QFont font)
 {
     if (_chartYAxisLabelFont != font)
     {
+        _UpdatingFromProperties = true;
         _chartYAxisLabelFont = font;
         clearLayout(ui->chartLayout);
         initChart();
@@ -1114,6 +1145,7 @@ void HtcChart::HTCChartYAxisLabelsTextColor(QColor color)
 {
     if (_chartYAxisLabelColor != color)
     {
+        _UpdatingFromProperties = true;
         _chartYAxisLabelColor = color;
         clearLayout(ui->chartLayout);
         initChart();
@@ -1126,6 +1158,7 @@ void HtcChart::HTCChartYAxisLabelsTextScaleMin(double value)
     QString v2 = QString::number(_YAxisMinValue);
     if (v1 != v2)
     {
+        _UpdatingFromProperties = true;
         _YAxisMinValue = value;
         clearLayout(ui->chartLayout);
         initChart();
@@ -1138,6 +1171,7 @@ void HtcChart::HTCChartYAxisLabelsTextScaleMax(double value)
     QString v2 = QString::number(_YAxisMaxValue);
     if (v1 != v2)
     {
+        _UpdatingFromProperties = true;
         _YAxisMaxValue = value;
         clearLayout(ui->chartLayout);
         initChart();
@@ -1150,6 +1184,7 @@ void HtcChart::HTCChartYMajorThickness(double arg1)
 {
     if (_chartYAxisMajorGridLineSize != arg1)
     {
+        _UpdatingFromProperties = true;
         _chartYAxisMajorGridLineSize = arg1;
         _chartYAxisMajorGridLinesPen = GetNewGirdLinesPen(_chartYAxisMajorGridLinesColor,
                                                           _chartYAxisMajorGridLineSize, Qt::SolidLine);
@@ -1163,6 +1198,7 @@ void HtcChart::HTCChartYMinorThickness(double arg1)
 {
     if (_chartYAxisMinorGridLineSize != arg1)
     {
+        _UpdatingFromProperties = true;
         _chartYAxisMinorGridLineSize = arg1;
         _chartXAxisMinorGridLinesPen = GetNewGirdLinesPen(_chartYAxisMinorGridLinesColor,
                                                           _chartYAxisMinorGridLineSize, Qt::SolidLine);
@@ -1176,6 +1212,7 @@ void HtcChart::HTCChartYAxisMajorTicsColor(QColor color)
 {
     if(_chartYAxisMajorGridLinesColor != color)
     {
+        _UpdatingFromProperties = true;
         _chartYAxisMajorGridLinesColor = color;
         _chartYAxisMajorGridLinesPen = GetNewGirdLinesPen(_chartYAxisMajorGridLinesColor,
                                                           _chartYAxisMajorGridLineSize, Qt::SolidLine);
@@ -1189,6 +1226,7 @@ void HtcChart::HTCChartYAxisMinorTicsColor(QColor color)
 {
     if(_chartYAxisMinorGridLinesColor != color)
     {
+        _UpdatingFromProperties = true;
         _chartYAxisMinorGridLinesColor = color;
         _chartYAxisMinorGridLinesPen = GetNewGirdLinesPen(_chartYAxisMinorGridLinesColor,
                                                           _chartYAxisMinorGridLineSize, Qt::SolidLine);
@@ -1202,6 +1240,7 @@ void HtcChart::HTCChartYMajorTicsEnabled(bool checked)
 {
     if(_chartYAxisMajorGridLinesVisible != checked)
     {
+        _UpdatingFromProperties = true;
         _chartYAxisMajorGridLinesVisible = checked;
         clearLayout(ui->chartLayout);
         initChart();
@@ -1212,6 +1251,7 @@ void HtcChart::HTCChartYMinorTicsEnabled(bool checked)
 {
     if(_chartYAxisMinorGridLinesVisible != checked)
     {
+        _UpdatingFromProperties = true;
         _chartYAxisMinorGridLinesVisible = checked;
         clearLayout(ui->chartLayout);
         initChart();
@@ -1223,6 +1263,7 @@ void HtcChart::HTCChartYMinorTicsValue(double arg1)
     int value = static_cast<int>(arg1);
     if(_chartYAxisMinorGridLinesCount != value)
     {
+        _UpdatingFromProperties = true;
         _chartYAxisMinorGridLinesCount = value;
         clearLayout(ui->chartLayout);
         initChart();
@@ -1234,6 +1275,7 @@ void HtcChart::HTCChartYMajorTicsValue(double arg1)
     int value = static_cast<int>(arg1);
     if(_chartYAxisMajorGridLinesCount != value)
     {
+        _UpdatingFromProperties = true;
         _chartYAxisMajorGridLinesCount = value;
         clearLayout(ui->chartLayout);
         initChart();
@@ -1244,6 +1286,7 @@ void HtcChart::HTCChartYLogChart(bool checked)
 {
 
     //qDebug() << "Y Log request value " << checked;
+    _UpdatingFromProperties = true;
     _chartYAxisLinLogScale = "LOG";
     clearLayout(ui->chartLayout);
     initChart();
@@ -1251,15 +1294,18 @@ void HtcChart::HTCChartYLogChart(bool checked)
 
 void HtcChart::HTCChartYLinChart(bool checked)
 {
-    qDebug() << "Y Lin request value " << checked;
+
+    _UpdatingFromProperties = true;
     _chartYAxisLinLogScale = "LIN";
     clearLayout(ui->chartLayout);
+
+
     initChart();
 }
 
 void HtcChart::HTCChartPenValues(int width, QColor color, int penStyle, QString penName, int penNumber)
 {
-   _UpdatingFromProperties = true;
+    _UpdatingFromProperties = true;
 
     _penStates[penNumber - 1] = 1;
     _penWidths[penNumber - 1] = width;
@@ -1276,6 +1322,7 @@ void HtcChart::HTCChartPenValues(int width, QColor color, int penStyle, QString 
 
 void HtcChart::HTCCHartNewPen(double baseValue, QString header)
 {
+    _UpdatingFromProperties = true;
     createPen(baseValue, header);
 
 }
