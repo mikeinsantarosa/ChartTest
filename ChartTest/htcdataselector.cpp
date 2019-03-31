@@ -53,6 +53,7 @@ void HTCDataSelector::on_btnClose_clicked()
 
 void HTCDataSelector::mySlot_Changed()
 {
+    qDebug() << "clicked on the treeview";
     int numberOfkids = -1;
     QString selectedSet = "";
     QTreeWidgetItem * item = ui->treeDatasets->currentItem();
